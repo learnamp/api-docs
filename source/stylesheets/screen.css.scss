@@ -4,6 +4,12 @@
 @import 'icon-font';
 // @import 'rtl'; // uncomment to switch to RTL format
 
+@import url("https://fonts.googleapis.com/css?family=Work+Sans");html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%
+}
+
 /*
 Copyright 2008-2013 Concur Technologies, Inc.
 
@@ -61,6 +67,7 @@ html, body {
   background-color: $nav-bg;
   font-size: 13px;
   font-weight: bold;
+  border-right: 1px solid #ccc;
 
   // language selector for mobile devices
   .lang-selector {
@@ -71,11 +78,16 @@ html, body {
     }
   }
 
-  // This is the logo at the top of the ToC
   .logo {
     display: block;
     max-width: 100%;
-    margin-bottom: $logo-margin;
+    margin: 15px auto 0;
+  }
+
+  .subtitle {
+    padding: 8px 0 15px;
+    text-align: center;
+    color: $nav-text;
   }
 
   &>.search {
@@ -98,7 +110,7 @@ html, body {
       position: absolute;
       top: 17px;
       left: $nav-padding;
-      color: $nav-text;
+      color: $search-box-border-color;
       @extend %icon-search;
     }
   }
@@ -172,6 +184,16 @@ html, body {
   .toc-h2 {
     padding-left: $nav-padding + $nav-indent;
     font-size: 12px;
+
+    &.toc-link {
+      color: #000;
+    }
+
+    &.active {
+      background-color: $nav-subitem-bg;
+      color: $nav-active-text;
+      font-weight: bold;
+    }
   }
 
   .toc-footer {
