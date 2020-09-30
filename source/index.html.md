@@ -5,8 +5,8 @@ toc_footers:
   - <a href='https://learnamp.com/contact'>Contact us for API access</a>
 
 language_tabs:
-  - shell
   - ruby
+  - shell
 
 includes:
   - authentication

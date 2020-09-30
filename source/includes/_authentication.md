@@ -6,10 +6,7 @@
 
 curl -X POST \
   https://learnamp.com/oauth/token \
-  -H 'Content-Type: application/json' \
-  -d '{"client_id":"YOUR-CLIENT-ID",
-       "client_secret":"YOUR-CLIENT-SECRET",
-       "grant_type":"client_credentials"}'
+  -d "client_id=YOUR-CLIENT-ID&client_secret=YOUR-CLIENT-SECRET&grant_type=client_credentials"
 
 ```
 
