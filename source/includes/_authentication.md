@@ -5,7 +5,7 @@
 ```shell
 
 curl -X POST \
-  https://learnamp.com/oauth/token \
+  https://api.learnamp.com/oauth/token \
   -d "client_id=YOUR-CLIENT-ID&client_secret=YOUR-CLIENT-SECRET&grant_type=client_credentials"
 
 ```
@@ -13,7 +13,7 @@ curl -X POST \
 ```ruby
 require 'httparty'
 
-url = "https://learnamp.com/oauth/token"
+url = "https://api.learnamp.com/oauth/token"
 
 body = {
   client_id: "YOUR-CLIENT-ID",
@@ -43,7 +43,7 @@ The Learn Amp API is secured using the OAuth2 Client Credentials flow.
 
 Before calls can be made to the API, an **access token** must be retrieved from the Auth Token URL.
 
-`POST https://learnamp.com/oauth/token`
+`POST https://api.learnamp.com/oauth/token`
 
 ### Data in Body
 
