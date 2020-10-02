@@ -30,13 +30,13 @@ code_clipboard: true
 > Authentication Token URL
 
 ```
-https://learnamp.com/oauth/token
+https://api.learnamp.com/oauth/token
 ```
 
 > API Base URL for subsquent calls
 
 ```
-https://learnamp.com/api/v1
+https://api.learnamp.com/api/v1
 ```
 
 Welcome to Learn Amp API reference.
