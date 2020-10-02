@@ -5,25 +5,27 @@ toc_footers:
   - <a href='https://learnamp.com/contact'>Contact us for API access</a>
 
 language_tabs:
+  - shell: cURL
   - ruby
-  - shell
+  - python
+  - php
 
 includes:
   - authentication
-  - users
-  - teams
-  - team_users
-  - tasks
-  - activities
-  - items
-  - events
-  - enrollments
   - errors
 
 search: true
 
 code_clipboard: true
 ---
+<!--   - users
+  - teams
+  - team_users
+  - tasks
+  - activities
+  - items
+  - events
+  - enrollments -->
 
 # API Reference
 
@@ -36,7 +38,7 @@ https://api.learnamp.com/oauth/token
 > API Base URL for subsquent calls
 
 ```
-https://api.learnamp.com/api/v1
+https://api.learnamp.com/v1
 ```
 
 Welcome to Learn Amp API reference.
