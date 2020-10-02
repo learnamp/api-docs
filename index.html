@@ -289,7 +289,7 @@
     <link href="images/favicon-a7db4bb6.png" rel="icon" type="image/png" />
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;]">
+  <body class="index" data-languages="[&quot;ruby&quot;,&quot;shell&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -301,8 +301,8 @@
       <img src="images/logo-aaa13419.png" class="logo" alt="" />
       <div class="subtitle">Developers</div>
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
               <a href="#" data-language-name="ruby">ruby</a>
+              <a href="#" data-language-name="shell">shell</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -389,15 +389,12 @@
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>
 curl <span class="nt">-X</span> POST <span class="se">\</span>
-  https://learnamp.com/oauth/token <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-  <span class="nt">-d</span> <span class="s1">'{"client_id":"YOUR-CLIENT-ID",
-       "client_secret":"YOUR-CLIENT-SECRET",
-       "grant_type":"client_credentials"}'</span>
+  https://api.learnamp.com/oauth/token <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s2">"client_id=YOUR-CLIENT-ID&amp;client_secret=YOUR-CLIENT-SECRET&amp;grant_type=client_credentials"</span>
 
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'httparty'</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://learnamp.com/oauth/token"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://api.learnamp.com/oauth/token"</span>
 
 <span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="ss">client_id: </span><span class="s2">"YOUR-CLIENT-ID"</span><span class="p">,</span>
@@ -425,7 +422,7 @@ curl <span class="nt">-X</span> POST <span class="se">\</span>
 
 <p>Before calls can be made to the API, an <strong>access token</strong> must be retrieved from the Auth Token URL.</p>
 
-<p><code>POST https://learnamp.com/oauth/token</code></p>
+<p><code>POST https://api.learnamp.com/oauth/token</code></p>
 <h3 id='data-in-body'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -522,8 +519,8 @@ A successful response will return an <code>access_token</code>, please replace <
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
                 <a href="#" data-language-name="ruby">ruby</a>
+                <a href="#" data-language-name="shell">shell</a>
           </div>
       </div>
     </div>
