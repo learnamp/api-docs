@@ -1,12 +1,151 @@
 # Users
 
-## Description
+## User Description
 
 In Learn Amp, a User, is a person who can access the platform. User's belong to your company account, and have a status like Invite Pending, Active or Deactivated.
 
-Users log in with SSO or email/password, depending on how your account is set up.
 
-The API exposes end points to allow you to manage users programmatically.
+## View All Users
+
+> View all users in your account:
+
+```shell
+curl --location --request GET 'http://api.learnamp.com/v1/users' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
+```
+
+```ruby
+require "uri"
+require "net/http"
+
+url = URI("http://api.learnamp.com/v1/users")
+
+http = Net::HTTP.new(url.host, url.port);
+request = Net::HTTP::Get.new(url)
+request["Authorization"] = "Bearer YOUR-ACCESS-TOKEN"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```python
+import requests
+
+url = "http://api.learnamp.com/v1/users"
+
+payload = {}
+headers = {
+  'Authorization': 'Bearer YOUR-ACCESS-TOKEN'
+}
+
+response = requests.request("GET", url, headers=headers, data = payload)
+
+print(response.text.encode('utf8'))
+```
+
+```php
+<?php
+require_once 'HTTP/Request2.php';
+$request = new HTTP_Request2();
+$request->setUrl('http://api.learnamp.com/v1/users');
+$request->setMethod(HTTP_Request2::METHOD_GET);
+$request->setConfig(array(
+  'follow_redirects' => TRUE
+));
+$request->setHeader(array(
+  'Authorization' => 'Bearer YOUR-ACCESS-TOKEN'
+));
+try {
+  $response = $request->send();
+  if ($response->getStatus() == 200) {
+    echo $response->getBody();
+  }
+  else {
+    echo 'Unexpected HTTP status: ' . $response->getStatus() . ' ' .
+    $response->getReasonPhrase();
+  }
+}
+catch(HTTP_Request2_Exception $e) {
+  echo 'Error: ' . $e->getMessage();
+}
+```
+
+View all users.
+
+`GET https://api.learnamp.com/users`
+
+Response will be paginated [see pagination](#pagination)
+
+### Headers
+Header | Value | Description
+--------- | ------- | -----------
+Authorization | "Bearer YOUR-ACCESS-TOKEN" | Auth token [see Authorization](#authentication)
+
+> 200 OK - successful response:
+
+```json
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Test",
+      "lastName": "User",
+      "jobTitle": "Developer",
+      "email": "test@email.com",
+      "timeZone": "London",
+      "language": "en",
+      "role": "viewer",
+      "profileUrl": "http://testaccount.learnamp.com/en/users/1",
+      "status": {
+          "status": "Confirmed",
+          "time": "On 29 Nov 16"
+      },
+      "avatar": "AVATAR_IMAGE_URL",
+      "manager": {
+          "id": 17,
+          "firstName": "Manager",
+          "lastName": "User",
+          "jobTitle": "Head of Ops",
+          "email": "testuser2@email.com",
+          "timeZone": "New York",
+          "language": "en-US",
+          "role": "admin",
+          "profileUrl": "http://testaccount.learnamp.com/en/users/17",
+          "status": {
+              "status": "Confirmed",
+              "time": "On 20 Feb 17"
+          }
+      },
+      "location": "London, UK",
+      "primaryTeam": {
+        "id": 15,
+        "name": "Operations",
+        "teamUsersCount": 10,
+        "apiTeamPath": "/v1/teams/15.json",
+        "apiTeamUsersPath": "/v1/teams/15/users.json",
+        "manager": {
+          "id": 17,
+          "firstName": "Manager",
+          "lastName": "User",
+          "jobTitle": "Head of Ops",
+          "email": "testuser2@email.com",
+          "timeZone": "New York",
+          "language": "en-US",
+          "role": "admin",
+          "profileUrl": "http://testaccount.learnamp.com/en/users/17",
+          "status": {
+            "status": "Confirmed",
+            "time": "On 20 Feb 17"
+          }
+        }
+      },
+      "secondaryTeams": []
+    },
+  ]
+}
+
+```
+
 
 ## Create a User
 
@@ -126,7 +265,7 @@ catch(HTTP_Request2_Exception $e) {
 }
 ```
 
-Create a user via the API.
+Create a user and trigger an invite email.
 
 `POST https://api.learnamp.com/users`
 
@@ -187,6 +326,4 @@ skip_invitation | true | Skip sending the user an invitation email immediately. 
     }
 }
 ```
-
-## View All Users
 
