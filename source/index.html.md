@@ -12,6 +12,9 @@ language_tabs:
 
 includes:
   - authentication
+  - users
+  - teams
+  - pagination
   - errors
 
 search: true
