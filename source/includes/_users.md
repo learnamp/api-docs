@@ -391,7 +391,7 @@ $request->addPostParameter(array(
 ));
 try {
   $response = $request->send();
-  if ($response->getStatus() == 200) {
+  if ($response->getStatus() == 201) {
     echo $response->getBody();
   }
   else {
@@ -417,6 +417,7 @@ firstName | Test | First name of user *(\*)*
 lastName | User | Last name of user *(\*)*
 language | fr | Primary language short code. One of:  en, en-US, de, es-CO, fr, it, nl, pt-BR, pl, ru, zh-CN, zh-TW, ja, ar
 jobTitle | Developer | Job title of user
+role | viewer | user's role. One of: viewer, curator, admin, hr, reporter
 primaryTeamId | 15 | Team ID of primary team [see Teams](#teams)
 secondaryTeamIds | [376,377] | Array of Team IDs of seconary teams
 managerId | 1 | User ID of this user's Manager (override manager, not primary team manager)
