@@ -10,6 +10,7 @@ Response Header | Example value | Description
 --------- | ------- | -----------
 Total | 1032 | Total number of matching results
 Per-Page | 10 | Number of results per page
+Total-Pages | 103 | Total number of pages
 
 ## Apply pagination in Request
 

@@ -14,6 +14,7 @@ includes:
   - authentication
   - users
   - teams
+  - team_users
   - pagination
   - errors
 

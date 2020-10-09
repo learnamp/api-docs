@@ -75,11 +75,6 @@ View all teams
 
 Response will be paginated [see pagination](#pagination)
 
-### Headers
-Header | Value | Description
---------- | ------- | -----------
-Authorization | "Bearer YOUR-ACCESS-TOKEN" | Auth token [see Authorization](#authentication)
-
 > 200 OK - successful response:
 
 ```json
@@ -318,7 +313,7 @@ $request->addPostParameter(array(
 ));
 try {
   $response = $request->send();
-  if ($response->getStatus() == 200) {
+  if ($response->getStatus() == 201) {
     echo $response->getBody();
   }
   else {
