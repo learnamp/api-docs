@@ -76,10 +76,15 @@ View all users.
 
 Response will be paginated [see pagination](#pagination)
 
-### Headers
-Header | Value | Description
+### Optional Filters in URL Params
+
+The following URL params by be included, to filter the result set:
+
+`GET https://api.learnamp.com/users?filters[email]=test@email.com`
+
+URL Param | Value | Description
 --------- | ------- | -----------
-Authorization | "Bearer YOUR-ACCESS-TOKEN" | Auth token [see Authorization](#authentication)
+filters[email] | email@test.com | Return user with matching email address
 
 > 200 OK - successful response:
 
