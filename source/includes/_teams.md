@@ -86,6 +86,7 @@ Response will be paginated [see pagination](#pagination)
             "teamUsersCount": 2,
             "apiTeamPath": "/v1/teams/379.json",
             "apiTeamUsersPath": "/v1/teams/379/users.json",
+            "parentTeamId": 123,
             "manager": {
                 "id": 7,
                 "firstName": "Test",
@@ -100,7 +101,24 @@ Response will be paginated [see pagination](#pagination)
                     "status": "Invite pending",
                     "time": "Sent 25 Sep 19"
                 }
-            }
+            },
+            "secondaryManagers": [
+                {
+                    "id": 8,
+                    "firstName": "Test2",
+                    "lastName": "Secondary",
+                    "jobTitle": "Vice director",
+                    "email": "admin2@example.com",
+                    "timeZone": "London",
+                    "language": "en",
+                    "role": "admin",
+                    "profileUrl": "http://testaccount.learnamp.com/en/users/8",
+                    "status": {
+                      "status": "Invite pending",
+                      "time": "Sent 25 Sep 19"
+                    }
+                }
+            ]
         },
   ]
 }
@@ -201,6 +219,23 @@ Display details for one specific Team.
             "time": "Sent 25 Sep 19"
         }
     },
+    "secondaryManagers": [
+        {
+            "id": 8,
+            "firstName": "Test2",
+            "lastName": "Secondary",
+            "jobTitle": "Vice director",
+            "email": "admin2@example.com",
+            "timeZone": "London",
+            "language": "en",
+            "role": "admin",
+            "profileUrl": "http://testaccount.learnamp.com/en/users/8",
+            "status": {
+              "status": "Invite pending",
+              "time": "Sent 25 Sep 19"
+            }
+        }
+    ],
     "users": [
         {
             "id": 1186,
@@ -234,7 +269,29 @@ Display details for one specific Team.
             },
             "removeFromTeamUrl": "/v1/teams/383/users/1281.json"
         }
-    ]
+    ],
+    "subTeams": [
+        {
+            "id": 169,
+            "name": "Middle team",
+            "teamUsersCount": 2,
+            "parentTeamId": 383,
+            "apiTeamPath": "/v1/teams/169.json",
+            "apiTeamUsersPath": "/v1/teams/169/users.json",
+            "manager": null,
+            "secondaryManagers": []
+        }
+    ],
+    "parentTeam": {
+        "id": 1,
+        "name": "Super team",
+        "teamUsersCount": 2,
+        "parentTeamId": null,
+        "apiTeamPath": "/v1/teams/1.json",
+        "apiTeamUsersPath": "/v1/teams/1/users.json",
+        "manager": null,
+        "secondaryManagers": []
+    }
 }
 ```
 
@@ -268,7 +325,8 @@ request = Net::HTTP::Post.new(url)
 request["Authorization"] = "Bearer YOUR-ACCESS-TOKEN"
 form_data = [
   ['name', 'New Team Test'],
-  ['managerId', '1']
+  ['managerId', 1],
+  ['parentTeamId', 10]
 ]
 request.set_form form_data, 'multipart/form-data'
 response = http.request(request)
@@ -283,7 +341,8 @@ url = "https://api.learnamp.com/v1/teams"
 
 payload = {
   'name': 'New Team Test',
-  'managerId': '1'
+  'managerId': 1,
+  'parentTeamId': 10
 }
 headers = {
   'Authorization': 'Bearer YOUR-ACCESS-TOKEN'
@@ -310,6 +369,7 @@ $request->setHeader(array(
 $request->addPostParameter(array(
   'name' => 'New Team Test',
   'managerId' => '1'
+  'parentTeamId' => '10'
 ));
 try {
   $response = $request->send();
@@ -332,10 +392,11 @@ Create a Team
 
 ### Data in Body
 
-Parameter | Example value | Description (* required)
+Parameter (* required) | Example value | Description 
 --------- | ------- | -----------
-name | Sales | Name of team
+name * | Sales | Name of team
 managerId | 1 | User ID of Team Manager
+parentTeamId | 10 | ID of the parent team
 
 > 201 Created - successful response:
 
@@ -361,7 +422,19 @@ managerId | 1 | User ID of Team Manager
             "time": "On 29 Nov 16"
         }
     },
-    "users": []
+    "secondaryManagers": [],
+    "users": [],
+    "parentTeam": {
+        "id": 10,
+        "name": "Super team",
+        "teamUsersCount": 2,
+        "parentTeamId": null,
+        "apiTeamPath": "/v1/teams/10.json",
+        "apiTeamUsersPath": "/v1/teams/10/users.json",
+        "manager": null,
+        "secondaryManagers": []
+    },
+    "subTeams": []
 }
 ```
 
@@ -369,11 +442,14 @@ managerId | 1 | User ID of Team Manager
 
 ```json
 {
-    "error": "name is missing, name is empty",
+    "error": "name is missing, name is empty, parentTeamId must match existing teams IDs",
     "fullErrors": {
         "name": [
             "is missing",
             "is empty"
+        ],
+        "parentTeamId": [
+            "must match existing teams IDs"
         ]
     }
 }
@@ -399,7 +475,7 @@ url = URI("https://api.learnamp.com/v1/teams/383")
 http = Net::HTTP.new(url.host, url.port);
 request = Net::HTTP::Put.new(url)
 request["Authorization"] = "Bearer YOUR-ACCESS-TOKEN"
-form_data = [['name', 'New Team Name'],['managerId', '1']]
+form_data = [['name', 'New Team Name'],['managerId', 1],['parentTeamId', 10]]
 request.set_form form_data, 'multipart/form-data'
 response = http.request(request)
 puts response.read_body
@@ -413,7 +489,8 @@ url = "https://api.learnamp.com/v1/teams/383"
 
 payload = {
   'name': 'New Team Name',
-  'managerId': '1'
+  'managerId': 1,
+  'parentTeamId': 10
 }
 
 headers = {
@@ -440,7 +517,8 @@ $request->setHeader(array(
 ));
 $request->addPostParameter(array(
   'name' => 'New Team Name',
-  'managerId' => '1'
+  'managerId' => '1',
+  'parentTeamId' => '10'
 ));
 try {
   $response = $request->send();
@@ -463,10 +541,11 @@ Update a Team
 
 ### Data in Body
 
-Parameter | Example value | Description (* required)
+Parameter | Example value | Description
 --------- | ------- | -----------
 name | Marketing | Team Name
 managerId | 1 | User ID of Team Manager
+parentTeamId | 10 | ID of the parent team
 
 > 200 OK - successful response:
 
@@ -492,7 +571,19 @@ managerId | 1 | User ID of Team Manager
             "time": "On 29 Nov 16"
         }
     },
-    "users": []
+    "secondaryManagers": [],
+    "users": [],
+    "parentTeam": {
+        "id": 10,
+        "name": "Super team",
+        "teamUsersCount": 2,
+        "parentTeamId": null,
+        "apiTeamPath": "/v1/teams/10.json",
+        "apiTeamUsersPath": "/v1/teams/10/users.json",
+        "manager": null,
+        "secondaryManagers": []
+    },
+    "subTeams": []
 }
 ```
 
