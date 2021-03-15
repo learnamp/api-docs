@@ -100,6 +100,7 @@ filters[email] | email@test.com | Return user with matching email address
       "timeZone": "London",
       "language": "en",
       "role": "viewer",
+      "hireDate": "2021-01-15",
       "profileUrl": "https://testaccount.learnamp.com/en/users/1",
       "status": {
           "status": "Confirmed",
@@ -234,6 +235,7 @@ Display user details for one specific user.
     "timeZone": "London",
     "language": "en",
     "role": "viewer",
+    "hireDate": "2021-01-15",
     "profileUrl": "https://testaccount.learnamp.com/en/users/1",
     "status": {
         "status": "Confirmed",
@@ -427,6 +429,8 @@ primaryTeamId | 15 | Team ID of primary team [see Teams](#teams)
 secondaryTeamIds | [376,377] | Array of Team IDs of seconary teams
 managerId | 1 | User ID of this user's Manager (override manager, not primary team manager)
 skipInvitation | true | Skip sending the user an invitation email immediately. If skipInvitation is not set, the user will be immediately sent an invitation email
+hireDate | 2021-02-28 | Employment start date for user in ISO 8601 date format
+customFields | [{ name: "Employee ID", value: "12-34-56" }] | CustomFields param is an array, of name/value pairs for custom fields.
 
 > 201 Created - successful response:
 
@@ -579,6 +583,8 @@ jobTitle | Developer | Job title of user
 primaryTeamId | 15 | Team ID of primary team [see Teams](#teams)
 secondaryTeamIds | [376,377] | Array of Team IDs of seconary teams
 managerId | 1 | User ID of this user's Manager (override manager, not primary team manager)
+hireDate | 2021-02-28 | Employment start date for user in ISO 8601 date format
+customFields | [{ name: "Employee ID", value: "12-34-56" }] | CustomFields param is an array, of name/value pairs for custom fields.
 
 > 200 OK - successful response:
 

@@ -15,6 +15,7 @@ includes:
   - users
   - teams
   - team_users
+  - tasks
   - pagination
   - errors
 
@@ -25,7 +26,6 @@ code_clipboard: true
 <!--   - users
   - teams
   - team_users
-  - tasks
   - activities
   - items
   - events

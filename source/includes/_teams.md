@@ -75,6 +75,18 @@ View all teams
 
 Response will be paginated [see pagination](#pagination)
 
+
+### Optional Filters in URL Params
+
+The following URL params by be included, to filter the result set:
+
+`GET https://api.learnamp.com/teams?filters[name]=founders`
+
+URL Param | Value | Description
+--------- | ------- | -----------
+filters[name] | "Team name" | Return team with matching name
+filters[tags] | "developers,product,compliance" | Return teams matching any of the given tags. Use comma seperated string.
+
 > 200 OK - successful response:
 
 ```json
@@ -291,7 +303,11 @@ Display details for one specific Team.
         "apiTeamUsersPath": "/v1/teams/1/users.json",
         "manager": null,
         "secondaryManagers": []
-    }
+    },
+    "tags": [
+      "example team tag 1",
+      "example team tag 2"
+    ],
 }
 ```
 
@@ -392,11 +408,12 @@ Create a Team
 
 ### Data in Body
 
-Parameter (* required) | Example value | Description 
+Parameter (* required) | Example value | Description
 --------- | ------- | -----------
 name * | Sales | Name of team
 managerId | 1 | User ID of Team Manager
 parentTeamId | 10 | ID of the parent team
+tags | "developers,product,compliance" | Tags - comma seperated string
 
 > 201 Created - successful response:
 
@@ -434,7 +451,8 @@ parentTeamId | 10 | ID of the parent team
         "manager": null,
         "secondaryManagers": []
     },
-    "subTeams": []
+    "subTeams": [],
+    "tags": []
 }
 ```
 
@@ -546,6 +564,7 @@ Parameter | Example value | Description
 name | Marketing | Team Name
 managerId | 1 | User ID of Team Manager
 parentTeamId | 10 | ID of the parent team
+tags | "developers,product,compliance" | Tags - comma seperated string
 
 > 200 OK - successful response:
 
@@ -583,7 +602,8 @@ parentTeamId | 10 | ID of the parent team
         "manager": null,
         "secondaryManagers": []
     },
-    "subTeams": []
+    "subTeams": [],
+    "tags": []
 }
 ```
 
