@@ -391,6 +391,17 @@
               </ul>
           </li>
           <li>
+            <a href="#tasks" class="toc-h1 toc-link" data-title="Tasks">Tasks</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#task-description" class="toc-h2 toc-link" data-title="Task Description">Task Description</a>
+                  </li>
+                  <li>
+                    <a href="#view-all-tasks" class="toc-h2 toc-link" data-title="View All Tasks">View All Tasks</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#paginated-responses" class="toc-h1 toc-link" data-title="Paginated Responses">Paginated Responses</a>
               <ul class="toc-list-h2">
                   <li>
@@ -415,7 +426,6 @@
         <!--   - users
   - teams
   - team_users
-  - tasks
   - activities
   - items
   - events
@@ -658,6 +668,7 @@ A successful response will return an <code>access_token</code>, please replace <
       </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-01-15"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
@@ -778,6 +789,7 @@ A successful response will return an <code>access_token</code>, please replace <
     </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-01-15"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
@@ -1000,6 +1012,16 @@ A successful response will return an <code>access_token</code>, please replace <
 <td>true</td>
 <td>Skip sending the user an invitation email immediately. If skipInvitation is not set, the user will be immediately sent an invitation email</td>
 </tr>
+<tr>
+<td>hireDate</td>
+<td>2021-02-28</td>
+<td>Employment start date for user in ISO 8601 date format</td>
+</tr>
+<tr>
+<td>customFields</td>
+<td>[{ name: &quot;Employee ID&quot;, value: &quot;12-34-56&quot; }]</td>
+<td>CustomFields param is an array, of name/value pairs for custom fields.</td>
+</tr>
 </tbody></table>
 
 <blockquote>
@@ -1173,6 +1195,16 @@ A successful response will return an <code>access_token</code>, please replace <
 <td>managerId</td>
 <td>1</td>
 <td>User ID of this user&#39;s Manager (override manager, not primary team manager)</td>
+</tr>
+<tr>
+<td>hireDate</td>
+<td>2021-02-28</td>
+<td>Employment start date for user in ISO 8601 date format</td>
+</tr>
+<tr>
+<td>customFields</td>
+<td>[{ name: &quot;Employee ID&quot;, value: &quot;12-34-56&quot; }]</td>
+<td>CustomFields param is an array, of name/value pairs for custom fields.</td>
 </tr>
 </tbody></table>
 
@@ -1453,6 +1485,29 @@ A successful response will return an <code>access_token</code>, please replace <
 <p><code>GET https://api.learnamp.com/teams</code></p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
+<h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
+<p>The following URL params by be included, to filter the result set:</p>
+
+<p><code>GET https://api.learnamp.com/teams?filters[name]=founders</code></p>
+
+<table><thead>
+<tr>
+<th>URL Param</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>filters[name]</td>
+<td>&quot;Team name&quot;</td>
+<td>Return team with matching name</td>
+</tr>
+<tr>
+<td>filters[tags]</td>
+<td>&quot;developers,product,compliance&quot;</td>
+<td>Return teams matching any of the given tags. Use comma seperated string.</td>
+</tr>
+</tbody></table>
 
 <blockquote>
 <p>200 OK - successful response:</p>
@@ -1656,7 +1711,11 @@ A successful response will return an <code>access_token</code>, please replace <
         </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/1/users.json"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"secondaryManagers"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"example team tag 1"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"example team tag 2"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <blockquote>
@@ -1763,6 +1822,11 @@ A successful response will return an <code>access_token</code>, please replace <
 <td>10</td>
 <td>ID of the parent team</td>
 </tr>
+<tr>
+<td>tags</td>
+<td>&quot;developers,product,compliance&quot;</td>
+<td>Tags - comma seperated string</td>
+</tr>
 </tbody></table>
 
 <blockquote>
@@ -1801,7 +1865,8 @@ A successful response will return an <code>access_token</code>, please replace <
         </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"secondaryManagers"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"subTeams"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="nl">"subTeams"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <blockquote>
@@ -1914,6 +1979,11 @@ A successful response will return an <code>access_token</code>, please replace <
 <td>10</td>
 <td>ID of the parent team</td>
 </tr>
+<tr>
+<td>tags</td>
+<td>&quot;developers,product,compliance&quot;</td>
+<td>Tags - comma seperated string</td>
+</tr>
 </tbody></table>
 
 <blockquote>
@@ -1952,7 +2022,8 @@ A successful response will return an <code>access_token</code>, please replace <
         </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"secondaryManagers"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"subTeams"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="nl">"subTeams"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <blockquote>
@@ -2433,6 +2504,234 @@ A successful response will return an <code>access_token</code>, please replace <
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h1 id='tasks'>Tasks</h1><h2 id='task-description'>Task Description</h2>
+<p>In Learn Amp, a Task is a piece of learning content that a user is given a specific deadline to complete.</p>
+<h2 id='view-all-tasks'>View All Tasks</h2>
+<blockquote>
+<p>View all tasks in your account:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'http://api.learnamp.com/v1/tasks'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s2">"uri"</span>
+<span class="nb">require</span> <span class="s2">"net/http"</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"http://api.learnamp.com/v1/tasks"</span><span class="p">)</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">);</span>
+<span class="n">request</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Get</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">request</span><span class="p">[</span><span class="s2">"Authorization"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Bearer YOUR-ACCESS-TOKEN"</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">response</span><span class="p">.</span><span class="nf">read_body</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://api.learnamp.com/v1/tasks"</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'Bearer YOUR-ACCESS-TOKEN'</span>
+<span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">request</span><span class="p">(</span><span class="s">"GET"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">payload</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf8'</span><span class="p">))</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+<span class="k">require_once</span> <span class="s1">'HTTP/Request2.php'</span><span class="p">;</span>
+<span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">HTTP_Request2</span><span class="p">();</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">setUrl</span><span class="p">(</span><span class="s1">'http://api.learnamp.com/v1/tasks'</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">setMethod</span><span class="p">(</span><span class="nx">HTTP_Request2</span><span class="o">::</span><span class="na">METHOD_GET</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">setConfig</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+  <span class="s1">'follow_redirects'</span> <span class="o">=&gt;</span> <span class="kc">TRUE</span>
+<span class="p">));</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+  <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s1">'Bearer YOUR-ACCESS-TOKEN'</span>
+<span class="p">));</span>
+<span class="k">try</span> <span class="p">{</span>
+  <span class="nv">$response</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getStatus</span><span class="p">()</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">'Unexpected HTTP status: '</span> <span class="o">.</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getStatus</span><span class="p">()</span> <span class="o">.</span> <span class="s1">' '</span> <span class="o">.</span>
+    <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getReasonPhrase</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">catch</span><span class="p">(</span><span class="nx">HTTP_Request2_Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">echo</span> <span class="s1">'Error: '</span> <span class="o">.</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>View all tasks</p>
+
+<p><code>GET https://api.learnamp.com/tasks</code></p>
+
+<p>Response will be paginated <a href="#pagination">see pagination</a></p>
+<h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
+<p>The following URL params by be included, to filter the result set:</p>
+
+<p><code>GET https://api.learnamp.com/tasks?filters[deadline][from]=2021-01-01&amp;filters[deadline][to]=2021-06-01</code></p>
+
+<table><thead>
+<tr>
+<th>URL Param</th>
+<th>Example Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>filters[assigned_at][from]</td>
+<td>&quot;2021-12-31&quot;</td>
+<td>Assigned date range FROM date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[assigned_at][to]</td>
+<td>&quot;2022-02-28&quot;</td>
+<td>Assigned date range TO date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[completed_at][from]</td>
+<td>&quot;2021-12-31&quot;</td>
+<td>Completion date range FROM date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[completed_at][to]</td>
+<td>&quot;2022-02-28&quot;</td>
+<td>Completion date range TO date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[deadline][from]</td>
+<td>&quot;2021-12-31&quot;</td>
+<td>Deadline date range FROM date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[deadline][to]</td>
+<td>&quot;2022-02-28&quot;</td>
+<td>Deadline date range TO date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[created_at][from]</td>
+<td>&quot;2021-12-31&quot;</td>
+<td>Created at date range FROM date in ISO 8601 format. Tasks may be created before they are actually assigned to the user.</td>
+</tr>
+<tr>
+<td>filters[created_at][to]</td>
+<td>&quot;2022-02-28&quot;</td>
+<td>Created at date range TO date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[update_at][from]</td>
+<td>&quot;2021-12-31&quot;</td>
+<td>Updated at date range FROM date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[update_at][to]</td>
+<td>&quot;2022-02-28&quot;</td>
+<td>Updated at date range TO date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[id]</td>
+<td>2456</td>
+<td>ID of specific task</td>
+</tr>
+<tr>
+<td>filters[user_id]</td>
+<td>78823</td>
+<td>User ID of person assigned the task</td>
+</tr>
+<tr>
+<td>filters[taskable_type]</td>
+<td>&quot;Item,Channel,Learnlist,Quiz&quot;</td>
+<td>Type of learning object. Can be single value, or comma seperated list of Task types: any of Item,Channel,Learnlist,Quiz</td>
+</tr>
+<tr>
+<td>filters[taskable_id]</td>
+<td>99874</td>
+<td>ID of specific learning object</td>
+</tr>
+<tr>
+<td>filters[status]</td>
+<td>&quot;completed&quot;</td>
+<td>Task status. One of: completed / overdue / incomplete</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>200 OK - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"tasks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4428</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"taskableId"</span><span class="p">:</span><span class="w"> </span><span class="mi">634</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"taskableType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Item"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-02-24T15:52:59Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"deadline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-02-28"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"expiredAt"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"assignedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-02-24T15:52:59Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"completedAt"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Landing Page Design &amp; Web Design Fundamentals"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"taskable"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">634</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Landing Page Design &amp; Web Design Fundamentals"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Item"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/items/landing-page-design-web-design-fundamentals-2017"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"addedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Richard"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Larcombe"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CTO"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rjlarcombe@gmail.com"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"super_admin"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 29 Nov 16"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"displayAddedBy"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"totalTimeEstimate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1-10 hrs"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"typeLabel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Course"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"overdue"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mandatory"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"completed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"expired"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"setFor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Andy"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jones"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Customer Success Executive"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"andy@example.com"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/123"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 15 Oct 20"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/items/landing-page-design-web-design-fundamentals-2017"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"assigner"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Admin"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Boss"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"adminuser@example.com"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 29 Nov 16"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h1 id='paginated-responses'>Paginated Responses</h1>
 <p>All &quot;View All&quot; type responses will be paginated.</p>
