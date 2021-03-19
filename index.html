@@ -691,6 +691,7 @@ A successful response will return an <code>access_token</code>, please replace <
           </span><span class="p">}</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="nl">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London, UK"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"department"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Marketing"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"primaryTeam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
         </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Operations"</span><span class="p">,</span><span class="w">
@@ -812,6 +813,7 @@ A successful response will return an <code>access_token</code>, please replace <
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nl">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London, UK"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"department"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Marketing"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"primaryTeam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
         </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Operations"</span><span class="p">,</span><span class="w">
@@ -1018,6 +1020,16 @@ A successful response will return an <code>access_token</code>, please replace <
 <td>Employment start date for user in ISO 8601 date format</td>
 </tr>
 <tr>
+<td>location</td>
+<td>London</td>
+<td>Primary location of user</td>
+</tr>
+<tr>
+<td>department</td>
+<td>Marketing</td>
+<td>Department of user</td>
+</tr>
+<tr>
 <td>customFields</td>
 <td>[{ name: &quot;Employee ID&quot;, value: &quot;12-34-56&quot; }]</td>
 <td>CustomFields param is an array, of name/value pairs for custom fields.</td>
@@ -1028,18 +1040,62 @@ A successful response will return an <code>access_token</code>, please replace <
 <p>201 Created - successful response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1905</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
     </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Developer"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testuser@test.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@email.com"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fr"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"curator"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1905"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-01-15"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not yet invited"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 29 Nov 16"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/dfiav5ctj/image/upload/c_crop,g_custom/a_exif,c_fill,dpr_1.0,f_auto,q_auto,w_100/v1505401603/iysnlkr6sr6ys0dybeh0.jpg"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ops Director"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test2@email.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London, UK"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"department"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Marketing"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"primaryTeam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Operations"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"apiTeamPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15.json"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15/users.json"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ops Director"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test2@email.com"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="err">,</span><span class="w">
+    </span><span class="nl">"secondaryTeams"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <blockquote>
@@ -1200,6 +1256,16 @@ A successful response will return an <code>access_token</code>, please replace <
 <td>hireDate</td>
 <td>2021-02-28</td>
 <td>Employment start date for user in ISO 8601 date format</td>
+</tr>
+<tr>
+<td>location</td>
+<td>London</td>
+<td>Primary location of user</td>
+</tr>
+<tr>
+<td>department</td>
+<td>Marketing</td>
+<td>Department of user</td>
 </tr>
 <tr>
 <td>customFields</td>
