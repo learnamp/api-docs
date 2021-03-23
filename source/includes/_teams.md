@@ -14,59 +14,37 @@ curl --location --request GET 'http://api.learnamp.com/v1/teams' \
 ```
 
 ```ruby
-require "uri"
-require "net/http"
+module Learnamp
+  class Teams
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
 
-url = URI("http://api.learnamp.com/v1/teams")
+    attr_accessor :token
 
-http = Net::HTTP.new(url.host, url.port);
-request = Net::HTTP::Get.new(url)
-request["Authorization"] = "Bearer YOUR-ACCESS-TOKEN"
+    def initialize(token)
+      @token = token
+    end
 
-response = http.request(request)
-puts response.read_body
-```
+    def all(filters)
+      filters_query = URI.encode_www_form(filters)
+      response = self.class.get("/teams?#{filters_query}", { headers: headers })
+      response.parsed_response
+    end
 
-```python
-import requests
+    private
 
-url = "http://api.learnamp.com/v1/teams"
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
 
-payload = {}
-headers = {
-  'Authorization': 'Bearer YOUR-ACCESS-TOKEN'
+filters = {
+  "filters[name]": "marketing"
 }
-
-response = requests.request("GET", url, headers=headers, data = payload)
-
-print(response.text.encode('utf8'))
-```
-
-```php
-<?php
-require_once 'HTTP/Request2.php';
-$request = new HTTP_Request2();
-$request->setUrl('http://api.learnamp.com/v1/teams');
-$request->setMethod(HTTP_Request2::METHOD_GET);
-$request->setConfig(array(
-  'follow_redirects' => TRUE
-));
-$request->setHeader(array(
-  'Authorization' => 'Bearer YOUR-ACCESS-TOKEN'
-));
-try {
-  $response = $request->send();
-  if ($response->getStatus() == 200) {
-    echo $response->getBody();
-  }
-  else {
-    echo 'Unexpected HTTP status: ' . $response->getStatus() . ' ' .
-    $response->getReasonPhrase();
-  }
-}
-catch(HTTP_Request2_Exception $e) {
-  echo 'Error: ' . $e->getMessage();
-}
+teams = Learnamp::Teams.new(token).all(filters)
 ```
 
 View all teams
@@ -147,59 +125,33 @@ curl --location --request GET 'https://api.learnamp.com/v1/teams/383' \
 ```
 
 ```ruby
-require "uri"
-require "net/http"
+module Learnamp
+  class Teams
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
 
-url = URI("https://api.learnamp.com/v1/teams/383")
+    attr_accessor :token
 
-http = Net::HTTP.new(url.host, url.port);
-request = Net::HTTP::Get.new(url)
-request["Authorization"] = "Bearer YOUR-ACCESS-TOKEN"
+    def initialize(token)
+      @token = token
+    end
 
-response = http.request(request)
-puts response.read_body
-```
+    def find(id)
+      response = self.class.get("/teams/#{id}", { headers: headers })
+      response.parsed_response
+    end
 
-```python
-import requests
+    private
 
-url = "https://api.learnamp.com/v1/teams/383"
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
 
-payload = {}
-headers = {
-  'Authorization': 'Bearer YOUR-ACCESS-TOKEN'
-}
-
-response = requests.request("GET", url, headers=headers, data = payload)
-
-print(response.text.encode('utf8'))
-```
-
-```php
-<?php
-require_once 'HTTP/Request2.php';
-$request = new HTTP_Request2();
-$request->setUrl('https://api.learnamp.com/v1/teams/383');
-$request->setMethod(HTTP_Request2::METHOD_GET);
-$request->setConfig(array(
-  'follow_redirects' => TRUE
-));
-$request->setHeader(array(
-  'Authorization' => 'Bearer YOUR-ACCESS-TOKEN'
-));
-try {
-  $response = $request->send();
-  if ($response->getStatus() == 200) {
-    echo $response->getBody();
-  }
-  else {
-    echo 'Unexpected HTTP status: ' . $response->getStatus() . ' ' .
-    $response->getReasonPhrase();
-  }
-}
-catch(HTTP_Request2_Exception $e) {
-  echo 'Error: ' . $e->getMessage();
-}
+teams = Learnamp::Teams.new(token).find(245)
 ```
 
 Display details for one specific Team.
@@ -331,75 +283,40 @@ curl --location --request POST 'https://api.learnamp.com/v1/teams' \
 ```
 
 ```ruby
-require "uri"
-require "net/http"
+module Learnamp
+  class Teams
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
 
-url = URI("https://api.learnamp.com/v1/teams")
+    attr_accessor :token
 
-http = Net::HTTP.new(url.host, url.port);
-request = Net::HTTP::Post.new(url)
-request["Authorization"] = "Bearer YOUR-ACCESS-TOKEN"
-form_data = [
-  ['name', 'New Team Test'],
-  ['managerId', 1],
-  ['parentTeamId', 10]
-]
-request.set_form form_data, 'multipart/form-data'
-response = http.request(request)
-puts response.read_body
+    def initialize(token)
+      @token = token
+    end
 
-```
+    def create(params)
+      response = self.class.post("/teams", { body: params, headers: headers })
+      response.parsed_response
+    end
 
-```python
-import requests
+    private
 
-url = "https://api.learnamp.com/v1/teams"
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
 
-payload = {
-  'name': 'New Team Test',
-  'managerId': 1,
-  'parentTeamId': 10
+params = {
+  name: "Sales",
+  managerId: 1,
+  parentTeamId: 245,
+  tags: "sales,account management,cold calling"
 }
-headers = {
-  'Authorization': 'Bearer YOUR-ACCESS-TOKEN'
-}
 
-response = requests.request("POST", url, headers=headers, data = payload, files = [])
-
-print(response.text.encode('utf8'))
-
-```
-
-```php
-<?php
-require_once 'HTTP/Request2.php';
-$request = new HTTP_Request2();
-$request->setUrl('https://api.learnamp.com/v1/teams');
-$request->setMethod(HTTP_Request2::METHOD_POST);
-$request->setConfig(array(
-  'follow_redirects' => TRUE
-));
-$request->setHeader(array(
-  'Authorization' => 'Bearer YOUR-ACCESS-TOKEN'
-));
-$request->addPostParameter(array(
-  'name' => 'New Team Test',
-  'managerId' => '1'
-  'parentTeamId' => '10'
-));
-try {
-  $response = $request->send();
-  if ($response->getStatus() == 201) {
-    echo $response->getBody();
-  }
-  else {
-    echo 'Unexpected HTTP status: ' . $response->getStatus() . ' ' .
-    $response->getReasonPhrase();
-  }
-}
-catch(HTTP_Request2_Exception $e) {
-  echo 'Error: ' . $e->getMessage();
-}
+team = Learnamp::Teams.new(token).create(params)
 ```
 
 Create a Team
@@ -485,72 +402,33 @@ curl --location --request PUT 'https://api.learnamp.com/v1/teams/383' \
 ```
 
 ```ruby
-require "uri"
-require "net/http"
+module Learnamp
+  class Teams
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
 
-url = URI("https://api.learnamp.com/v1/teams/383")
+    attr_accessor :token
 
-http = Net::HTTP.new(url.host, url.port);
-request = Net::HTTP::Put.new(url)
-request["Authorization"] = "Bearer YOUR-ACCESS-TOKEN"
-form_data = [['name', 'New Team Name'],['managerId', 1],['parentTeamId', 10]]
-request.set_form form_data, 'multipart/form-data'
-response = http.request(request)
-puts response.read_body
+    def initialize(token)
+      @token = token
+    end
 
-```
+    def update(id, params)
+      response = self.class.put("/teams/#{id}", { body: params, headers: headers })
+      response.parsed_response
+    end
 
-```python
-import requests
+    private
 
-url = "https://api.learnamp.com/v1/teams/383"
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
 
-payload = {
-  'name': 'New Team Name',
-  'managerId': 1,
-  'parentTeamId': 10
-}
-
-headers = {
-  'Authorization': 'Bearer YOUR-ACCESS-TOKEN'
-}
-
-response = requests.request("PUT", url, headers=headers, data = payload, files = [])
-
-print(response.text.encode('utf8'))
-
-```
-
-```php
-<?php
-require_once 'HTTP/Request2.php';
-$request = new HTTP_Request2();
-$request->setUrl('https://api.learnamp.com/v1/teams/383');
-$request->setMethod(HTTP_Request2::METHOD_PUT);
-$request->setConfig(array(
-  'follow_redirects' => TRUE
-));
-$request->setHeader(array(
-  'Authorization' => 'Bearer YOUR-ACCESS-TOKEN'
-));
-$request->addPostParameter(array(
-  'name' => 'New Team Name',
-  'managerId' => '1',
-  'parentTeamId' => '10'
-));
-try {
-  $response = $request->send();
-  if ($response->getStatus() == 200) {
-    echo $response->getBody();
-  }
-  else {
-    echo 'Unexpected HTTP status: ' . $response->getStatus() . ' ' .
-    $response->getReasonPhrase();
-  }
-}
-catch(HTTP_Request2_Exception $e) {
-  echo 'Error: ' . $e->getMessage();
-}
+team = Learnamp::Teams.new(token).update(456, params)
 ```
 
 Update a Team
@@ -631,59 +509,33 @@ curl --location --request DELETE 'https://api.learnamp.com/v1/teams/1' \
 ```
 
 ```ruby
-require "uri"
-require "net/http"
+module Learnamp
+  class Teams
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
 
-url = URI("https://api.learnamp.com/v1/teams/1")
+    attr_accessor :token
 
-http = Net::HTTP.new(url.host, url.port);
-request = Net::HTTP::Delete.new(url)
-request["Authorization"] = "Bearer YOUR-ACCESS-TOKEN"
+    def initialize(token)
+      @token = token
+    end
 
-response = http.request(request)
-puts response.read_body
-```
+    def delete(id)
+      response = self.class.delete("/teams/#{id}", { headers: headers })
+      response.parsed_response
+    end
 
-```python
-import requests
+    private
 
-url = "https://api.learnamp.com/v1/teams/1"
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
 
-payload = {}
-headers = {
-  'Authorization': 'Bearer YOUR-ACCESS-TOKEN'
-}
-
-response = requests.request("DELETE", url, headers=headers, data = payload)
-
-print(response.text.encode('utf8'))
-```
-
-```php
-<?php
-require_once 'HTTP/Request2.php';
-$request = new HTTP_Request2();
-$request->setUrl('https://api.learnamp.com/v1/teams/1');
-$request->setMethod(HTTP_Request2::METHOD_DELETE);
-$request->setConfig(array(
-  'follow_redirects' => TRUE
-));
-$request->setHeader(array(
-  'Authorization' => 'Bearer YOUR-ACCESS-TOKEN'
-));
-try {
-  $response = $request->send();
-  if ($response->getStatus() == 204) {
-    echo $response->getBody();
-  }
-  else {
-    echo 'Unexpected HTTP status: ' . $response->getStatus() . ' ' .
-    $response->getReasonPhrase();
-  }
-}
-catch(HTTP_Request2_Exception $e) {
-  echo 'Error: ' . $e->getMessage();
-}
+Learnamp::Teams.new(token).delete(456)
 ```
 
 Delete a team. (Users are kept, but their association with team is removed).

@@ -14,59 +14,51 @@ curl --location --request GET 'http://api.learnamp.com/v1/tasks' \
 ```
 
 ```ruby
-require "uri"
-require "net/http"
+module Learnamp
+  class Tasks
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
 
-url = URI("http://api.learnamp.com/v1/tasks")
+    attr_accessor :token
 
-http = Net::HTTP.new(url.host, url.port);
-request = Net::HTTP::Get.new(url)
-request["Authorization"] = "Bearer YOUR-ACCESS-TOKEN"
+    def initialize(token)
+      @token = token
+    end
 
-response = http.request(request)
-puts response.read_body
-```
+    def all(filters)
+      filters_query = URI.encode_www_form(filters)
+      response = self.class.get("/tasks?#{filters_query}", { headers: headers })
+      response.parsed_response
+    end
 
-```python
-import requests
+    private
 
-url = "http://api.learnamp.com/v1/tasks"
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
 
-payload = {}
-headers = {
-  'Authorization': 'Bearer YOUR-ACCESS-TOKEN'
+filters = {
+  "filters[assigned_at][from]" => "2021-12-31",
+  "filters[assigned_at][to]" => "2022-02-28",
+  "filters[completed_at][from]" => "2021-12-31",
+  "filters[completed_at][to]" => "2022-02-28",
+  "filters[deadline][from]" => "2021-12-31",
+  "filters[deadline][to]" => "2022-02-28",
+  "filters[created_at][from]" => "2021-12-31",
+  "filters[created_at][to]" => "2022-02-28",
+  "filters[update_at][from]" => "2021-12-31",
+  "filters[update_at][to]" => "2022-02-28",
+  "filters[id]" => 2456,
+  "filters[user_id]" => 1,
+  "filters[taskable_type]" => "Item,Channel,Learnlist,Quiz",
+  "filters[taskable_id]" => 99874,
+  "filters[status]" => "completed"
 }
-
-response = requests.request("GET", url, headers=headers, data = payload)
-
-print(response.text.encode('utf8'))
-```
-
-```php
-<?php
-require_once 'HTTP/Request2.php';
-$request = new HTTP_Request2();
-$request->setUrl('http://api.learnamp.com/v1/tasks');
-$request->setMethod(HTTP_Request2::METHOD_GET);
-$request->setConfig(array(
-  'follow_redirects' => TRUE
-));
-$request->setHeader(array(
-  'Authorization' => 'Bearer YOUR-ACCESS-TOKEN'
-));
-try {
-  $response = $request->send();
-  if ($response->getStatus() == 200) {
-    echo $response->getBody();
-  }
-  else {
-    echo 'Unexpected HTTP status: ' . $response->getStatus() . ' ' .
-    $response->getReasonPhrase();
-  }
-}
-catch(HTTP_Request2_Exception $e) {
-  echo 'Error: ' . $e->getMessage();
-}
+tasks = Learnamp::Tasks.new(token).all(filters)
 ```
 
 View all tasks

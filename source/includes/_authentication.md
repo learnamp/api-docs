@@ -10,74 +10,25 @@ curl --location --request POST 'https://api.learnamp.com/oauth/token' \
 ```
 
 ```ruby
-require "uri"
-require "net/http"
+module Learnamp
+  class Auth
+    include HTTParty
+    base_uri ENV['BASE_URL']
 
-url = URI("https://api.learnamp.com/oauth/token")
+    def self.access_token
+      post('/oauth/token',
+           body: {
+             grant_type: 'client_credentials',
+             client_id: ENV['CLIENT_ID'],
+             client_secret: ENV['CLIENT_SECRET']
+           })
+    end
+  end
+end
 
-http = Net::HTTP.new(url.host, url.port);
-request = Net::HTTP::Post.new(url)
-
-form_data = [
-  ['client_id', 'YOUR-CLIENT-ID'],
-  ['client_secret', 'YOUR-CLIENT-SECRET'],
-  ['grant_type', 'client_credentials']
-]
-
-request.set_form form_data, 'multipart/form-data'
-
-response = http.request(request)
-
-puts response.read_body
+response = Learnamp::Auth.access_token
+puts response["access_token"] if response.ok?
 ```
-
-```php
-require_once 'HTTP/Request2.php';
-
-$request = new HTTP_Request2();
-$request->setUrl('https://api.learnamp.com/oauth/token');
-$request->setMethod(HTTP_Request2::METHOD_POST);
-$request->setConfig(array(
-  'follow_redirects' => TRUE
-));
-
-$request->addPostParameter(array(
-  'client_id' => 'YOUR-CLIENT-ID',
-  'client_secret' => 'YOUR-CLIENT-SECRET',
-  'grant_type' => 'client_credentials'
-));
-
-try {
-  $response = $request->send();
-  if ($response->getStatus() == 200) {
-    echo $response->getBody();
-  }
-  else {
-    echo 'Unexpected HTTP status: ' . $response->getStatus() . ' ' .
-    $response->getReasonPhrase();
-  }
-}
-catch(HTTP_Request2_Exception $e) {
-  echo 'Error: ' . $e->getMessage();
-}
-```
-
-```python
-import requests
-
-url = "https://api.learnamp.com/oauth/token"
-
-payload = {
-  'client_id': 'YOUR-CLIENT-ID',
-  'client_secret': 'YOUR-CLIENT-SECRET',
-  'grant_type': 'client_credentials'
-}
-
-response = requests.request("POST", url, headers = [], data = payload, files = [])
-
-print(response.text.encode('utf8'))
-```
-
 > 200 OK - successful response:
 
 ```json

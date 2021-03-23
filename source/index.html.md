@@ -7,8 +7,6 @@ toc_footers:
 language_tabs:
   - shell: cURL
   - ruby
-  - python
-  - php
 
 includes:
   - authentication
