@@ -416,6 +416,26 @@
               </ul>
           </li>
           <li>
+            <a href="#items" class="toc-h1 toc-link" data-title="Items">Items</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#view-all-items" class="toc-h2 toc-link" data-title="View all Items">View all Items</a>
+                  </li>
+                  <li>
+                    <a href="#show-an-item" class="toc-h2 toc-link" data-title="Show an Item">Show an Item</a>
+                  </li>
+                  <li>
+                    <a href="#create-an-item" class="toc-h2 toc-link" data-title="Create an Item">Create an Item</a>
+                  </li>
+                  <li>
+                    <a href="#update-an-item" class="toc-h2 toc-link" data-title="Update an Item">Update an Item</a>
+                  </li>
+                  <li>
+                    <a href="#delete-an-item" class="toc-h2 toc-link" data-title="Delete an Item">Delete an Item</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#users" class="toc-h1 toc-link" data-title="Users">Users</a>
               <ul class="toc-list-h2">
                   <li>
@@ -2646,6 +2666,597 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <p>Delete a user from a team. (User and team are kept, but their association is removed).</p>
 
 <p><code>DELETE https://api.learnamp.com/v1/teams/{teamId}/users/{userId}</code></p>
+
+<blockquote>
+<p>204 No Content - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>404 Not Found - unsuccessful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h1 id='items'>Items</h1>
+<p>An item in Learn Amp is a learning object. It could be a SCORM, xAPI or AICC package. It could be a URL link to an external web page. It could be an embedded video, or downloadable file.</p>
+
+<p>Items are typically organised into Channels and Learnlists.</p>
+<h2 id='view-all-items'>View all Items</h2>
+<blockquote>
+<p>View all items in your account:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/items'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Items</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">all</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/items"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">items</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Items</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">all</span>
+</code></pre></div>
+<p>View all items</p>
+
+<p><code>GET https://api.learnamp.com/v1/items</code></p>
+
+<p>Response will be paginated <a href="#pagination">see pagination</a></p>
+
+<blockquote>
+<p>200 OK - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3015</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Activity 10"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"itemType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Video"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"itemCategory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Audio/Visual"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"itemUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/activity-10"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3014</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rust-lang/rust"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"itemType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"itemCategory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"itemUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/rust-lang-rust"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div><h2 id='show-an-item'>Show an Item</h2>
+<blockquote>
+<p>Display details for a single Item:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/items/3015'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Items</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/items/</span><span class="si">#{</span><span class="nb">id</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">item</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Items</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">find</span><span class="p">(</span><span class="mi">3015</span><span class="p">)</span>
+</code></pre></div>
+<p>Display all details for one specific Item.</p>
+
+<p><code>GET https://api.learnamp.com/v1/items/{itemId}</code></p>
+
+<blockquote>
+<p>200 OK - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3015</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Marketing 101"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"itemType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Video"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"itemCategory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Audio/Visual"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"itemUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/marketing-101"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.youtube.com/watch?v=8Sj2tbh-ozE"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;p&gt;Testing Youtube video&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"marketing-101"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fileSize"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fileType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"expires"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ratingsCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"averageRating"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"goesLive"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"sourceType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"sourceId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-03-02T11:09:35Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-03-02T12:24:02Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"goesLiveAt"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://res.cloudinary.com/dfiav5ctj/image/upload/c_crop,g_custom/a_exif,c_fill,dpr_1.0,f_auto,h_153,q_auto,w_260/v1614683346/c6q5ylwoencf2iaoc4zs.jpg"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"supplier"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">138</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Youtube.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"logo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/assets/placeholders/organisation_avatar-cd6e9138f99068ded8cca1210674ac7abd1329738317547968943addc6056ae7.png"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"addedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tester"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@example.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-02-01"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 29 Nov 16"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"displayAddedBy"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"visibility"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Entire Company"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Free"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"totalTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt; 10 mins"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"marketing"</span><span class="p">,</span><span class="w"> </span><span class="s2">"video"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>404 Not Found - unsuccessful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='create-an-item'>Create an Item</h2>
+<blockquote>
+<p>Create a new Item:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/items'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'url=https://www.test.com'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'description=This is the description'</span>
+<span class="nt">--form</span> <span class="s1">'title=This is Item title'</span>
+<span class="nt">--form</span> <span class="s1">'itemType=video'</span>
+<span class="nt">--form</span> <span class="s1">'totalTime=less_than_one_hour'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Items</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="s2">"/items"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">body: </span><span class="n">params</span><span class="p">,</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">title: </span><span class="s2">"Sales"</span><span class="p">,</span>
+  <span class="ss">url: </span><span class="s2">"https://www.test.com"</span>
+  <span class="ss">des1cription: </span><span class="s2">"This is the description"</span>
+  <span class="ss">tit1le: </span><span class="s2">"This is Item title"</span>
+  <span class="ss">ite1mType: </span><span class="s2">"video"</span>
+  <span class="ss">tot1alTime: </span><span class="s2">"less_than_one_hour"</span>
+<span class="p">}</span>
+
+<span class="n">item</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Items</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">create</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</code></pre></div>
+<p>Create an Item</p>
+
+<p><code>POST https://api.learnamp.com/v1/items</code></p>
+<h3 id='data-in-body'>Data in Body</h3>
+<table><thead>
+<tr>
+<th>Parameter (* required)</th>
+<th>Example value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>title *</td>
+<td>Sales and Marketing Guide</td>
+<td>Title of item</td>
+</tr>
+<tr>
+<td>url</td>
+<td>https://www.test.com</td>
+<td>URL to external web page for the item</td>
+</tr>
+<tr>
+<td>description</td>
+<td>Some description text</td>
+<td>Description of the item</td>
+</tr>
+<tr>
+<td>expires</td>
+<td>true</td>
+<td>If item must expire, set to true</td>
+</tr>
+<tr>
+<td>expiresAt</td>
+<td>2022-12-31</td>
+<td>Expiry date when item should expire in ISO 8601 format</td>
+</tr>
+<tr>
+<td>goesLive</td>
+<td>true</td>
+<td>If item should have a future go live date</td>
+</tr>
+<tr>
+<td>goesLiveAt</td>
+<td>2022-12-31</td>
+<td>Future go live date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>imageUrl</td>
+<td>https://sometileimageurl</td>
+<td>URL of tile image for the item, must be publically accessible</td>
+</tr>
+<tr>
+<td>imageUrl</td>
+<td>https://sometileimageurl</td>
+<td>URL of tile image for the item, must be publically accessible</td>
+</tr>
+<tr>
+<td>visibility</td>
+<td>entire_company</td>
+<td>Item visibility. Must be one of &quot;hidden&quot;, &quot;selected&quot;, &quot;entire_company&quot;</td>
+</tr>
+<tr>
+<td>sourceType</td>
+<td>Udemy</td>
+<td>Short string identifier of the source of the item, if is coming from an external LMS or other system</td>
+</tr>
+<tr>
+<td>sourceId</td>
+<td>e814koip</td>
+<td>External identifier of item, if it if coming from an external LMS or other system</td>
+</tr>
+<tr>
+<td>itemType</td>
+<td>article</td>
+<td>Item type, one of: &quot;article&quot;, &quot;document&quot;, &quot;book&quot;, &quot;q_and_a&quot;, &quot;info_card&quot;, &quot;video&quot;, &quot;elearning&quot;, &quot;infographic&quot;, &quot;audio&quot;, &quot;slides&quot;, &quot;image&quot;, &quot;project&quot;, &quot;classroom&quot;, &quot;coaching&quot;, &quot;course&quot;, &quot;event&quot;, &quot;presentation&quot;, &quot;meeting&quot;, &quot;webinar&quot;, &quot;action&quot;, &quot;test&quot;, &quot;qa&quot;, &quot;announcement&quot;, &quot;newsletter&quot;, &quot;reminder&quot;, &quot;website&quot;, &quot;other&quot;</td>
+</tr>
+<tr>
+<td>totalTime</td>
+<td>less_than_one_hour</td>
+<td>Approximate time to complete. One of: &quot;less_than_fifteen_minutes&quot;, &quot;less_than_one_hour&quot;, &quot;one_to_ten_hours&quot;, &quot;ten_to_one_hundred_hours&quot;, &quot;more_than_one_hundred_hours&quot;, &quot;less_than_five_minutes&quot;, &quot;five_to_ten_minutes&quot;, &quot;ten_to_twenty_minutes&quot;, &quot;twenty_to_thirty_minutes&quot;, &quot;more_than_thirty_minutes&quot;, &quot;less_than_ten_minutes&quot;, &quot;ten_to_thirty_minutes&quot;, &quot;thirty_minutes_to_one_hour&quot;, &quot;one_to_two_hours&quot;, &quot;more_than_two_hours&quot;, &quot;two_to_four_hours&quot;, &quot;four_to_six_hours&quot;, &quot;more_than_six_hours&quot;, &quot;less_than_two_hours&quot;, &quot;four_to_eight_hours&quot;, &quot;eight_to_twelve_hours&quot;, &quot;more_than_twelve_hours&quot;, &quot;more_than_one_hour&quot;, &quot;custom_time&quot;</td>
+</tr>
+<tr>
+<td>itemCategory</td>
+<td>audiovisual</td>
+<td>Category. One of: &quot;written&quot;, &quot;audiovisual&quot;, &quot;activity_category&quot;, &quot;assessment&quot;, &quot;update_category&quot;, &quot;other_category&quot;</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>201 Created - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3016</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"new item with tags"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"itemType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"itemCategory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"itemUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/new-item-with-tags"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Short desc"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"new-item-with-tags"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fileSize"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fileType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"expires"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ratingsCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"averageRating"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"goesLive"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"sourceType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"sourceId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-03-26T17:29:25Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-03-26T17:29:25Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"goesLiveAt"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://res.cloudinary.com/dfiav5ctj/image/upload/c_crop,g_custom/a_exif,c_fill,dpr_1.0,f_auto,h_153,q_auto,w_260/v1588665654/e5pclrrfd8xyyffphich.jpg"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"supplier"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"addedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1381</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rebecca"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bridger"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Founder &amp; Managing Director"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rebecca@example.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"owner"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/users/1381"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not yet invited"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"displayAddedBy"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"visibility"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Entire Company"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Free"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"totalTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt; 15 mins"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>400 Bad request - validation errors:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"title is missing"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fullErrors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"is missing"</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='update-an-item'>Update an Item</h2>
+<blockquote>
+<p>Update an Item:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'https://api.learnamp.com/v1/items/383'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'title=New Item Title'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Items</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="s2">"/items/</span><span class="si">#{</span><span class="nb">id</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">body: </span><span class="n">params</span><span class="p">,</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">item</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Items</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">update</span><span class="p">(</span><span class="mi">1234</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</code></pre></div>
+<p>Update an Item</p>
+
+<p><code>POST https://api.learnamp.com/v1/items</code></p>
+<h3 id='data-in-body-2'>Data in Body</h3>
+<table><thead>
+<tr>
+<th>Parameter (* required)</th>
+<th>Example value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>title *</td>
+<td>Sales and Marketing Guide</td>
+<td>Title of item</td>
+</tr>
+<tr>
+<td>url</td>
+<td>https://www.test.com</td>
+<td>URL to external web page for the item</td>
+</tr>
+<tr>
+<td>description</td>
+<td>Some description text</td>
+<td>Description of the item</td>
+</tr>
+<tr>
+<td>expires</td>
+<td>true</td>
+<td>If item must expire, set to true</td>
+</tr>
+<tr>
+<td>expiresAt</td>
+<td>2022-12-31</td>
+<td>Expiry date when item should expire in ISO 8601 format</td>
+</tr>
+<tr>
+<td>goesLive</td>
+<td>true</td>
+<td>If item should have a future go live date</td>
+</tr>
+<tr>
+<td>goesLiveAt</td>
+<td>2022-12-31</td>
+<td>Future go live date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>imageUrl</td>
+<td>https://sometileimageurl</td>
+<td>URL of tile image for the item, must be publically accessible</td>
+</tr>
+<tr>
+<td>imageUrl</td>
+<td>https://sometileimageurl</td>
+<td>URL of tile image for the item, must be publically accessible</td>
+</tr>
+<tr>
+<td>visibility</td>
+<td>entire_company</td>
+<td>Item visibility. Must be one of &quot;hidden&quot;, &quot;selected&quot;, &quot;entire_company&quot;</td>
+</tr>
+<tr>
+<td>sourceType</td>
+<td>Udemy</td>
+<td>Short string identifier of the source of the item, if is coming from an external LMS or other system</td>
+</tr>
+<tr>
+<td>sourceId</td>
+<td>e814koip</td>
+<td>External identifier of item, if it if coming from an external LMS or other system</td>
+</tr>
+<tr>
+<td>itemType</td>
+<td>article</td>
+<td>Item type, one of: &quot;article&quot;, &quot;document&quot;, &quot;book&quot;, &quot;q_and_a&quot;, &quot;info_card&quot;, &quot;video&quot;, &quot;elearning&quot;, &quot;infographic&quot;, &quot;audio&quot;, &quot;slides&quot;, &quot;image&quot;, &quot;project&quot;, &quot;classroom&quot;, &quot;coaching&quot;, &quot;course&quot;, &quot;event&quot;, &quot;presentation&quot;, &quot;meeting&quot;, &quot;webinar&quot;, &quot;action&quot;, &quot;test&quot;, &quot;qa&quot;, &quot;announcement&quot;, &quot;newsletter&quot;, &quot;reminder&quot;, &quot;website&quot;, &quot;other&quot;</td>
+</tr>
+<tr>
+<td>totalTime</td>
+<td>less_than_one_hour</td>
+<td>Approximate time to complete. One of: &quot;less_than_fifteen_minutes&quot;, &quot;less_than_one_hour&quot;, &quot;one_to_ten_hours&quot;, &quot;ten_to_one_hundred_hours&quot;, &quot;more_than_one_hundred_hours&quot;, &quot;less_than_five_minutes&quot;, &quot;five_to_ten_minutes&quot;, &quot;ten_to_twenty_minutes&quot;, &quot;twenty_to_thirty_minutes&quot;, &quot;more_than_thirty_minutes&quot;, &quot;less_than_ten_minutes&quot;, &quot;ten_to_thirty_minutes&quot;, &quot;thirty_minutes_to_one_hour&quot;, &quot;one_to_two_hours&quot;, &quot;more_than_two_hours&quot;, &quot;two_to_four_hours&quot;, &quot;four_to_six_hours&quot;, &quot;more_than_six_hours&quot;, &quot;less_than_two_hours&quot;, &quot;four_to_eight_hours&quot;, &quot;eight_to_twelve_hours&quot;, &quot;more_than_twelve_hours&quot;, &quot;more_than_one_hour&quot;, &quot;custom_time&quot;</td>
+</tr>
+<tr>
+<td>itemCategory</td>
+<td>audiovisual</td>
+<td>Category. One of: &quot;written&quot;, &quot;audiovisual&quot;, &quot;activity_category&quot;, &quot;assessment&quot;, &quot;update_category&quot;, &quot;other_category&quot;</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>200 OK - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3016</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"new item with tags"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"itemType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"itemCategory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"itemUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/new-item-with-tags"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Short desc"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"new-item-with-tags"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fileSize"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fileType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"expires"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ratingsCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"averageRating"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"goesLive"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"sourceType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"sourceId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-03-26T17:29:25Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-03-26T17:29:25Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"goesLiveAt"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://res.cloudinary.com/dfiav5ctj/image/upload/c_crop,g_custom/a_exif,c_fill,dpr_1.0,f_auto,h_153,q_auto,w_260/v1588665654/e5pclrrfd8xyyffphich.jpg"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"supplier"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"addedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1381</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rebecca"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bridger"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Founder &amp; Managing Director"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rebecca@example.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"owner"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/users/1381"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not yet invited"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"displayAddedBy"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"visibility"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Entire Company"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Free"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"totalTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt; 15 mins"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>400 Bad request - validation errors:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"title is missing"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fullErrors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"is missing"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='delete-an-item'>Delete an Item</h2>
+<blockquote>
+<p>Delete an item:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> DELETE <span class="s1">'https://api.learnamp.com/v1/items/1'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Items</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="s2">"/items/</span><span class="si">#{</span><span class="nb">id</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">Learnamp</span><span class="o">::</span><span class="no">Items</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">delete</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>Delete an Item</p>
+
+<p><code>DELETE https://api.learnamp.com/v1/items/{itemId}</code></p>
 
 <blockquote>
 <p>204 No Content - successful response:</p>
