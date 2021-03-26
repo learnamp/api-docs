@@ -45,7 +45,7 @@ verbs = Learnamp::Verbs.new(token).all
 
 View all verbs
 
-`GET https://api.learnamp.com/verbs`
+`GET https://api.learnamp.com/v1/verbs`
 
 Response will be paginated [see pagination](#pagination)
 
