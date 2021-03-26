@@ -46,7 +46,7 @@ users = Learnamp::Users.new(token).all
 
 View all users.
 
-`GET https://api.learnamp.com/users`
+`GET https://api.learnamp.com/v1/users`
 
 Response will be paginated [see pagination](#pagination)
 
@@ -54,7 +54,7 @@ Response will be paginated [see pagination](#pagination)
 
 The following URL params by be included, to filter the result set:
 
-`GET https://api.learnamp.com/users?filters[email]=test@email.com`
+`GET https://api.learnamp.com/v1/users?filters[email]=test@email.com`
 
 URL Param | Value | Description
 --------- | ------- | -----------
@@ -168,7 +168,7 @@ user = Learnamp::Users.new(token).find(1920)
 
 Display user details for one specific user.
 
-`GET https://api.learnamp.com/users/{userId}`
+`GET https://api.learnamp.com/v1/users/{userId}`
 
 
 > 200 OK - successful response:
@@ -312,7 +312,7 @@ user = Learnamp::Users.new(token).create(params)
 
 Create a user and trigger an invite email.
 
-`POST https://api.learnamp.com/users`
+`POST https://api.learnamp.com/v1/users`
 
 ### Data in Body
 
@@ -421,7 +421,7 @@ customFields | [{ name: "Employee ID", value: "12-34-56" }] | CustomFields param
 > Update an existing user:
 
 ```shell
-curl --location --request PUT 'http://api.learnamp.com/v1/users/1382' \
+curl --location --request PUT 'https://api.learnamp.com/v1/users/1382' \
 --header 'Authorization: Bearer SQn9nZAxgwPJcz-neajmNahBdlc2DRoNbUHwx9A4Rvw' \
 --form 'firstName=Jim' \
 --form 'lastName=Robinson' \
@@ -482,7 +482,7 @@ user = Learnamp::Users.new(token).update(1904, params)
 
 Update a user's details'.
 
-`PUT https://api.learnamp.com/users/{userId}`
+`PUT https://api.learnamp.com/v1/users/{userId}`
 
 ### Data in Body
 
@@ -619,7 +619,7 @@ Learnamp::Users.new(token).deactivate(1904)
 
 Deactivate a user, so that they can no longer login. Their data is not removed.
 
-`PUT https://api.learnamp.com/users/{userId}/deactivate`
+`PUT https://api.learnamp.com/v1/users/{userId}/deactivate`
 
 
 > 204 No Content - successful response:
@@ -677,7 +677,7 @@ Learnamp::Users.new(token).delete(1904)
 
 Delete a user, so that they can no longer login. Their data is removed.
 
-`DELETE https://api.learnamp.com/users/{userId}`
+`DELETE https://api.learnamp.com/v1/users/{userId}`
 
 
 > 204 No Content - successful response:

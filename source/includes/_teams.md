@@ -9,7 +9,7 @@ In Learn Amp, a Team is any grouping of users. Teams may map to your organisatio
 > View all teams in your account:
 
 ```shell
-curl --location --request GET 'http://api.learnamp.com/v1/teams' \
+curl --location --request GET 'https://api.learnamp.com/v1/teams' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -49,7 +49,7 @@ teams = Learnamp::Teams.new(token).all(filters)
 
 View all teams
 
-`GET https://api.learnamp.com/teams`
+`GET https://api.learnamp.com/v1/teams`
 
 Response will be paginated [see pagination](#pagination)
 
@@ -58,7 +58,7 @@ Response will be paginated [see pagination](#pagination)
 
 The following URL params by be included, to filter the result set:
 
-`GET https://api.learnamp.com/teams?filters[name]=founders`
+`GET https://api.learnamp.com/v1/teams?filters[name]=founders`
 
 URL Param | Value | Description
 --------- | ------- | -----------
@@ -156,7 +156,7 @@ teams = Learnamp::Teams.new(token).find(245)
 
 Display details for one specific Team.
 
-`GET https://api.learnamp.com/teams/{teamId}`
+`GET https://api.learnamp.com/v1/teams/{teamId}`
 
 
 > 200 OK - successful response:
@@ -321,7 +321,7 @@ team = Learnamp::Teams.new(token).create(params)
 
 Create a Team
 
-`POST https://api.learnamp.com/teams`
+`POST https://api.learnamp.com/v1/teams`
 
 ### Data in Body
 
@@ -433,7 +433,7 @@ team = Learnamp::Teams.new(token).update(456, params)
 
 Update a Team
 
-`POST https://api.learnamp.com/items`
+`POST https://api.learnamp.com/v1/items`
 
 ### Data in Body
 
@@ -540,7 +540,7 @@ Learnamp::Teams.new(token).delete(456)
 
 Delete a team. (Users are kept, but their association with team is removed).
 
-`DELETE https://api.learnamp.com/teams/{teamId}`
+`DELETE https://api.learnamp.com/v1/teams/{teamId}`
 
 
 > 204 No Content - successful response:

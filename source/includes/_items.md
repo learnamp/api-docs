@@ -22,7 +22,7 @@
 
 Create an Item
 
-`POST https://api.learnamp.com/items`
+`POST https://api.learnamp.com/v1/items`
 
 ### Data in Body
 

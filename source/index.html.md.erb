@@ -1,19 +1,20 @@
 ---
 title: API Reference
 
-toc_footers:
-  - <a href='https://learnamp.com/contact'>Contact us for API access</a>
-
 language_tabs:
   - shell: cURL
   - ruby
 
 includes:
   - authentication
-  - users
+  - activities
+  - events
+  - enrollments
+  - tasks
   - teams
   - team_users
-  - tasks
+  - users
+  - verbs
   - pagination
   - errors
 
@@ -21,13 +22,6 @@ search: true
 
 code_clipboard: true
 ---
-<!--   - users
-  - teams
-  - team_users
-  - activities
-  - items
-  - events
-  - enrollments -->
 
 # API Reference
 
@@ -53,6 +47,7 @@ The Learn Amp API is organised around [REST](https://en.wikipedia.org/wiki/Repre
 To get started, you will need:
 
 1. An account on the Learn Amp platform
-2. An API Key and Secret
+2. An API Key and Secret: These are available when logged in as the "owner" user of your Learn Amp account.
+Go to "Company Settings" --> "API"
 
-If you don't have these, please [contact us](https://learnamp.com/contact).
+<%= image_tag "images/api_credentials.png", width: 580, alt: "Accessing API credentials for Learn Amp within Company Settings area" %>

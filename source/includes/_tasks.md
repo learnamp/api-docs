@@ -4,12 +4,20 @@
 
 In Learn Amp, a Task is a piece of learning content that a user is given a specific deadline to complete.
 
+A task has an assigner - the person who set the task. It also has a setFor user - the person required to complete the task.
+
+Tasks may be mandatory. Tasks always have a deadline, and are associated to a specific learning object, referred to as "taskable" in json reponses.
+
+Tasks may be completed by the user, or they may still be pending/overdue.
+
+Tasks may be expired, for example, if the same user is required to complete the same content every year. When the new task is assigned for the same user, their previous task to complete the same content is marked as expired.
+
 ## View All Tasks
 
 > View all tasks in your account:
 
 ```shell
-curl --location --request GET 'http://api.learnamp.com/v1/tasks' \
+curl --location --request GET 'https://api.learnamp.com/v1/tasks' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -63,7 +71,7 @@ tasks = Learnamp::Tasks.new(token).all(filters)
 
 View all tasks
 
-`GET https://api.learnamp.com/tasks`
+`GET https://api.learnamp.com/v1/tasks`
 
 Response will be paginated [see pagination](#pagination)
 
@@ -72,10 +80,11 @@ Response will be paginated [see pagination](#pagination)
 
 The following URL params by be included, to filter the result set:
 
-`GET https://api.learnamp.com/tasks?filters[deadline][from]=2021-01-01&filters[deadline][to]=2021-06-01`
+`GET https://api.learnamp.com/v1/tasks?filters[deadline][from]=2021-01-01&filters[deadline][to]=2021-06-01`
 
 URL Param | Example Value | Description
 --------- | ------- | -----------
+expanded | true | Optional expanded data. Will include related exercise submissions, and awarded certificates. Using this option is NOT recommended, unless required.
 filters[assigned_at][from] | "2021-12-31" | Assigned date range FROM date in ISO 8601 format
 filters[assigned_at][to] | "2022-02-28" | Assigned date range TO date in ISO 8601 format
 filters[completed_at][from] | "2021-12-31" | Completion date range FROM date in ISO 8601 format
@@ -112,16 +121,16 @@ filters[status] | "completed" | Task status. One of: completed / overdue / incom
                 "name": "Landing Page Design & Web Design Fundamentals",
                 "shortDescription": null,
                 "type": "Item",
-                "url": "https://testaccount.learnamp.com/en/items/landing-page-design-web-design-fundamentals-2017",
+                "url": "https://testaccount.learnamp.com/en/items/landing-page-design",
                 "addedBy": {
                     "id": 1,
-                    "firstName": "Richard",
-                    "lastName": "Larcombe",
-                    "jobTitle": "CTO",
-                    "email": "rjlarcombe@gmail.com",
+                    "firstName": "Test",
+                    "lastName": "User",
+                    "jobTitle": "Tester",
+                    "email": "test@example.com",
                     "timeZone": "London",
                     "language": "en",
-                    "role": "super_admin",
+                    "role": "viewer",
                     "profileUrl": "https://testaccount.learnamp.com/en/users/1",
                     "status": {
                         "status": "Confirmed",
@@ -167,6 +176,97 @@ filters[status] | "completed" | Task status. One of: completed / overdue / incom
                     "time": "On 29 Nov 16"
                 }
             }
+        }
+    ]
+}
+```
+
+> 200 OK - successful response, woth optional expanded=true param
+
+```json
+{
+    "tasks": [
+        {
+            "id": 4169,
+            "taskableId": 2958,
+            "taskableType": "Item",
+            "createdAt": "2020-08-10T13:38:50Z",
+            "deadline": "2020-08-21",
+            "expiredAt": null,
+            "assignedAt": "2020-08-10T13:38:50Z",
+            "completedAt": "2020-08-10T13:39:01Z",
+            "name": "Marketing 101",
+            "taskable": {
+                "id": 2958,
+                "name": "Marketing 101",
+                "shortDescription": null,
+                "type": "Item",
+                "url": "https://examplecompany.learnamp.com/en/items/dani",
+                "addedBy": {
+                    "id": 1,
+                    "jobTitle": "TV Presenter & Personality",
+                    "firstName": "Keith",
+                    "lastName": "Chegwin",
+                    "email": null,
+                    "timeZone": null,
+                    "language": null,
+                    "role": null,
+                    "profileUrl": null,
+                    "status": {
+                        "status": "External Contributor",
+                        "time": null
+                    }
+                },
+                "displayAddedBy": true,
+                "totalTimeEstimate": "< 10 mins",
+                "tags": []
+            },
+            "typeLabel": "Video",
+            "overdue": true,
+            "mandatory": true,
+            "completed": true,
+            "expired": false,
+            "setFor": {
+                "id": 1,
+                "firstName": "Test",
+                "lastName": "User",
+                "jobTitle": "Tester",
+                "email": "test@example.com",
+                "timeZone": "London",
+                "language": "en",
+                "role": "viewer",
+                "hireDate": "2017-02-01",
+                "profileUrl": "https://examplecompany.learnamp.com/en/users/1",
+                "status": {
+                    "status": "Confirmed",
+                    "time": "On 29 Nov 16"
+                }
+            },
+            "url": "https://examplecompany.learnamp.com/en/items/dani",
+            "assigner": {
+                "id": 1,
+                "firstName": "Test",
+                "lastName": "User",
+                "jobTitle": "CTO",
+                "email": "test@example.com",
+                "timeZone": "London",
+                "language": "en",
+                "role": "viewer",
+                "hireDate": "2017-02-01",
+                "profileUrl": "https://examplecompany.learnamp.com/en/users/1",
+                "status": {
+                    "status": "Confirmed",
+                    "time": "On 29 Nov 16"
+                }
+            },
+            "certificate": {
+                "id": 58,
+                "awardedAt": "2020-08-10T13:39:01.724Z",
+                "expiresAt": null,
+                "certificateUrl": "https://examplecompany.learnamp.com/en/certificates/58"
+            },
+            "score": 100,
+            "totalTime": 180
         }
     ]
 }
