@@ -56,9 +56,15 @@ The following URL params by be included, to filter the result set:
 
 `GET https://api.learnamp.com/v1/users?filters[email]=test@email.com`
 
-URL Param | Value | Description
---------- | ------- | -----------
-filters[email] | email@test.com | Return user with matching email address
+URL Param | Type | Value | Description
+--------- | ------- | ------- | -----------
+filters[email] | email |email@test.com | Return users with matching email address
+filters[first_name] | string | John | Return users with matching first name (using `ILIKE '%value%'`)
+filters[last_name] | string | Smith | Return users with matching last name (using `ILIKE '%value%'`)
+filters[role] | enum | viewer | Return users with matching role. <br />Possible values: "viewer", "curator", "reporter", "hr", "admin", "owner"
+filters[no_team] | boolean | true | Return users that have no team assigned
+filters[team_ids] | array | [1,2,3] | Return members of any of the given teams
+
 
 > 200 OK - successful response:
 
@@ -80,47 +86,6 @@ filters[email] | email@test.com | Return user with matching email address
           "status": "Confirmed",
           "time": "On 29 Nov 16"
       },
-      "avatar": "AVATAR_IMAGE_URL",
-      "manager": {
-          "id": 17,
-          "firstName": "Manager",
-          "lastName": "User",
-          "jobTitle": "Head of Ops",
-          "email": "testuser2@email.com",
-          "timeZone": "New York",
-          "language": "en-US",
-          "role": "admin",
-          "profileUrl": "https://testaccount.learnamp.com/en/users/17",
-          "status": {
-              "status": "Confirmed",
-              "time": "On 20 Feb 17"
-          }
-      },
-      "location": "London, UK",
-      "department": "Marketing",
-      "primaryTeam": {
-        "id": 15,
-        "name": "Operations",
-        "teamUsersCount": 10,
-        "apiTeamPath": "/v1/teams/15.json",
-        "apiTeamUsersPath": "/v1/teams/15/users.json",
-        "manager": {
-          "id": 17,
-          "firstName": "Manager",
-          "lastName": "User",
-          "jobTitle": "Head of Ops",
-          "email": "testuser2@email.com",
-          "timeZone": "New York",
-          "language": "en-US",
-          "role": "admin",
-          "profileUrl": "https://testaccount.learnamp.com/en/users/17",
-          "status": {
-            "status": "Confirmed",
-            "time": "On 20 Feb 17"
-          }
-        }
-      },
-      "secondaryTeams": []
     },
   ]
 }
