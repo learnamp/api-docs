@@ -451,20 +451,21 @@ Update a user's details'.
 
 ### Data in Body
 
-Parameter | Example value | Description (* required)
---------- | ------- | -----------
-email | testuser@test.com | Email address of user *(\*)*
-firstName | Test | First name of user *(\*)*
-lastName | User | Last name of user *(\*)*
-language | fr | Primary language short code. One of:  en, en-US, de, es-CO, fr, it, nl, pt-BR, pl, ru, zh-CN, zh-TW, ja, ar
-jobTitle | Developer | Job title of user
-primaryTeamId | 15 | Team ID of primary team [see Teams](#teams)
-secondaryTeamIds | [376,377] | Array of Team IDs of seconary teams
-managerId | 1 | User ID of this user's Manager (override manager, not primary team manager)
-hireDate | 2021-02-28 | Employment start date for user in ISO 8601 date format
-location | London | Primary location of user
-department | Marketing | Department of user
-customFields | [{ name: "Employee ID", value: "12-34-56" }] | CustomFields param is an array, of name/value pairs for custom fields.
+Parameter | type | Example value | Description (* required)
+--------- | ---- | ------- | -----------
+email | email |testuser@test.com | Email address of user *(\*)*
+firstName | string | Test | First name of user *(\*)*
+lastName | string | User | Last name of user *(\*)*
+language | enum | fr | Primary language short code. One of:  en, en-US, de, es-CO, fr, it, nl, pt-BR, pl, ru, zh-CN, zh-TW, ja, ar
+jobTitle | string |Developer | Job title of user
+primaryTeamId | integer | 15 | Team ID of primary team [see Teams](#teams)
+secondaryTeamIds | Array(integer) | [376,377] | Array of Team IDs of seconary teams
+managerId | integer | 1 | User ID of this user's Manager (override manager, not primary team manager)
+hireDate | date | 2021-02-28 | Employment start date for user in ISO 8601 date format
+location | string | London | Primary location of user
+department | string | Marketing | Department of user
+reactivate | boolean | true | Reactivates user if deactivated
+customFields | object | [{ name: "Employee ID", value: "12-34-56" }] | CustomFields param is an array, of name/value pairs for custom fields.
 
 > 200 OK - successful response:
 
@@ -585,6 +586,64 @@ Learnamp::Users.new(token).deactivate(1904)
 Deactivate a user, so that they can no longer login. Their data is not removed.
 
 `PUT https://api.learnamp.com/v1/users/{userId}/deactivate`
+
+
+> 204 No Content - successful response:
+
+```json
+
+```
+
+> 404 Not Found - unsuccessful response:
+
+```json
+{
+    "error": "Not found"
+}
+```
+
+## Reactivate a User
+
+> Reactivate a deactivated user:
+
+```shell
+curl --location --request PUT 'https://api.learnamp.com/v1/users/1/reactivate' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
+```
+
+```ruby
+module Learnamp
+  class Users
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+
+    attr_accessor :token
+
+    def initialize(token)
+      @token = token
+    end
+
+    def reactivate(id)
+      response = self.class.put("/users/#{id}/reactivate", { headers: headers })
+      response.parsed_response
+    end
+
+    private
+
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
+
+Learnamp::Users.new(token).reactivate(1904)
+```
+
+Reactivate a user, so that they login again.
+
+`PUT https://api.learnamp.com/v1/users/{userId}/reactivate`
 
 
 > 204 No Content - successful response:
