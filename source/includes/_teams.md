@@ -279,18 +279,8 @@ Display details for one specific Team.
 curl --location --request POST 'https://api.learnamp.com/v1/teams' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --form 'name=New Team Test' \
---form 'managerId=1' \
---form 'parentTeamId=1200'
+--form 'managerId=1'
 ```
-
-```shell
-curl --location --request POST 'https://api.learnamp.com/v1/teams' \
---header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
---form 'name=New Team Test' \
---form 'managerEmail=manager@company.com' \
---form 'parentTeamName=Marketing'
-```
-
 
 ```ruby
 module Learnamp
@@ -339,16 +329,8 @@ Parameter (* required) | Example value | Description
 --------- | ------- | -----------
 name * | Sales | Name of team
 managerId | 1 | User ID of Team Manager
-managerEmail | "manager@email.com" | Email of Team Manager
-secondaryManagerIds | [2, 3] | IDs of Secondary Managers
 parentTeamId | 10 | ID of the parent team
-parentTeamName | "Marketing" | Name of the parent team
-subTeamIds | [1000, 1200] | IDs of sub-teams
-subTeamNames | ["Tech", "HR"] | Names of sub-teams
 tags | "developers,product,compliance" | Tags - comma seperated string
-
-Parameters `managerId` and `managerEmail` are mutually exclusive - endpoint expects to receive only one of those.
-Same rule applies for `parentTeamId` - `parentTeamName` and `subTeamIds` - `subTeamNames`.
 
 > 201 Created - successful response:
 
