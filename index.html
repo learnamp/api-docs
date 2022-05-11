@@ -337,6 +337,17 @@
               </ul>
           </li>
           <li>
+            <a href="#channels" class="toc-h1 toc-link" data-title="Channels">Channels</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#channel-description" class="toc-h2 toc-link" data-title="Channel Description">Channel Description</a>
+                  </li>
+                  <li>
+                    <a href="#view-all-channels" class="toc-h2 toc-link" data-title="View All Channels">View All Channels</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#events" class="toc-h1 toc-link" data-title="Events">Events</a>
               <ul class="toc-list-h2">
                   <li>
@@ -432,6 +443,17 @@
                   </li>
                   <li>
                     <a href="#delete-an-item" class="toc-h2 toc-link" data-title="Delete an Item">Delete an Item</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#learnlists" class="toc-h1 toc-link" data-title="Learnlists">Learnlists</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#learnlist-description" class="toc-h2 toc-link" data-title="Learnlist Description">Learnlist Description</a>
+                  </li>
+                  <li>
+                    <a href="#view-all-learnlists" class="toc-h2 toc-link" data-title="View All Learnlists">View All Learnlists</a>
                   </li>
               </ul>
           </li>
@@ -831,6 +853,63 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h1 id='channels'>Channels</h1><h2 id='channel-description'>Channel Description</h2>
+<p>In Learn Amp, a Channel is a collection of content (items, learnlists, events etc), arranged into a learning pathway.</p>
+<h2 id='view-all-channels'>View All Channels</h2>
+<blockquote>
+<p>View all channels in your account:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/channels'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Channels</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+      <span class="n">filters_query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">encode_www_form</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/channels?</span><span class="si">#{</span><span class="n">filters_query</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">filters</span> <span class="o">=</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="n">teams</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Channels</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">all</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+</code></pre></div>
+<p>View all channels</p>
+
+<p><code>GET https://api.learnamp.com/v1/channels</code></p>
+
+<p>Response will be paginated <a href="#pagination">see pagination</a></p>
+
+<blockquote>
+<p>200 OK - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">379</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Channel"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
 </span></code></pre></div><h1 id='events'>Events</h1><h2 id='event-description'>Event Description</h2>
 <p>In Learn Amp, an Event is a specific type of learning object. Events have event sessions. For example the same event &quot;Annual Christmas Party&quot;, could have multiple event sessions, one for each year.</p>
 
@@ -3273,6 +3352,64 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
 </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h1 id='learnlists'>Learnlists</h1><h2 id='learnlist-description'>Learnlist Description</h2>
+<p>In Learn Amp, a Learnlist is a &#39;playlist&#39; of content. It can be structured, like a course with a specific sequence, or an unordered collection of learning items.</p>
+<h2 id='view-all-learnlists'>View All Learnlists</h2>
+<blockquote>
+<p>View all learnlists in your account:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/learnlists'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Learnlists</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+      <span class="n">filters_query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">encode_www_form</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/learnlists?</span><span class="si">#{</span><span class="n">filters_query</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">filters</span> <span class="o">=</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="n">teams</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Learnlists</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">all</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+</code></pre></div>
+<p>View all learnlists</p>
+
+<p><code>GET https://api.learnamp.com/v1/learnlists</code></p>
+
+<p>Response will be paginated <a href="#pagination">see pagination</a></p>
+
+<blockquote>
+<p>200 OK - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"learnlists"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">379</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test learnlist"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is the learnlist description"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
 </span></code></pre></div><h1 id='users'>Users</h1><h2 id='user-description'>User Description</h2>
 <p>In Learn Amp, a User, is a person who can access the platform. User&#39;s belong to your company account, and have a status like Invite Pending, Active or Deactivated.</p>
 <h2 id='view-all-users'>View All Users</h2>
