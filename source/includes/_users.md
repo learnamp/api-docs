@@ -63,7 +63,7 @@ filters[first_name] | string | John | Return users with matching first name (usi
 filters[last_name] | string | Smith | Return users with matching last name (using `ILIKE '%value%'`)
 filters[role] | enum | viewer | Return users with matching role. <br />Possible values: "viewer", "curator", "reporter", "hr", "admin", "owner"
 filters[no_team] | boolean | true | Return users that have no team assigned
-filters[team_ids] | array or string | [1,2,3] or "1,2,3" | Return members of any of the given teams by team ID.<br /><br />Param can be array of team ids, or a string of comma seperated team ids
+filters[team_ids] | array or string | *[1,2,3]* or *1,2,3* | Return members of any of the given teams by team ID.<br /><br />Param can be array of team ids, or a string of comma seperated team ids
 
 
 > 200 OK - successful response:
