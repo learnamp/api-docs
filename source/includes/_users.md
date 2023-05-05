@@ -717,3 +717,106 @@ Delete a user, so that they can no longer login. Their data is removed.
     "error": "Not found"
 }
 ```
+
+## Channels Progress
+
+> View progress of all assigned channels by the specified user:
+
+```shell
+curl --location --request GET 'https://api.learnamp.com/v1/users/567/channels_progress' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
+```
+
+```ruby
+module Learnamp
+  class Users
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+
+    attr_accessor :token
+
+    def initialize(token)
+      @token = token
+    end
+
+    def channels_progress(user_id)
+      response = self.class.get("/channels/#{user_id}/users_progress", { headers: headers })
+      response.parsed_response
+    end
+
+    private
+
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
+
+data = Learnamp::Users.new(token).Channels_progress(123)
+```
+
+View progress of all assigned channels by a specified user. This is analogous to Learn Amp's People Log feature, for a single user.
+
+`GET https://api.learnamp.com/v1/users/{userId}/channels_progress`
+
+This end-point will return a paginated array of channels that are assigned to the specified user. Each element will contain the completion percentage of the channel by that user, as well as the datetime (if any) when the channel was completed.
+
+Please note: The completion percentage is a cached value, which is refreshed in the background automatically. The completion percentage shown may therefore take a few minutes to update.
+
+The results are ordered alphabetically by created at date of the channel, most recent first.
+
+Response will be paginated [see pagination](#pagination)
+
+> 200 OK - successful response:
+
+```json
+[
+    {
+        "user_id": 200321,
+        "first_name": "John",
+        "last_name": "Abc",
+        "email": "jabc@test.com",
+        "content_name": "Favourites",
+        "content_type": "Channel",
+        "content_id": 1,
+        "completed": false,
+        "completion_percent": 50,
+        "completed_at": null
+    },
+    {
+        "user_id": 200321,
+        "first_name": "John",
+        "last_name": "Abc",
+        "email": "jabc@test.com",
+        "content_name": "Compliance Training",
+        "content_type": "Channel",
+        "content_id": 2,
+        "completed": true,
+        "completion_percent": 100,
+        "completed_at": "2023-04-04T15:44:04Z"
+    },
+    {
+        "user_id": 200321,
+        "first_name": "John",
+        "last_name": "Abc",
+        "email": "jabc@test.com",
+        "content_name": "Business Essentials",
+        "content_type": "Channel",
+        "content_id": 3,
+        "completed": false,
+        "completion_percent": 0,
+        "completed_at": null
+    }
+]
+
+```
+
+> 404 Not Found - unsuccessful response when user ID does not exist:
+
+```json
+{
+    "error": "Not found"
+}
+```
