@@ -345,6 +345,9 @@
                   <li>
                     <a href="#view-all-channels" class="toc-h2 toc-link" data-title="View All Channels">View All Channels</a>
                   </li>
+                  <li>
+                    <a href="#users-progress" class="toc-h2 toc-link" data-title="Users Progress">Users Progress</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -486,6 +489,9 @@
                   </li>
                   <li>
                     <a href="#delete-a-user" class="toc-h2 toc-link" data-title="Delete a User">Delete a User</a>
+                  </li>
+                  <li>
+                    <a href="#channels-progress" class="toc-h2 toc-link" data-title="Channels Progress">Channels Progress</a>
                   </li>
               </ul>
           </li>
@@ -913,6 +919,103 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
+</span></code></pre></div><h2 id='users-progress'>Users Progress</h2>
+<blockquote>
+<p>View progress of all assigned users through a specified channel:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/channels/123/users_progress'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Channels</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">users_progress</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/channels/</span><span class="si">#{</span><span class="nb">id</span><span class="si">}</span><span class="s2">/users_progress"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Channels</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">users_progress</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+</code></pre></div>
+<p>View progress of all assigned users through a specified channel. This is analogous to Learn Amp&#39;s Content Log feature, for a single channel.</p>
+
+<p><code>GET https://api.learnamp.com/v1/channels/{channelId}/users_progress</code></p>
+
+<p>This end-point will return a paginated array of users who are assigned the specified channel. Each element will contain the completion percentage of the channel by that user, as well as the datetime (if any) when the channel was completed.</p>
+
+<p>Please note: Only assigned users will be returned. Users who are not assigned the specified channel will not appear in the array.</p>
+
+<p>Also, please note: The completion percentage is a cached value, which is refreshed in the background automatically. The completion percentage shown may therefore take a few minutes to update.</p>
+
+<p>The results are ordered alphabetically by user&#39;s last name.</p>
+
+<p>Response will be paginated <a href="#pagination">see pagination</a></p>
+
+<blockquote>
+<p>200 OK - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">200321</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Abc"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jabc@test.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Favourites"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Channel"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completion_percent"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">200018</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hannah"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Baker"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hbaker@test.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Favourites"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Channel"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completion_percent"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-04-04T15:44:04Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">199915</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Brian"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cross"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bcross@test.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Favourites"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Channel"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completion_percent"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre></div>
+<blockquote>
+<p>404 Not Found - unsuccessful response when channel ID does not exist:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div><h1 id='events'>Events</h1><h2 id='event-description'>Event Description</h2>
 <p>In Learn Amp, an Event is a specific type of learning object. Events have event sessions. For example the same event &quot;Annual Christmas Party&quot;, could have multiple event sessions, one for each year.</p>
 
@@ -4438,6 +4541,101 @@ endpoint responsible for team member creation was implemented.</p>
 </span></code></pre></div>
 <blockquote>
 <p>404 Not Found - unsuccessful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='channels-progress'>Channels Progress</h2>
+<blockquote>
+<p>View progress of all assigned channels by the specified user:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/users/567/channels_progress'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Users</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">channels_progress</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/channels/</span><span class="si">#{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">/users_progress"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Users</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">)</span><span class="o">.</span><span class="no">Channels_progress</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+</code></pre></div>
+<p>View progress of all assigned channels by a specified user. This is analogous to Learn Amp&#39;s People Log feature, for a single user.</p>
+
+<p><code>GET https://api.learnamp.com/v1/users/{userId}/channels_progress</code></p>
+
+<p>This end-point will return a paginated array of channels that are assigned to the specified user. Each element will contain the completion percentage of the channel by that user, as well as the datetime (if any) when the channel was completed.</p>
+
+<p>Please note: The completion percentage is a cached value, which is refreshed in the background automatically. The completion percentage shown may therefore take a few minutes to update.</p>
+
+<p>The results are ordered alphabetically by created at date of the channel, most recent first.</p>
+
+<p>Response will be paginated <a href="#pagination">see pagination</a></p>
+
+<blockquote>
+<p>200 OK - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">200321</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Abc"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jabc@test.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Favourites"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Channel"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completion_percent"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">200321</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Abc"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jabc@test.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Compliance Training"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Channel"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completion_percent"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-04-04T15:44:04Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">200321</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Abc"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jabc@test.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Business Essentials"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Channel"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completion_percent"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre></div>
+<blockquote>
+<p>404 Not Found - unsuccessful response when user ID does not exist:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
