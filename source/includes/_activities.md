@@ -64,11 +64,12 @@ Response will be paginated [see pagination](#pagination)
 
 The following URL params by be included, to filter the result set:
 
-`GET https://api.learnamp.com/v1/activities?filters[date][from]=2021-01-01&filters[date][to]=2021-06-01`
+`GET https://api.learnamp.com/v1/activities?expanded=true&include_deactivated_users=true&filters[date][from]=2021-01-01&filters[date][to]=2021-06-01`
 
 URL Param | Example Value | Description
 --------- | ------- | -----------
 expanded | true | Optional expanded json. Returns certificate and any related exercise submissions as nested data in the response. Recommend not using this option unless required.
+include_deactivated_users | true | Optional - default is false. When true activity returned by the end-point will include activity by deactivated users.
 filters[date][from] | "2021-12-31" | Date range FROM date in ISO 8601 format
 filters[date][to] | "2022-02-28" | Date range TO date in ISO 8601 format
 filters[user_id] | 1 | User ID of user who performed the activity
