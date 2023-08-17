@@ -767,7 +767,7 @@ Please note: The completion percentage is a cached value, which is refreshed in 
 
 The results are ordered alphabetically by created at date of the channel, most recent first.
 
-The end-point will accept a `userId` of a deactivated user, and return the deactivate users's channel progress.
+The end-point will accept a `userId` of a deactivated user, and return the deactivated users's channel progress.
 
 Response will be paginated [see pagination](#pagination)
 
