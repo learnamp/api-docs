@@ -684,7 +684,7 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
 <p>The following URL params by be included, to filter the result set:</p>
 
-<p><code>GET https://api.learnamp.com/v1/activities?filters[date][from]=2021-01-01&amp;filters[date][to]=2021-06-01</code></p>
+<p><code>GET https://api.learnamp.com/v1/activities?expanded=true&amp;include_deactivated_users=true&amp;filters[date][from]=2021-01-01&amp;filters[date][to]=2021-06-01</code></p>
 
 <table><thead>
 <tr>
@@ -697,6 +697,11 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <td>expanded</td>
 <td>true</td>
 <td>Optional expanded json. Returns certificate and any related exercise submissions as nested data in the response. Recommend not using this option unless required.</td>
+</tr>
+<tr>
+<td>include_deactivated_users</td>
+<td>true</td>
+<td>Optional - default is false. When true activity returned by the end-point will include activity by deactivated users.</td>
 </tr>
 <tr>
 <td>filters[date][from]</td>
@@ -4589,6 +4594,8 @@ endpoint responsible for team member creation was implemented.</p>
 <p>Please note: The completion percentage is a cached value, which is refreshed in the background automatically. The completion percentage shown may therefore take a few minutes to update.</p>
 
 <p>The results are ordered alphabetically by created at date of the channel, most recent first.</p>
+
+<p>The end-point will accept a <code>userId</code> of a deactivated user, and return the deactivated users&#39;s channel progress.</p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 
