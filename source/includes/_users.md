@@ -52,12 +52,14 @@ Response will be paginated [see pagination](#pagination)
 
 ### Optional Filters in URL Params
 
-The following URL params by be included, to filter the result set:
+The following URL params may be included, to filter the result set:
 
 `GET https://api.learnamp.com/v1/users?filters[email]=test@email.com`
 
-URL Param | Type | Value | Description
+
+URL Param | Type | Example Value | Description
 --------- | ------- | ------- | -----------
+expanded | boolean | true | Optional expanded json. Returns all available user details including custom fields and teams information.
 filters[email] | email |email@test.com | Return users with matching email address
 filters[first_name] | string | John | Return users with matching first name (using `ILIKE '%value%'`)
 filters[last_name] | string | Smith | Return users with matching last name (using `ILIKE '%value%'`)
@@ -90,6 +92,73 @@ filters[team_ids] | array or string | *[1,2,3]* or *1,2,3* | Return members of a
   ]
 }
 
+```
+
+> 200 OK - successfully response, when param expanded=true is included
+
+```json
+{
+  "users": [
+    {
+        "id": 1,
+        "firstName": "Test",
+        "lastName": "User",
+        "jobTitle": "Developer",
+        "email": "test@email.com",
+        "timeZone": "London",
+        "language": "en",
+        "role": "viewer",
+        "hireDate": "2021-01-15",
+        "profileUrl": "https://testaccount.learnamp.com/en/users/1",
+        "status": {
+            "status": "Confirmed",
+            "time": "On 29 Nov 16"
+        },
+        "avatar": "https://res.cloudinary.com/dfiav5ctj/image/upload/c_crop,g_custom/a_exif,c_fill,dpr_1.0,f_auto,q_auto,w_100/v1505401603/iysnlkr6sr6ys0dybeh0.jpg",
+        "manager": {
+            "id": 17,
+            "firstName": "Test",
+            "lastName": "Manager",
+            "jobTitle": "Ops Director",
+            "email": "test2@email.com",
+            "timeZone": "London",
+            "language": "en",
+            "role": "admin",
+            "profileUrl": "https://testaccount.learnamp.com/en/users/17",
+            "status": {
+                "status": "Confirmed",
+                "time": "On 20 Feb 17"
+            }
+        },
+        "location": "London, UK",
+        "department": "Marketing",
+        "primaryTeam": {
+            "id": 15,
+            "name": "Operations",
+            "teamUsersCount": 1,
+            "apiTeamPath": "/v1/teams/15.json",
+            "apiTeamUsersPath": "/v1/teams/15/users.json",
+            "manager": {
+              "id": 17,
+              "firstName": "Test",
+              "lastName": "Manager",
+              "jobTitle": "Ops Director",
+              "email": "test2@email.com",
+              "timeZone": "London",
+              "language": "en",
+              "role": "admin",
+              "profileUrl": "https://testaccount.learnamp.com/en/users/17",
+              "status": {
+                  "status": "Confirmed",
+                  "time": "On 20 Feb 17"
+              }
+            }
+          }
+        },
+        "secondaryTeams": []
+    }
+  ]
+}
 ```
 
 ## Show a User
