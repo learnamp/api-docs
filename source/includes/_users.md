@@ -57,16 +57,21 @@ The following URL params may be included, to filter the result set:
 `GET https://api.learnamp.com/v1/users?filters[email]=test@email.com`
 
 
-URL Param | Type | Example Value | Description
---------- | ------- | ------- | -----------
-expanded | boolean | true | Optional expanded json. Returns all available user details including custom fields and teams information.
-filters[email] | email |email@test.com | Return users with matching email address
-filters[first_name] | string | John | Return users with matching first name (using `ILIKE '%value%'`)
-filters[last_name] | string | Smith | Return users with matching last name (using `ILIKE '%value%'`)
-filters[role] | enum | viewer | Return users with matching role. <br />Possible values: "viewer", "curator", "reporter", "hr", "admin", "owner"
-filters[no_team] | boolean | true | Return users that have no team assigned
-filters[team_ids] | array or string | *[1,2,3]* or *1,2,3* | Return members of any of the given teams by team ID.<br /><br />Param can be array of team ids, or a string of comma seperated team ids
-
+URL Param |Example Value | Description
+--------- | ------- | -----------
+expanded | true | Optional expanded json. Returns all available user details including custom fields and teams information.
+filters[email] | email@test.com | Return users with matching email address
+filters[first_name] | John | Return users with matching first name (using `ILIKE '%value%'`)
+filters[last_name] | Smith | Return users with matching last name (using `ILIKE '%value%'`)
+filters[role] | viewer | Return users with matching role. <br />Possible values: "viewer", "curator", "reporter", "hr", "admin", "owner"
+filters[no_team] | true | Return users that have no team assigned
+filters[team_ids] | *[1,2,3]* or *1,2,3* | Return members of any of the given teams by team ID.<br /><br />Param can be array of team ids, or a string of comma seperated team ids
+filters[created_at][from] | "2021-12-31" | Created date range FROM date in ISO 8601 format
+filters[created_at][to] | "2022-02-28" | Created date range TO date in ISO 8601 format
+filters[updated_at][from] | "2021-12-31" | Updated date range FROM date in ISO 8601 format
+filters[updated_at][to] | "2022-02-28" | Updated date range TO date in ISO 8601 format
+filters[deactivated_at][from] | "2021-12-31" | Deactivated date range FROM date in ISO 8601 format
+filters[deactivated_at][to] | "2022-02-28" | Deactivated date range TO date in ISO 8601 format
 
 > 200 OK - successful response:
 
