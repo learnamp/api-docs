@@ -158,10 +158,9 @@ filters[deactivated_at][to] | "2022-02-28" | Deactivated date range TO date in I
                   "time": "On 20 Feb 17"
               }
             }
-          }
-        },
+          },
         "secondaryTeams": []
-    }
+      }
   ]
 }
 ```
