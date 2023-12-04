@@ -52,19 +52,26 @@ Response will be paginated [see pagination](#pagination)
 
 ### Optional Filters in URL Params
 
-The following URL params by be included, to filter the result set:
+The following URL params may be included, to filter the result set:
 
 `GET https://api.learnamp.com/v1/users?filters[email]=test@email.com`
 
-URL Param | Type | Value | Description
---------- | ------- | ------- | -----------
-filters[email] | email |email@test.com | Return users with matching email address
-filters[first_name] | string | John | Return users with matching first name (using `ILIKE '%value%'`)
-filters[last_name] | string | Smith | Return users with matching last name (using `ILIKE '%value%'`)
-filters[role] | enum | viewer | Return users with matching role. <br />Possible values: "viewer", "curator", "reporter", "hr", "admin", "owner"
-filters[no_team] | boolean | true | Return users that have no team assigned
-filters[team_ids] | array or string | *[1,2,3]* or *1,2,3* | Return members of any of the given teams by team ID.<br /><br />Param can be array of team ids, or a string of comma seperated team ids
 
+URL Param |Example Value | Description
+--------- | ------- | -----------
+expanded | true | Optional expanded json. Returns all available user details including custom fields and teams information.
+filters[email] | email@test.com | Return users with matching email address
+filters[first_name] | John | Return users with matching first name (using `ILIKE '%value%'`)
+filters[last_name] | Smith | Return users with matching last name (using `ILIKE '%value%'`)
+filters[role] | viewer | Return users with matching role. <br />Possible values: "viewer", "curator", "reporter", "hr", "admin", "owner"
+filters[no_team] | true | Return users that have no team assigned
+filters[team_ids] | *[1,2,3]* or *1,2,3* | Return members of any of the given teams by team ID.<br /><br />Param can be array of team ids, or a string of comma seperated team ids
+filters[created_at][from] | "2021-12-31" | Created date range FROM date in ISO 8601 format
+filters[created_at][to] | "2022-02-28" | Created date range TO date in ISO 8601 format
+filters[updated_at][from] | "2021-12-31" | Updated date range FROM date in ISO 8601 format
+filters[updated_at][to] | "2022-02-28" | Updated date range TO date in ISO 8601 format
+filters[deactivated_at][from] | "2021-12-31" | Deactivated date range FROM date in ISO 8601 format
+filters[deactivated_at][to] | "2022-02-28" | Deactivated date range TO date in ISO 8601 format
 
 > 200 OK - successful response:
 
@@ -90,6 +97,72 @@ filters[team_ids] | array or string | *[1,2,3]* or *1,2,3* | Return members of a
   ]
 }
 
+```
+
+> 200 OK - successfully response, when param expanded=true is included
+
+```json
+{
+  "users": [
+    {
+        "id": 1,
+        "firstName": "Test",
+        "lastName": "User",
+        "jobTitle": "Developer",
+        "email": "test@email.com",
+        "timeZone": "London",
+        "language": "en",
+        "role": "viewer",
+        "hireDate": "2021-01-15",
+        "profileUrl": "https://testaccount.learnamp.com/en/users/1",
+        "status": {
+            "status": "Confirmed",
+            "time": "On 29 Nov 16"
+        },
+        "avatar": "https://res.cloudinary.com/dfiav5ctj/image/upload/c_crop,g_custom/a_exif,c_fill,dpr_1.0,f_auto,q_auto,w_100/v1505401603/iysnlkr6sr6ys0dybeh0.jpg",
+        "manager": {
+            "id": 17,
+            "firstName": "Test",
+            "lastName": "Manager",
+            "jobTitle": "Ops Director",
+            "email": "test2@email.com",
+            "timeZone": "London",
+            "language": "en",
+            "role": "admin",
+            "profileUrl": "https://testaccount.learnamp.com/en/users/17",
+            "status": {
+                "status": "Confirmed",
+                "time": "On 20 Feb 17"
+            }
+        },
+        "location": "London, UK",
+        "department": "Marketing",
+        "primaryTeam": {
+            "id": 15,
+            "name": "Operations",
+            "teamUsersCount": 1,
+            "apiTeamPath": "/v1/teams/15.json",
+            "apiTeamUsersPath": "/v1/teams/15/users.json",
+            "manager": {
+              "id": 17,
+              "firstName": "Test",
+              "lastName": "Manager",
+              "jobTitle": "Ops Director",
+              "email": "test2@email.com",
+              "timeZone": "London",
+              "language": "en",
+              "role": "admin",
+              "profileUrl": "https://testaccount.learnamp.com/en/users/17",
+              "status": {
+                  "status": "Confirmed",
+                  "time": "On 20 Feb 17"
+              }
+            }
+          },
+        "secondaryTeams": []
+      }
+  ]
+}
 ```
 
 ## Show a User
