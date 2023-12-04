@@ -3773,53 +3773,81 @@ endpoint responsible for team member creation was implemented.</p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
-<p>The following URL params by be included, to filter the result set:</p>
+<p>The following URL params may be included, to filter the result set:</p>
 
 <p><code>GET https://api.learnamp.com/v1/users?filters[email]=test@email.com</code></p>
 
 <table><thead>
 <tr>
 <th>URL Param</th>
-<th>Type</th>
-<th>Value</th>
+<th>Example Value</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
+<td>expanded</td>
+<td>true</td>
+<td>Optional expanded json. Returns all available user details including custom fields and teams information.</td>
+</tr>
+<tr>
 <td>filters[email]</td>
-<td>email</td>
 <td>email@test.com</td>
 <td>Return users with matching email address</td>
 </tr>
 <tr>
 <td>filters[first_name]</td>
-<td>string</td>
 <td>John</td>
 <td>Return users with matching first name (using <code>ILIKE &#39;%value%&#39;</code>)</td>
 </tr>
 <tr>
 <td>filters[last_name]</td>
-<td>string</td>
 <td>Smith</td>
 <td>Return users with matching last name (using <code>ILIKE &#39;%value%&#39;</code>)</td>
 </tr>
 <tr>
 <td>filters[role]</td>
-<td>enum</td>
 <td>viewer</td>
 <td>Return users with matching role. <br />Possible values: &quot;viewer&quot;, &quot;curator&quot;, &quot;reporter&quot;, &quot;hr&quot;, &quot;admin&quot;, &quot;owner&quot;</td>
 </tr>
 <tr>
 <td>filters[no_team]</td>
-<td>boolean</td>
 <td>true</td>
 <td>Return users that have no team assigned</td>
 </tr>
 <tr>
 <td>filters[team_ids]</td>
-<td>array or string</td>
 <td><em>[1,2,3]</em> or <em>1,2,3</em></td>
 <td>Return members of any of the given teams by team ID.<br /><br />Param can be array of team ids, or a string of comma seperated team ids</td>
+</tr>
+<tr>
+<td>filters[created_at][from]</td>
+<td>&quot;2021-12-31&quot;</td>
+<td>Created date range FROM date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[created_at][to]</td>
+<td>&quot;2022-02-28&quot;</td>
+<td>Created date range TO date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[updated_at][from]</td>
+<td>&quot;2021-12-31&quot;</td>
+<td>Updated date range FROM date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[updated_at][to]</td>
+<td>&quot;2022-02-28&quot;</td>
+<td>Updated date range TO date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[deactivated_at][from]</td>
+<td>&quot;2021-12-31&quot;</td>
+<td>Deactivated date range FROM date in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[deactivated_at][to]</td>
+<td>&quot;2022-02-28&quot;</td>
+<td>Deactivated date range TO date in ISO 8601 format</td>
 </tr>
 </tbody></table>
 
@@ -3847,6 +3875,71 @@ endpoint responsible for team member creation was implemented.</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
+</span></code></pre></div>
+<blockquote>
+<p>200 OK - successfully response, when param expanded=true is included</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Developer"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@email.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-01-15"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 29 Nov 16"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/dfiav5ctj/image/upload/c_crop,g_custom/a_exif,c_fill,dpr_1.0,f_auto,q_auto,w_100/v1505401603/iysnlkr6sr6ys0dybeh0.jpg"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ops Director"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test2@email.com"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London, UK"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"department"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Marketing"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"primaryTeam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Operations"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"apiTeamPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15.json"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15/users.json"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ops Director"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test2@email.com"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"secondaryTeams"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div><h2 id='show-a-user'>Show a User</h2>
 <blockquote>
 <p>Display details for a single user:</p>
