@@ -138,4 +138,4 @@ The table below lists the mapping between the name used as input, and the [TZ Id
 | Darwin                   | Australia/Darwin        |
 | Adelaide                 | Australia/Adelaide      |
 | Canberra                 | Australia/Canberra      |
-| Melbourne                | Australia/Melbourne
+| Melbourne                | Australia/Melbourne     |
