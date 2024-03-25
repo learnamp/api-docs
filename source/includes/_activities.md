@@ -72,7 +72,7 @@ expanded | true | Optional expanded json. Returns certificate and any related ex
 include_deactivated_users | true | Optional - default is false. When true activity returned by the end-point will include activity by deactivated users.
 filters[date][from] | "2021-12-31" | Date range FROM date in ISO 8601 format
 filters[date][to] | "2022-02-28" | Date range TO date in ISO 8601 format
-filters[timezone] | "UTC" | Specify Timezone by which to filter activites. See [Rails Timezone names](https://apidock.com/rails/ActiveSupport/TimeZone).
+filters[timezone] | "UTC" | Specify Timezone by which to filter activites. See [timezones](#timezones).
 filters[user_id] | 1 | User ID of user who performed the activity
 filters[team_id] | 78823 | Filter activities to users within a particular team, specified by team_id
 filters[activityable_type] | "Item,Channel,Learnlist,Quiz" | Type of learning object. Can be single value, or comma seperated list of types: any of Item,Channel,Learnlist,Quiz
