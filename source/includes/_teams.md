@@ -451,7 +451,7 @@ team = Learnamp::Teams.new(token).update(456, params)
 
 Update a Team
 
-`POST https://api.learnamp.com/v1/items`
+`PUT https://api.learnamp.com/v1/items`
 
 ### Data in Body
 
