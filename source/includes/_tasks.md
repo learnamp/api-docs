@@ -58,8 +58,8 @@ filters = {
   "filters[deadline][to]" => "2022-02-28",
   "filters[created_at][from]" => "2021-12-31",
   "filters[created_at][to]" => "2022-02-28",
-  "filters[update_at][from]" => "2021-12-31",
-  "filters[update_at][to]" => "2022-02-28",
+  "filters[updated_at][from]" => "2021-12-31",
+  "filters[updated_at][to]" => "2022-02-28",
   "filters[id]" => 2456,
   "filters[user_id]" => 1,
   "filters[taskable_type]" => "Item,Channel,Learnlist,Quiz",
@@ -93,8 +93,8 @@ filters[deadline][from] | "2021-12-31" | Deadline date range FROM date in ISO 86
 filters[deadline][to] | "2022-02-28" | Deadline date range TO date in ISO 8601 format
 filters[created_at][from] | "2021-12-31" | Created at date range FROM date in ISO 8601 format. Tasks may be created before they are actually assigned to the user.
 filters[created_at][to] | "2022-02-28" | Created at date range TO date in ISO 8601 format
-filters[update_at][from] | "2021-12-31" | Updated at date range FROM date in ISO 8601 format
-filters[update_at][to] | "2022-02-28" | Updated at date range TO date in ISO 8601 format
+filters[updated_at][from] | "2021-12-31" | Updated at date range FROM date in ISO 8601 format
+filters[updated_at][to] | "2022-02-28" | Updated at date range TO date in ISO 8601 format
 filters[id] | 2456 | ID of specific task
 filters[user_id] | 78823 | User ID of person assigned the task
 filters[taskable_type] | "Item,Channel,Learnlist,Quiz" | Type of learning object. Can be single value, or comma seperated list of Task types: any of Item,Channel,Learnlist,Quiz
