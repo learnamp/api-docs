@@ -1718,7 +1718,8 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
   <span class="s2">"filters[user_id]"</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
   <span class="s2">"filters[taskable_type]"</span> <span class="o">=&gt;</span> <span class="s2">"Item,Channel,Learnlist,Quiz"</span><span class="p">,</span>
   <span class="s2">"filters[taskable_id]"</span> <span class="o">=&gt;</span> <span class="mi">99874</span><span class="p">,</span>
-  <span class="s2">"filters[status]"</span> <span class="o">=&gt;</span> <span class="s2">"completed"</span>
+  <span class="s2">"filters[status]"</span> <span class="o">=&gt;</span> <span class="s2">"completed"</span><span class="p">,</span>
+  <span class="s2">"filters[lifecycle]"</span> <span class="o">=&gt;</span> <span class="s2">"active,deleted,deactivated"</span><span class="p">,</span>
 <span class="p">}</span>
 <span class="n">tasks</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Tasks</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">all</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
 </code></pre></div>
@@ -1819,6 +1820,11 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <td>&quot;completed&quot;</td>
 <td>Task status. One of: completed / overdue / incomplete</td>
 </tr>
+<tr>
+<td>filters[lifecycle]</td>
+<td>&quot;active&quot;</td>
+<td>Lifecycle status of task. Can be single value, or comma seperated list of Task lifecycle values: active / deleted / deactivated. When tasks are deleted via the UI, they are given a lifecycle of &#39;deleted&#39;. When a user is deactivated, all their tasks are given a lifecycle of &#39;deactivated&#39;. By default the API will only return &#39;active&#39; lifecycle tasks.</td>
+</tr>
 </tbody></table>
 
 <blockquote>
@@ -1830,6 +1836,7 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
             </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4428</span><span class="p">,</span><span class="w">
             </span><span class="nl">"taskableId"</span><span class="p">:</span><span class="w"> </span><span class="mi">634</span><span class="p">,</span><span class="w">
             </span><span class="nl">"taskableType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Item"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lifecycle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
             </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-02-24T15:52:59Z"</span><span class="p">,</span><span class="w">
             </span><span class="nl">"deadline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-02-28"</span><span class="p">,</span><span class="w">
             </span><span class="nl">"expiredAt"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -1909,6 +1916,7 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
             </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4169</span><span class="p">,</span><span class="w">
             </span><span class="nl">"taskableId"</span><span class="p">:</span><span class="w"> </span><span class="mi">2958</span><span class="p">,</span><span class="w">
             </span><span class="nl">"taskableType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Item"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lifecycle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
             </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-08-10T13:38:50Z"</span><span class="p">,</span><span class="w">
             </span><span class="nl">"deadline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-08-21"</span><span class="p">,</span><span class="w">
             </span><span class="nl">"expiredAt"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
