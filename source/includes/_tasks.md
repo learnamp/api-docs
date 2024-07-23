@@ -58,13 +58,14 @@ filters = {
   "filters[deadline][to]" => "2022-02-28",
   "filters[created_at][from]" => "2021-12-31",
   "filters[created_at][to]" => "2022-02-28",
-  "filters[update_at][from]" => "2021-12-31",
-  "filters[update_at][to]" => "2022-02-28",
+  "filters[updated_at][from]" => "2021-12-31",
+  "filters[updated_at][to]" => "2022-02-28",
   "filters[id]" => 2456,
   "filters[user_id]" => 1,
   "filters[taskable_type]" => "Item,Channel,Learnlist,Quiz",
   "filters[taskable_id]" => 99874,
-  "filters[status]" => "completed"
+  "filters[status]" => "completed",
+  "filters[lifecycle]" => "active,deleted,deactivated",
 }
 tasks = Learnamp::Tasks.new(token).all(filters)
 ```
@@ -93,13 +94,14 @@ filters[deadline][from] | "2021-12-31" | Deadline date range FROM date in ISO 86
 filters[deadline][to] | "2022-02-28" | Deadline date range TO date in ISO 8601 format
 filters[created_at][from] | "2021-12-31" | Created at date range FROM date in ISO 8601 format. Tasks may be created before they are actually assigned to the user.
 filters[created_at][to] | "2022-02-28" | Created at date range TO date in ISO 8601 format
-filters[update_at][from] | "2021-12-31" | Updated at date range FROM date in ISO 8601 format
-filters[update_at][to] | "2022-02-28" | Updated at date range TO date in ISO 8601 format
+filters[updated_at][from] | "2021-12-31" | Updated at date range FROM date in ISO 8601 format
+filters[updated_at][to] | "2022-02-28" | Updated at date range TO date in ISO 8601 format
 filters[id] | 2456 | ID of specific task
 filters[user_id] | 78823 | User ID of person assigned the task
 filters[taskable_type] | "Item,Channel,Learnlist,Quiz" | Type of learning object. Can be single value, or comma seperated list of Task types: any of Item,Channel,Learnlist,Quiz
 filters[taskable_id] | 99874 | ID of specific learning object
 filters[status] | "completed" | Task status. One of: completed / overdue / incomplete
+filters[lifecycle] | "active" | Lifecycle status of task. Can be single value, or comma seperated list of Task lifecycle values: active / deleted / deactivated. When tasks are deleted via the UI, they are given a lifecycle of 'deleted'. When a user is deactivated, all their tasks are given a lifecycle of 'deactivated'. By default the API will only return 'active' lifecycle tasks.
 
 > 200 OK - successful response:
 
@@ -110,6 +112,7 @@ filters[status] | "completed" | Task status. One of: completed / overdue / incom
             "id": 4428,
             "taskableId": 634,
             "taskableType": "Item",
+            "lifecycle": "active",
             "createdAt": "2021-02-24T15:52:59Z",
             "deadline": "2021-02-28",
             "expiredAt": null,
@@ -190,6 +193,7 @@ filters[status] | "completed" | Task status. One of: completed / overdue / incom
             "id": 4169,
             "taskableId": 2958,
             "taskableType": "Item",
+            "lifecycle": "active",
             "createdAt": "2020-08-10T13:38:50Z",
             "deadline": "2020-08-21",
             "expiredAt": null,
