@@ -100,7 +100,7 @@ filters[id] | 2456 | ID of specific task
 filters[user_id] | 78823 | User ID of person assigned the task
 filters[taskable_type] | "Item,Channel,Learnlist,Quiz" | Type of learning object. Can be single value, or comma seperated list of Task types: any of Item,Channel,Learnlist,Quiz
 filters[taskable_id] | 99874 | ID of specific learning object
-filters[status] | "completed" | Task status. One of: completed / overdue / incomplete
+filters[status] | "completed" | Task status. One of: completed / overdue / incomplete / started
 filters[lifecycle] | "active,deleted,deactivated" | Lifecycle status of task. Can be single value, or comma seperated list of Task lifecycle values: active / deleted / deactivated. When tasks are deleted via the UI, they are given a lifecycle of 'deleted'. When a user is deactivated, all their tasks are given a lifecycle of 'deactivated'. By default the API will only return 'active' lifecycle tasks.
 
 > 200 OK - successful response:
@@ -118,6 +118,7 @@ filters[lifecycle] | "active,deleted,deactivated" | Lifecycle status of task. Ca
             "expiredAt": null,
             "assignedAt": "2021-02-24T15:52:59Z",
             "completedAt": null,
+            "startedAt": "2021-03-04T15:01:00Z",
             "name": "Landing Page Design & Web Design Fundamentals",
             "taskable": {
                 "id": 634,
@@ -199,6 +200,7 @@ filters[lifecycle] | "active,deleted,deactivated" | Lifecycle status of task. Ca
             "expiredAt": null,
             "assignedAt": "2020-08-10T13:38:50Z",
             "completedAt": "2020-08-10T13:39:01Z",
+            "startedAt": "2020-08-10T13:38:01Z",
             "name": "Marketing 101",
             "taskable": {
                 "id": 2958,
