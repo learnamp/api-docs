@@ -55,7 +55,7 @@ activities = Learnamp::Activities.new(token).all(filters)
 
 View all activity
 
-`GET https://api.learnamp.com/v1/activities`
+`GET https://{API_BASE_URL}/v1/activities`
 
 Response will be paginated [see pagination](#pagination)
 
@@ -64,7 +64,7 @@ Response will be paginated [see pagination](#pagination)
 
 The following URL params by be included, to filter the result set:
 
-`GET https://api.learnamp.com/v1/activities?expanded=true&include_deactivated_users=true&filters[date][from]=2021-01-01&filters[date][to]=2021-06-01`
+`GET https://{API_BASE_URL}/v1/activities?expanded=true&include_deactivated_users=true&filters[date][from]=2021-01-01&filters[date][to]=2021-06-01`
 
 URL Param | Example Value | Description
 --------- | ------- | -----------

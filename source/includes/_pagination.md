@@ -24,5 +24,5 @@ perPage | 20 | Return 20 results per page
 
 **Example:**
 
-`GET https://api.learnamp.com/v1/tasks?page=3&perPage=30`
+`GET https://{API_BASE_URL}/v1/tasks?page=3&perPage=30`
 </aside>

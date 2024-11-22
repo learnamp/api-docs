@@ -46,7 +46,7 @@ users = Learnamp::Users.new(token).all
 
 View all users.
 
-`GET https://api.learnamp.com/v1/users`
+`GET https://{API_BASE_URL}/v1/users`
 
 Response will be paginated [see pagination](#pagination)
 
@@ -54,7 +54,7 @@ Response will be paginated [see pagination](#pagination)
 
 The following URL params may be included, to filter the result set:
 
-`GET https://api.learnamp.com/v1/users?filters[email]=test@email.com`
+`GET https://{API_BASE_URL}/v1/users?filters[email]=test@email.com`
 
 
 URL Param |Example Value | Description
@@ -206,7 +206,7 @@ user = Learnamp::Users.new(token).find(1920)
 
 Display user details for one specific user.
 
-`GET https://api.learnamp.com/v1/users/{userId}`
+`GET https://{API_BASE_URL}/v1/users/{userId}`
 
 
 > 200 OK - successful response:
@@ -350,7 +350,7 @@ user = Learnamp::Users.new(token).create(params)
 
 Create a user and trigger an invite email.
 
-`POST https://api.learnamp.com/v1/users`
+`POST https://{API_BASE_URL}/v1/users`
 
 ### Data in Body
 
@@ -520,7 +520,7 @@ user = Learnamp::Users.new(token).update(1904, params)
 
 Update a user's details'.
 
-`PUT https://api.learnamp.com/v1/users/{userId}`
+`PUT https://{API_BASE_URL}/v1/users/{userId}`
 
 ### Data in Body
 
@@ -658,7 +658,7 @@ Learnamp::Users.new(token).deactivate(1904)
 
 Deactivate a user, so that they can no longer login. Their data is not removed.
 
-`PUT https://api.learnamp.com/v1/users/{userId}/deactivate`
+`PUT https://{API_BASE_URL}/v1/users/{userId}/deactivate`
 
 
 > 204 No Content - successful response:
@@ -716,7 +716,7 @@ Learnamp::Users.new(token).reactivate(1904)
 
 Reactivate a user, so that they login again.
 
-`PUT https://api.learnamp.com/v1/users/{userId}/reactivate`
+`PUT https://{API_BASE_URL}/v1/users/{userId}/reactivate`
 
 
 > 204 No Content - successful response:
@@ -774,7 +774,7 @@ Learnamp::Users.new(token).delete(1904)
 
 Delete a user, so that they can no longer login. Their data is removed.
 
-`DELETE https://api.learnamp.com/v1/users/{userId}`
+`DELETE https://{API_BASE_URL}/v1/users/{userId}`
 
 
 > 204 No Content - successful response:
@@ -832,7 +832,7 @@ data = Learnamp::Users.new(token).Channels_progress(123)
 
 View progress of all assigned channels by a specified user. This is analogous to Learn Amp's People Log feature, for a single user.
 
-`GET https://api.learnamp.com/v1/users/{userId}/channels_progress`
+`GET https://{API_BASE_URL}/v1/users/{userId}/channels_progress`
 
 This end-point will return a paginated array of channels that are assigned to the specified user. Each element will contain the completion percentage of the channel by that user, as well as the datetime (if any) when the channel was completed.
 

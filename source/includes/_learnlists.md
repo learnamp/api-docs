@@ -48,7 +48,7 @@ teams = Learnamp::Learnlists.new(token).all(filters)
 
 View all learnlists
 
-`GET https://api.learnamp.com/v1/learnlists`
+`GET https://{API_BASE_URL}/v1/learnlists`
 
 Response will be paginated [see pagination](#pagination)
 

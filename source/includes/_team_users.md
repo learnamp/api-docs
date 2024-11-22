@@ -41,7 +41,7 @@ users = Learnamp::TeamUsers.new(token).find(245)
 
 View a specific team, and include all users in that team.
 
-`GET https://api.learnamp.com/v1/teams/{teamId}/users`
+`GET https://{API_BASE_URL}/v1/teams/{teamId}/users`
 
 > 200 OK - successful response:
 
@@ -177,7 +177,7 @@ Learnamp::TeamUsers.new(token).create(245, params)
 
 Adds a user to a Team.
 
-`POST https://api.learnamp.com/v1/teams/{teamId}/users`
+`POST https://{API_BASE_URL}/v1/teams/{teamId}/users`
 
 Note that Team ID is passed in as a URL segment.
 
@@ -340,7 +340,7 @@ Adds a user to a Team.
 In order to simplify integration with third party services, another
 endpoint responsible for team member creation was implemented.
 
-`POST https://api.learnamp.com/v1/teams/users`
+`POST https://{API_BASE_URL}/v1/teams/users`
 
 ### Data in Body
 
@@ -498,7 +498,7 @@ Learnamp::TeamUsers.new(token).delete(245, 1)
 
 Delete a user from a team. (User and team are kept, but their association is removed).
 
-`DELETE https://api.learnamp.com/v1/teams/{teamId}/users/{userId}`
+`DELETE https://{API_BASE_URL}/v1/teams/{teamId}/users/{userId}`
 
 
 > 204 No Content - successful response:

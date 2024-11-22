@@ -49,7 +49,7 @@ teams = Learnamp::Teams.new(token).all(filters)
 
 View all teams
 
-`GET https://api.learnamp.com/v1/teams`
+`GET https://{API_BASE_URL}/v1/teams`
 
 Response will be paginated [see pagination](#pagination)
 
@@ -58,7 +58,7 @@ Response will be paginated [see pagination](#pagination)
 
 The following URL params by be included, to filter the result set:
 
-`GET https://api.learnamp.com/v1/teams?filters[name]=founders`
+`GET https://{API_BASE_URL}/v1/teams?filters[name]=founders`
 
 URL Param | Value | Description
 --------- | ------- | -----------
@@ -156,7 +156,7 @@ teams = Learnamp::Teams.new(token).find(245)
 
 Display details for one specific Team.
 
-`GET https://api.learnamp.com/v1/teams/{teamId}`
+`GET https://{API_BASE_URL}/v1/teams/{teamId}`
 
 
 > 200 OK - successful response:
@@ -331,7 +331,7 @@ team = Learnamp::Teams.new(token).create(params)
 
 Create a Team
 
-`POST https://api.learnamp.com/v1/teams`
+`POST https://{API_BASE_URL}/v1/teams`
 
 ### Data in Body
 
@@ -451,7 +451,7 @@ team = Learnamp::Teams.new(token).update(456, params)
 
 Update a Team
 
-`PUT https://api.learnamp.com/v1/items`
+`PUT https://{API_BASE_URL}/v1/items`
 
 ### Data in Body
 
@@ -558,7 +558,7 @@ Learnamp::Teams.new(token).delete(456)
 
 Delete a team. (Users are kept, but their association with team is removed).
 
-`DELETE https://api.learnamp.com/v1/teams/{teamId}`
+`DELETE https://{API_BASE_URL}/v1/teams/{teamId}`
 
 
 > 204 No Content - successful response:

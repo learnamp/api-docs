@@ -48,7 +48,7 @@ teams = Learnamp::Channels.new(token).all(filters)
 
 View all channels
 
-`GET https://api.learnamp.com/v1/channels`
+`GET https://{API_BASE_URL}/v1/channels`
 
 Response will be paginated [see pagination](#pagination)
 
@@ -107,7 +107,7 @@ data = Learnamp::Channels.new(token).users_progress(123)
 
 View progress of all assigned users through a specified channel. This is analogous to Learn Amp's Content Log feature, for a single channel.
 
-`GET https://api.learnamp.com/v1/channels/{channelId}/users_progress`
+`GET https://{API_BASE_URL}/v1/channels/{channelId}/users_progress`
 
 This end-point will return a paginated array of users who are assigned the specified channel. Each element will contain the completion percentage of the channel by that user, as well as the datetime (if any) when the channel was completed.
 

@@ -45,7 +45,7 @@ items = Learnamp::Items.new(token).all
 
 View all items
 
-`GET https://api.learnamp.com/v1/items`
+`GET https://{API_BASE_URL}/v1/items`
 
 Response will be paginated [see pagination](#pagination)
 
@@ -116,7 +116,7 @@ item = Learnamp::Items.new(token).find(3015)
 
 Display all details for one specific Item.
 
-`GET https://api.learnamp.com/v1/items/{itemId}`
+`GET https://{API_BASE_URL}/v1/items/{itemId}`
 
 
 > 200 OK - successful response:
@@ -236,7 +236,7 @@ item = Learnamp::Items.new(token).create(params)
 
 Create an Item
 
-`POST https://api.learnamp.com/v1/items`
+`POST https://{API_BASE_URL}/v1/items`
 
 ### Data in Body
 
@@ -362,7 +362,7 @@ item = Learnamp::Items.new(token).update(1234, params)
 
 Update an Item
 
-`POST https://api.learnamp.com/v1/items`
+`POST https://{API_BASE_URL}/v1/items`
 
 ### Data in Body
 
@@ -488,7 +488,7 @@ Learnamp::Items.new(token).delete(1)
 
 Delete an Item
 
-`DELETE https://api.learnamp.com/v1/items/{itemId}`
+`DELETE https://{API_BASE_URL}/v1/items/{itemId}`
 
 
 > 204 No Content - successful response:

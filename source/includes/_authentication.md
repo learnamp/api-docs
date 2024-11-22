@@ -45,7 +45,11 @@ The Learn Amp API is secured using the OAuth2 Client Credentials flow.
 
 Before calls can be made to the API, an **access token** must be retrieved from the Auth Token URL.
 
+For accounts on EU1 Pod, the authentication URL is:
 `POST https://api.learnamp.com/oauth/token`
+
+For accounts on EU2 Pod, the authentication URL is:
+`POST https://api-eu2.learnamp.com/oauth/token`
 
 ### Data in Body
 

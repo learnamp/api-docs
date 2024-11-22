@@ -72,7 +72,7 @@ tasks = Learnamp::Tasks.new(token).all(filters)
 
 View all tasks
 
-`GET https://api.learnamp.com/v1/tasks`
+`GET https://{API_BASE_URL}/v1/tasks`
 
 Response will be paginated [see pagination](#pagination)
 
@@ -81,7 +81,7 @@ Response will be paginated [see pagination](#pagination)
 
 The following URL params by be included, to filter the result set:
 
-`GET https://api.learnamp.com/v1/tasks?filters[deadline][from]=2021-01-01&filters[deadline][to]=2021-06-01`
+`GET https://{API_BASE_URL}/v1/tasks?filters[deadline][from]=2021-01-01&filters[deadline][to]=2021-06-01`
 
 URL Param | Example Value | Description
 --------- | ------- | -----------

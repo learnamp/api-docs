@@ -29,18 +29,6 @@ code_clipboard: true
 
 # API Reference
 
-> Authentication Token URL
-
-```
-https://api.learnamp.com/oauth/token
-```
-
-> API Base URL for subsquent calls
-
-```
-https://api.learnamp.com/v1
-```
-
 Welcome to Learn Amp API reference.
 
 The Learn Amp API is organised around [REST](https://en.wikipedia.org/wiki/Representational_state_transfer). Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
@@ -52,7 +40,33 @@ To get started, you will need:
 
 1. An account on the Learn Amp platform
 2. An API Key and Secret: Go to "Company Settings" --> "API"
+3. Take note of the API Base URL, and use this value for all API calls.
 
 **Please note** Only the Owner user of your account is permitted to access the API settings.
 
 <%= image_tag "images/api_credentials.png", width: 580, alt: "Accessing API credentials for Learn Amp within Company Settings area" %>
+
+
+## Authentication Token URL
+
+For accounts on EU1 Pod:
+```
+https://api.learnamp.com/oauth/token
+```
+
+For accounts on EU2 Pod:
+```
+https://api-eu2.learnamp.com/oauth/token
+```
+
+## API Base URL for subsquent calls
+
+For accounts on EU1 Pod:
+```
+https://api.learnamp.com/v1
+```
+
+For accounts on EU2 Pod:
+```
+https://api-eu2.learnamp.com/v1
+```
