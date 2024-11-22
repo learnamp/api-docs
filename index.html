@@ -316,6 +316,12 @@
                   <li>
                     <a href="#getting-started" class="toc-h2 toc-link" data-title="Getting Started">Getting Started</a>
                   </li>
+                  <li>
+                    <a href="#authentication-token-url" class="toc-h2 toc-link" data-title="Authentication Token URL">Authentication Token URL</a>
+                  </li>
+                  <li>
+                    <a href="#api-base-url-for-subsquent-calls" class="toc-h2 toc-link" data-title="API Base URL for subsquent calls">API Base URL for subsquent calls</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -535,16 +541,6 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='api-reference'>API Reference</h1>
-<blockquote>
-<p>Authentication Token URL</p>
-</blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>https://api.learnamp.com/oauth/token
-</code></pre></div>
-<blockquote>
-<p>API Base URL for subsquent calls</p>
-</blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>https://api.learnamp.com/v1
-</code></pre></div>
 <p>Welcome to Learn Amp API reference.</p>
 
 <p>The Learn Amp API is organised around <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</a>. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.</p>
@@ -554,11 +550,32 @@
 <ol>
 <li>An account on the Learn Amp platform</li>
 <li>An API Key and Secret: Go to &quot;Company Settings&quot; --&gt; &quot;API&quot;</li>
+<li>Take note of the API Base URL, and use this value for all API calls.</li>
 </ol>
 
 <p><strong>Please note</strong> Only the Owner user of your account is permitted to access the API settings.</p>
 
 <p><img src="images/api_credentials-a4984507.png" width="580" alt="Accessing API credentials for Learn Amp within Company Settings area" /></p>
+<h2 id='authentication-token-url'>Authentication Token URL</h2>
+<p>For accounts on EU1 Pod:
+<code>
+https://api.learnamp.com/oauth/token
+</code></p>
+
+<p>For accounts on EU2 Pod:
+<code>
+https://api-eu2.learnamp.com/oauth/token
+</code></p>
+<h2 id='api-base-url-for-subsquent-calls'>API Base URL for subsquent calls</h2>
+<p>For accounts on EU1 Pod:
+<code>
+https://api.learnamp.com/v1
+</code></p>
+
+<p>For accounts on EU2 Pod:
+<code>
+https://api-eu2.learnamp.com/v1
+</code></p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>Generate an Access Token from the Auth Token URL:</p>
@@ -601,7 +618,11 @@
 
 <p>Before calls can be made to the API, an <strong>access token</strong> must be retrieved from the Auth Token URL.</p>
 
-<p><code>POST https://api.learnamp.com/oauth/token</code></p>
+<p>For accounts on EU1 Pod, the authentication URL is:
+<code>POST https://api.learnamp.com/oauth/token</code></p>
+
+<p>For accounts on EU2 Pod, the authentication URL is:
+<code>POST https://api-eu2.learnamp.com/oauth/token</code></p>
 <h3 id='data-in-body'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -686,13 +707,13 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 </code></pre></div>
 <p>View all activity</p>
 
-<p><code>GET https://api.learnamp.com/v1/activities</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/activities</code></p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
 <p>The following URL params by be included, to filter the result set:</p>
 
-<p><code>GET https://api.learnamp.com/v1/activities?expanded=true&amp;include_deactivated_users=true&amp;filters[date][from]=2021-01-01&amp;filters[date][to]=2021-06-01</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/activities?expanded=true&amp;include_deactivated_users=true&amp;filters[date][from]=2021-01-01&amp;filters[date][to]=2021-06-01</code></p>
 
 <table><thead>
 <tr>
@@ -922,7 +943,7 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 </code></pre></div>
 <p>View all channels</p>
 
-<p><code>GET https://api.learnamp.com/v1/channels</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/channels</code></p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 
@@ -974,7 +995,7 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 </code></pre></div>
 <p>View progress of all assigned users through a specified channel. This is analogous to Learn Amp&#39;s Content Log feature, for a single channel.</p>
 
-<p><code>GET https://api.learnamp.com/v1/channels/{channelId}/users_progress</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/channels/{channelId}/users_progress</code></p>
 
 <p>This end-point will return a paginated array of users who are assigned the specified channel. Each element will contain the completion percentage of the channel by that user, as well as the datetime (if any) when the channel was completed.</p>
 
@@ -1083,13 +1104,13 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 </code></pre></div>
 <p>View all events</p>
 
-<p><code>GET https://api.learnamp.com/v1/events</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/events</code></p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
 <p>The following URL params by be included, to filter the result set:</p>
 
-<p><code>GET https://api.learnamp.com/v1/events?filters[created_at][from]=2021-01-01&amp;filters[created_at][to]=2021-06-01</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/events?filters[created_at][from]=2021-01-01&amp;filters[created_at][to]=2021-06-01</code></p>
 
 <table><thead>
 <tr>
@@ -1185,7 +1206,7 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 </code></pre></div>
 <p>Display user details for one specific event.</p>
 
-<p><code>GET https://api.learnamp.com/v1/event/{eventId}</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/events/{eventId}</code></p>
 
 <blockquote>
 <p>200 OK - successful response:</p>
@@ -1287,13 +1308,13 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 </code></pre></div>
 <p>View all events</p>
 
-<p><code>GET https://api.learnamp.com/v1/enrollments</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/enrollments</code></p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
 <p>The following URL params by be included, to filter the result set:</p>
 
-<p><code>GET https://api.learnamp.com/v1/enrollments?filters[created_at][from]=2021-01-01&amp;filters[created_at][to]=2021-06-01</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/enrollments?filters[created_at][from]=2021-01-01&amp;filters[created_at][to]=2021-06-01</code></p>
 
 <table><thead>
 <tr>
@@ -1479,7 +1500,7 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 </code></pre></div>
 <p>Display user details for one specific event.</p>
 
-<p><code>GET https://api.learnamp.com/v1/event/{eventId}</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/event/{eventId}</code></p>
 
 <blockquote>
 <p>200 OK - successful response:</p>
@@ -1586,7 +1607,7 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 </code></pre></div>
 <p>Display user details for one specific user.</p>
 
-<p><code>GET https://api.learnamp.com/v1/enrollments/{enrollmentId}</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/enrollments/{enrollmentId}</code></p>
 
 <blockquote>
 <p>200 OK - successful response:</p>
@@ -1725,13 +1746,13 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 </code></pre></div>
 <p>View all tasks</p>
 
-<p><code>GET https://api.learnamp.com/v1/tasks</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/tasks</code></p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
 <p>The following URL params by be included, to filter the result set:</p>
 
-<p><code>GET https://api.learnamp.com/v1/tasks?filters[deadline][from]=2021-01-01&amp;filters[deadline][to]=2021-06-01</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/tasks?filters[deadline][from]=2021-01-01&amp;filters[deadline][to]=2021-06-01</code></p>
 
 <table><thead>
 <tr>
@@ -2041,13 +2062,13 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 </code></pre></div>
 <p>View all teams</p>
 
-<p><code>GET https://api.learnamp.com/v1/teams</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/teams</code></p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
 <p>The following URL params by be included, to filter the result set:</p>
 
-<p><code>GET https://api.learnamp.com/v1/teams?filters[name]=founders</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/teams?filters[name]=founders</code></p>
 
 <table><thead>
 <tr>
@@ -2152,7 +2173,7 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 </code></pre></div>
 <p>Display details for one specific Team.</p>
 
-<p><code>GET https://api.learnamp.com/v1/teams/{teamId}</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/teams/{teamId}</code></p>
 
 <blockquote>
 <p>200 OK - successful response:</p>
@@ -2314,7 +2335,7 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 </code></pre></div>
 <p>Create a Team</p>
 
-<p><code>POST https://api.learnamp.com/v1/teams</code></p>
+<p><code>POST https://{API_BASE_URL}/v1/teams</code></p>
 <h3 id='data-in-body'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -2466,7 +2487,7 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 </code></pre></div>
 <p>Update a Team</p>
 
-<p><code>PUT https://api.learnamp.com/v1/items</code></p>
+<p><code>PUT https://{API_BASE_URL}/v1/items</code></p>
 <h3 id='data-in-body-2'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -2585,7 +2606,7 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 </code></pre></div>
 <p>Delete a team. (Users are kept, but their association with team is removed).</p>
 
-<p><code>DELETE https://api.learnamp.com/v1/teams/{teamId}</code></p>
+<p><code>DELETE https://{API_BASE_URL}/v1/teams/{teamId}</code></p>
 
 <blockquote>
 <p>204 No Content - successful response:</p>
@@ -2634,7 +2655,7 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 </code></pre></div>
 <p>View a specific team, and include all users in that team.</p>
 
-<p><code>GET https://api.learnamp.com/v1/teams/{teamId}/users</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/teams/{teamId}/users</code></p>
 
 <blockquote>
 <p>200 OK - successful response:</p>
@@ -2763,7 +2784,7 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 </code></pre></div>
 <p>Adds a user to a Team.</p>
 
-<p><code>POST https://api.learnamp.com/v1/teams/{teamId}/users</code></p>
+<p><code>POST https://{API_BASE_URL}/v1/teams/{teamId}/users</code></p>
 
 <p>Note that Team ID is passed in as a URL segment.</p>
 <h3 id='data-in-body'>Data in Body</h3>
@@ -2923,7 +2944,7 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <p>In order to simplify integration with third party services, another
 endpoint responsible for team member creation was implemented.</p>
 
-<p><code>POST https://api.learnamp.com/v1/teams/users</code></p>
+<p><code>POST https://{API_BASE_URL}/v1/teams/users</code></p>
 <h3 id='data-in-body-2'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -3092,7 +3113,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>Delete a user from a team. (User and team are kept, but their association is removed).</p>
 
-<p><code>DELETE https://api.learnamp.com/v1/teams/{teamId}/users/{userId}</code></p>
+<p><code>DELETE https://{API_BASE_URL}/v1/teams/{teamId}/users/{userId}</code></p>
 
 <blockquote>
 <p>204 No Content - successful response:</p>
@@ -3145,7 +3166,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>View all items</p>
 
-<p><code>GET https://api.learnamp.com/v1/items</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/items</code></p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 
@@ -3209,7 +3230,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>Display all details for one specific Item.</p>
 
-<p><code>GET https://api.learnamp.com/v1/items/{itemId}</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/items/{itemId}</code></p>
 
 <blockquote>
 <p>200 OK - successful response:</p>
@@ -3320,7 +3341,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>Create an Item</p>
 
-<p><code>POST https://api.learnamp.com/v1/items</code></p>
+<p><code>POST https://{API_BASE_URL}/v1/items</code></p>
 <h3 id='data-in-body'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -3502,7 +3523,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>Update an Item</p>
 
-<p><code>POST https://api.learnamp.com/v1/items</code></p>
+<p><code>POST https://{API_BASE_URL}/v1/items</code></p>
 <h3 id='data-in-body-2'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -3683,7 +3704,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>Delete an Item</p>
 
-<p><code>DELETE https://api.learnamp.com/v1/items/{itemId}</code></p>
+<p><code>DELETE https://{API_BASE_URL}/v1/items/{itemId}</code></p>
 
 <blockquote>
 <p>204 No Content - successful response:</p>
@@ -3737,7 +3758,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>View all learnlists</p>
 
-<p><code>GET https://api.learnamp.com/v1/learnlists</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/learnlists</code></p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 
@@ -3792,13 +3813,13 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>View all users.</p>
 
-<p><code>GET https://api.learnamp.com/v1/users</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/users</code></p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
 <p>The following URL params may be included, to filter the result set:</p>
 
-<p><code>GET https://api.learnamp.com/v1/users?filters[email]=test@email.com</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/users?filters[email]=test@email.com</code></p>
 
 <table><thead>
 <tr>
@@ -3999,7 +4020,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>Display user details for one specific user.</p>
 
-<p><code>GET https://api.learnamp.com/v1/users/{userId}</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/users/{userId}</code></p>
 
 <blockquote>
 <p>200 OK - successful response:</p>
@@ -4134,7 +4155,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>Create a user and trigger an invite email.</p>
 
-<p><code>POST https://api.learnamp.com/v1/users</code></p>
+<p><code>POST https://{API_BASE_URL}/v1/users</code></p>
 <h3 id='data-in-body'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -4356,7 +4377,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>Update a user&#39;s details&#39;.</p>
 
-<p><code>PUT https://api.learnamp.com/v1/users/{userId}</code></p>
+<p><code>PUT https://{API_BASE_URL}/v1/users/{userId}</code></p>
 <h3 id='data-in-body-2'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -4556,7 +4577,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>Deactivate a user, so that they can no longer login. Their data is not removed.</p>
 
-<p><code>PUT https://api.learnamp.com/v1/users/{userId}/deactivate</code></p>
+<p><code>PUT https://{API_BASE_URL}/v1/users/{userId}/deactivate</code></p>
 
 <blockquote>
 <p>204 No Content - successful response:</p>
@@ -4605,7 +4626,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>Reactivate a user, so that they login again.</p>
 
-<p><code>PUT https://api.learnamp.com/v1/users/{userId}/reactivate</code></p>
+<p><code>PUT https://{API_BASE_URL}/v1/users/{userId}/reactivate</code></p>
 
 <blockquote>
 <p>204 No Content - successful response:</p>
@@ -4654,7 +4675,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>Delete a user, so that they can no longer login. Their data is removed.</p>
 
-<p><code>DELETE https://api.learnamp.com/v1/users/{userId}</code></p>
+<p><code>DELETE https://{API_BASE_URL}/v1/users/{userId}</code></p>
 
 <blockquote>
 <p>204 No Content - successful response:</p>
@@ -4703,7 +4724,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>View progress of all assigned channels by a specified user. This is analogous to Learn Amp&#39;s People Log feature, for a single user.</p>
 
-<p><code>GET https://api.learnamp.com/v1/users/{userId}/channels_progress</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/users/{userId}/channels_progress</code></p>
 
 <p>This end-point will return a paginated array of channels that are assigned to the specified user. Each element will contain the completion percentage of the channel by that user, as well as the datetime (if any) when the channel was completed.</p>
 
@@ -4802,7 +4823,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>View all verbs</p>
 
-<p><code>GET https://api.learnamp.com/v1/verbs</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/verbs</code></p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 
@@ -4955,7 +4976,7 @@ endpoint responsible for team member creation was implemented.</p>
 
 <p><strong>Example:</strong></p>
 
-<p><code>GET https://api.learnamp.com/v1/tasks?page=3&amp;perPage=30</code>
+<p><code>GET https://{API_BASE_URL}/v1/tasks?page=3&amp;perPage=30</code>
 </aside></p>
 <h1 id='errors'>Errors</h1>
 <p>The Learn Amp API uses the following error codes:</p>
