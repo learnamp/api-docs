@@ -67,11 +67,24 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
 [
     {
         "id": 1,
-        "content": "<p> Hi guys <span class=\"atwho-inserted\" contenteditable=\"false\" data-atwho-at-query=\"@\"><a href=\"/en/users/198986\" data-user-id=\"198986\">@Mr Inactive McGoo</a></span> <span class=\"atwho-inserted\" contenteditable=\"false\" data-atwho-at-query=\"@\"><a href=\"/en/users/198990\" data-user-id=\"198990\">@new guy</a></span> <span class=\"atwho-inserted\" contenteditable=\"false\" data-atwho-at-query=\"@\"><a href=\"/en/users/1\" data-user-id=\"1\">@taylor williams</a></span>&nbsp;</p>",
+        "content": "<p>shout out to all my friends  <span class=\"atwho-inserted\" contenteditable=\"false\" data-atwho-at-query=\"@\"><a href=\"/en/users/198990\" data-user-id=\"198990\">@new guy</a></span> <span class=\"atwho-inserted\" contenteditable=\"false\" data-atwho-at-query=\"@\"><a href=\"/en/users/3\" data-user-id=\"3\">@Max Absurdity</a></span>&nbsp;</p>",
         "pinned": false,
-        "created_at_words": "Feb 07, 2025",
+        "createdAt": "2025-02-07T10:31:46.812Z",
         "user": {
-            "name": "Thomas Millward Wright"
+            "id": 1,
+            "firstName": "Henry",
+            "lastName": "Dorsett Case",
+            "jobTitle": null,
+            "email": "henry.dorsettcase@learnamp.com",
+            "timeZone": "International Date Line West",
+            "language": "en",
+            "role": "super_admin",
+            "hireDate": null,
+            "profileUrl": "http://sawmill.lvh.me:3000/en/users/1",
+            "status": {
+                "status": "Confirmed",
+                "time": "On 20 Jun 23"
+            }
         },
         "likes": {
             "count": 0,
@@ -80,14 +93,70 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
         "mentions": [
             {
                 "mentioned": {
-                    "id": 1,
-                    "name": "taylor williams",
-                    "email": "taylor.williams@learnamp.com"
+                    "id": 198990,
+                    "firstName": "new",
+                    "lastName": "guy",
+                    "jobTitle": "",
+                    "email": "new.guy@guy.guy",
+                    "timeZone": "International Date Line West",
+                    "language": "en",
+                    "role": "viewer",
+                    "hireDate": null,
+                    "profileUrl": "http://sawmill.lvh.me:3000/en/users/198990",
+                    "status": {
+                        "status": "Confirmed",
+                        "time": "On 12 Aug 24"
+                    }
                 },
                 "mentioned_by": {
                     "id": 1,
-                    "name": "Thomas Millward Wright",
-                    "email": "thomas.millwardwright@learnamp.com"
+                    "firstName": "Henry",
+                    "lastName": "Dorsett Case",
+                    "jobTitle": null,
+                    "email": "henry.dorsettcase@learnamp.com",
+                    "timeZone": "International Date Line West",
+                    "language": "en",
+                    "role": "super_admin",
+                    "hireDate": null,
+                    "profileUrl": "http://sawmill.lvh.me:3000/en/users/1",
+                    "status": {
+                        "status": "Confirmed",
+                        "time": "On 20 Jun 23"
+                    }
+                }
+            },
+            {
+                "mentioned": {
+                    "id": 3,
+                    "firstName": "Max",
+                    "lastName": "Absurdity",
+                    "jobTitle": null,
+                    "email": "max.absurdity@learnamp.com",
+                    "timeZone": "International Date Line West",
+                    "language": "en",
+                    "role": "super_admin",
+                    "hireDate": null,
+                    "profileUrl": "http://sawmill.lvh.me:3000/en/users/1",
+                    "status": {
+                        "status": "Confirmed",
+                        "time": "On 20 Jun 23"
+                    }
+                },
+                "mentioned_by": {
+                    "id": 1,
+                    "firstName": "Henry",
+                    "lastName": "Dorsett Case",
+                    "jobTitle": null,
+                    "email": "henry.dorsettcase@learnamp.com",
+                    "timeZone": "International Date Line West",
+                    "language": "en",
+                    "role": "super_admin",
+                    "hireDate": null,
+                    "profileUrl": "http://sawmill.lvh.me:3000/en/users/3",
+                    "status": {
+                        "status": "Confirmed",
+                        "time": "On 20 Jun 23"
+                    }
                 }
             }
         ],
