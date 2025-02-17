@@ -78,9 +78,9 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
             "email": "henry.dorsettcase@learnamp.com",
             "timeZone": "International Date Line West",
             "language": "en",
-            "role": "super_admin",
+            "role": "viewer",
             "hireDate": null,
-            "profileUrl": "http://sawmill.lvh.me:3000/en/users/1",
+            "profileUrl": "https://testaccount.learnamp.com/en/users/1",
             "status": {
                 "status": "Confirmed",
                 "time": "On 20 Jun 23"
@@ -102,7 +102,7 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
                     "language": "en",
                     "role": "viewer",
                     "hireDate": null,
-                    "profileUrl": "http://sawmill.lvh.me:3000/en/users/198990",
+                    "profileUrl": "https://testaccount.learnamp.com/en/users/198990",
                     "status": {
                         "status": "Confirmed",
                         "time": "On 12 Aug 24"
@@ -116,9 +116,9 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
                     "email": "henry.dorsettcase@learnamp.com",
                     "timeZone": "International Date Line West",
                     "language": "en",
-                    "role": "super_admin",
+                    "role": "viewer",
                     "hireDate": null,
-                    "profileUrl": "http://sawmill.lvh.me:3000/en/users/1",
+                    "profileUrl": "https://testaccount.learnamp.com/en/users/1",
                     "status": {
                         "status": "Confirmed",
                         "time": "On 20 Jun 23"
@@ -134,9 +134,9 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
                     "email": "max.absurdity@learnamp.com",
                     "timeZone": "International Date Line West",
                     "language": "en",
-                    "role": "super_admin",
+                    "role": "viewer",
                     "hireDate": null,
-                    "profileUrl": "http://sawmill.lvh.me:3000/en/users/1",
+                    "profileUrl": "https://testaccount.learnamp.com/en/users/1",
                     "status": {
                         "status": "Confirmed",
                         "time": "On 20 Jun 23"
@@ -150,9 +150,9 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
                     "email": "henry.dorsettcase@learnamp.com",
                     "timeZone": "International Date Line West",
                     "language": "en",
-                    "role": "super_admin",
+                    "role": "viewer",
                     "hireDate": null,
-                    "profileUrl": "http://sawmill.lvh.me:3000/en/users/3",
+                    "profileUrl": "https://testaccount.learnamp.com/en/users/3",
                     "status": {
                         "status": "Confirmed",
                         "time": "On 20 Jun 23"
