@@ -217,7 +217,7 @@ Create an activty with a related [Item](#items) record and [Verb](#verbs). Pleas
 > Create a Activity record with an Item and Verb
 
 ```shell
-curl --location 'http://learnamptesting.lvh.me:3000/v1/activities' \
+curl --location 'hhttps://testaccount.learnamp.com/v1/activities' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer a3DWMdP8mmFRtvulvanOGgII7U1dVV8LZ9zr6jyCq4k' \
 --header 'Cookie: _learnamp_session_=aadc48937fec7520fd7cf3f7e55681e4' \
@@ -289,7 +289,6 @@ activity = Learnamp::Activities.new(token).create(params_with_slug)
   - `item_id`
   - `external_id`
 
-
 Parameter | Example value | Description (* required)
 --------- | ------- | -----------
 user_id | 1 | ID of the User. 
@@ -298,3 +297,60 @@ verb_id | 54 | ID of the [Verb](#verbs) for this activity. *(\*)*
 item_id | 1 | ID of the Item that is created within the Learn Amp platform.
 slug | 'content-slug-for-activity' | Slug of an existing Item in the platform. 
 external_id | 1 or 'content_1234567890abcdef' | `source_id` of the Item that is in the Learn Amp platform but was created through the [Items](#items) create endpoint.
+
+> 201 Created - succesful response:
+
+```json
+{
+    "id": 225,
+    "activityable": {
+        "id": 10,
+        "name": "Content",
+        "shortDescription": null,
+        "type": "Item",
+        "url": "hhttps://testaccount.learnamp.com/en/items/content-slug-for-activity",
+        "addedBy": {
+            "id": 1,
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "jobTitle": "CTO",
+            "email": "firstlast.lastname@learnamp.com",
+            "timeZone": "London",
+            "language": "en",
+            "role": "viewer",
+            "hireDate": null,
+            "profileUrl": "hhttps://testaccount.learnamp.com/en/users/1",
+            "status": {
+                "status": "Confirmed",
+                "time": "On 4 Apr 23"
+            }
+        },
+        "displayAddedBy": false,
+        "totalTimeEstimate": "< 5 mins"
+    },
+    "user": {
+        "id": 1,
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "jobTitle": "Last Name",
+        "email": "firstlast.lastname@learnamp.com",
+        "timeZone": "London",
+        "language": "en",
+        "role": "viewer",
+        "hireDate": null,
+        "profileUrl": "hhttps://testaccount.learnamp.com/en/users/1",
+        "status": {
+            "status": "Confirmed",
+            "time": "On 4 Apr 23"
+        }
+    },
+    "verb": "started",
+    "createdAt": "2025-02-17T16:08:29Z",
+    "expiredAt": null,
+    "result": "",
+    "completed": false,
+    "expired": false,
+    "score": null,
+    "totalTime": null
+}
+```
