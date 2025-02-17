@@ -440,6 +440,14 @@
               </ul>
           </li>
           <li>
+            <a href="#communities" class="toc-h1 toc-link" data-title="Communities">Communities</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#view-all-community-posts" class="toc-h2 toc-link" data-title="View All Community Posts">View All Community Posts</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#items" class="toc-h1 toc-link" data-title="Items">Items</a>
               <ul class="toc-list-h2">
                   <li>
@@ -3126,6 +3134,175 @@ endpoint responsible for team member creation was implemented.</p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
 </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h1 id='communities'>Communities</h1><h2 id='view-all-community-posts'>View All Community Posts</h2>
+<blockquote>
+<p>For a given community, view all posts</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/communities/123/posts'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">CommunityPosts</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="n">community_id</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+      <span class="n">filters_query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">encode_www_form</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/communities/</span><span class="si">#{</span><span class="n">community_id</span><span class="si">}</span><span class="s2">/posts?</span><span class="si">#{</span><span class="n">filters_query</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">filters</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"filters[name][created_at][from]"</span><span class="p">:</span> <span class="no">DateTime</span><span class="p">.</span><span class="nf">now</span><span class="p">.</span><span class="nf">to_s</span>
+<span class="p">}</span>
+<span class="n">teams</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">CommunityPosts</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">all</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+</code></pre></div>
+<p>View all community posts</p>
+
+<p><code>GET https://{API_BASE_URL}/v1/communities/:id/posts</code></p>
+
+<p>Response will be paginated <a href="#pagination">see pagination</a></p>
+<h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
+<p>The following URL params by be included, to filter the result set:</p>
+
+<p><code>GET https://{API_BASE_URL}/v1/communities/:id/posts?filters[created_at][from]=2022-01-01</code></p>
+
+<table><thead>
+<tr>
+<th>URL Param</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>filters[created_at][from]</td>
+<td>&quot;2021-12-31&quot;</td>
+<td>Assigned date range FROM date/time in ISO 8601 format</td>
+</tr>
+<tr>
+<td>filters[created_at][to]</td>
+<td>&quot;2022-01-01 15:00:00&quot;</td>
+<td>Assigned date range TO date/time in ISO 8601 format</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>200 OK - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;p&gt;shout out to all my friends  &lt;span class=</span><span class="se">\"</span><span class="s2">atwho-inserted</span><span class="se">\"</span><span class="s2"> contenteditable=</span><span class="se">\"</span><span class="s2">false</span><span class="se">\"</span><span class="s2"> data-atwho-at-query=</span><span class="se">\"</span><span class="s2">@</span><span class="se">\"</span><span class="s2">&gt;&lt;a href=</span><span class="se">\"</span><span class="s2">/en/users/198990</span><span class="se">\"</span><span class="s2"> data-user-id=</span><span class="se">\"</span><span class="s2">198990</span><span class="se">\"</span><span class="s2">&gt;@new guy&lt;/a&gt;&lt;/span&gt; &lt;span class=</span><span class="se">\"</span><span class="s2">atwho-inserted</span><span class="se">\"</span><span class="s2"> contenteditable=</span><span class="se">\"</span><span class="s2">false</span><span class="se">\"</span><span class="s2"> data-atwho-at-query=</span><span class="se">\"</span><span class="s2">@</span><span class="se">\"</span><span class="s2">&gt;&lt;a href=</span><span class="se">\"</span><span class="s2">/en/users/3</span><span class="se">\"</span><span class="s2"> data-user-id=</span><span class="se">\"</span><span class="s2">3</span><span class="se">\"</span><span class="s2">&gt;@Max Absurdity&lt;/a&gt;&lt;/span&gt;&amp;nbsp;&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"pinned"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-02-07T10:31:46.812Z"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Henry"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dorsett Case"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"henry.dorsettcase@learnamp.com"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"International Date Line West"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"super_admin"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://sawmill.lvh.me:3000/en/users/1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Jun 23"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"likes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liked_by"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"mentions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"mentioned"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">198990</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"new"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"guy"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"new.guy@guy.guy"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"International Date Line West"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://sawmill.lvh.me:3000/en/users/198990"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 12 Aug 24"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"mentioned_by"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Henry"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dorsett Case"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"henry.dorsettcase@learnamp.com"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"International Date Line West"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"super_admin"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://sawmill.lvh.me:3000/en/users/1"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Jun 23"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"mentioned"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Absurdity"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"max.absurdity@learnamp.com"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"International Date Line West"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"super_admin"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://sawmill.lvh.me:3000/en/users/1"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Jun 23"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"mentioned_by"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Henry"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dorsett Case"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"henry.dorsettcase@learnamp.com"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"International Date Line West"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"super_admin"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://sawmill.lvh.me:3000/en/users/3"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Jun 23"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"comments"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
 </span></code></pre></div><h1 id='items'>Items</h1>
 <p>An item in Learn Amp is a learning object. It could be a SCORM, xAPI or AICC package. It could be a URL link to an external web page. It could be an embedded video, or downloadable file.</p>
 
