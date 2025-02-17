@@ -78,7 +78,7 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
             "email": "henry.dorsettcase@learnamp.com",
             "timeZone": "International Date Line West",
             "language": "en",
-            "role": "super_admin",
+            "role": "viewer",
             "hireDate": null,
             "profileUrl": "https://testaccount.learnamp.com/en/users/1",
             "status": {
@@ -116,7 +116,7 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
                     "email": "henry.dorsettcase@learnamp.com",
                     "timeZone": "International Date Line West",
                     "language": "en",
-                    "role": "super_admin",
+                    "role": "viewer",
                     "hireDate": null,
                     "profileUrl": "https://testaccount.learnamp.com/en/users/1",
                     "status": {
@@ -134,7 +134,7 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
                     "email": "max.absurdity@learnamp.com",
                     "timeZone": "International Date Line West",
                     "language": "en",
-                    "role": "super_admin",
+                    "role": "viewer",
                     "hireDate": null,
                     "profileUrl": "https://testaccount.learnamp.com/en/users/1",
                     "status": {
@@ -150,7 +150,7 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
                     "email": "henry.dorsettcase@learnamp.com",
                     "timeZone": "International Date Line West",
                     "language": "en",
-                    "role": "super_admin",
+                    "role": "viewer",
                     "hireDate": null,
                     "profileUrl": "https://testaccount.learnamp.com/en/users/3",
                     "status": {
