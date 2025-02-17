@@ -206,3 +206,95 @@ filters[verb] | "started" | Return activity for a specific verb. See [verbs](#ve
     ]
 }
 ```
+
+## Create an Activity
+
+##### NOTE: :construction: This endpoint is currently in beta and requires special access. Please raise a ticket on our Customer Portal to request access
+----
+
+Create an activty with a related [Item](#items) record and [Verb](#verbs). Please check to get an appropriate ID assigned to a specific verb.
+
+> Create a Activity record with an Item and Verb
+
+```shell
+curl --location 'http://learnamptesting.lvh.me:3000/v1/activities' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer a3DWMdP8mmFRtvulvanOGgII7U1dVV8LZ9zr6jyCq4k' \
+--header 'Cookie: _learnamp_session_=aadc48937fec7520fd7cf3f7e55681e4' \
+--form 'user_id="1"' \
+--form 'verb_id="54"' \
+--form 'item_id="10"'
+```
+
+```ruby
+module Learnamp
+  class Activities
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+
+    attr_accessor :token
+
+    def initialize(token)
+      @token = token
+    end
+
+    def create(params)
+      response = self.class.post("/activities", { body: params, headers: headers })
+      response.parsed_response
+    end
+
+    private
+
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
+
+params_with_item_id = {
+    user_id: '1',
+    verb_id: '54'
+    item_id: '10',
+}
+
+item_activity = Learnamp::Activities.new(token).create(params_with_item_id)
+
+params_with_external_id_item = {
+    user_id: '1',
+    verb_id: '54'
+    external_id: 'content_1234567890abcdef',
+}
+
+external_item_activity = Learnamp::Activities.new(token).create(params_with_external_id_item)
+
+params_with_slug = {
+    user_id: '1',
+    verb_id: '54'
+    slug: 'content-slug-for-activity',
+}
+
+activity = Learnamp::Activities.new(token).create(params_with_slug)
+```
+
+### Data in Body
+
+**Note:** The following parameters are mutually exclusive. It means you can only use one of other parameters to be a valid request.
+- For the User the Activity belongs to:
+  - `user_id`
+  - `email`
+- For the Item the Activity belongs to:
+  - `slug`
+  - `item_id`
+  - `external_id`
+
+
+Parameter | Example value | Description (* required)
+--------- | ------- | -----------
+user_id | 1 | ID of the User. 
+email | testuser@test.com | Email address of user.
+verb_id | 54 | ID of the [Verb](#verbs) for this activity. *(\*)*
+item_id | 1 | ID of the Item that is created within the Learn Amp platform.
+slug | 'content-slug-for-activity' | Slug of an existing Item in the platform. 
+external_id | 1 or 'content_1234567890abcdef' | `source_id` of the Item that is in the Learn Amp platform but was created through the [Items](#items) create endpoint.
