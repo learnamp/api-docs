@@ -209,7 +209,7 @@ filters[verb] | "started" | Return activity for a specific verb. See [verbs](#ve
 
 ## Create an Activity
 
-##### NOTE: :construction: This endpoint is currently in beta and requires special access. Please raise a ticket on our Customer Portal to request access
+##### NOTE: :construction: This endpoint is currently in beta and requires special access. Please raise a ticket on our [Customer Portal](https://learnamp.atlassian.net/servicedesk/customer/portal/1/user/login?destination=portal%2F1) to request access
 ----
 
 Create an activty with a related [Item](#items) record and [Verb](#verbs). Please check to get an appropriate ID assigned to a specific verb.
