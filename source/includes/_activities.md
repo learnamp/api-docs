@@ -354,3 +354,46 @@ external_id | 1 or 'content_1234567890abcdef' | `source_id` of the Item that is 
     "totalTime": null
 }
 ```
+
+> 400 Bad Request - validation errors:
+
+```json
+{
+    "error": "email is invalid, user_id, email are mutually exclusive",
+    "fullErrors": {
+        "email": [
+            "is invalid"
+        ],
+        "userId": [
+            "are mutually exclusive"
+        ]
+    }
+}
+```
+```json
+{
+    "error": "item_id, external_id are mutually exclusive",
+    "fullErrors": {
+        "itemId": [
+            "are mutually exclusive"
+        ]
+    }
+}
+```
+```json
+{
+    "error": "item_id, slug are mutually exclusive",
+    "fullErrors": {
+        "itemId": [
+            "are mutually exclusive"
+        ]
+    }
+}
+```
+
+> 404 Not Found - unsuccessful response:
+
+```json
+{
+    "error": "Couldn't find Verb with 'id'=666"
+}
