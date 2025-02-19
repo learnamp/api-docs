@@ -258,6 +258,11 @@ itemType | article | Item type, one of: "article", "document", "book", "q_and_a"
 totalTime | less_than_one_hour | Approximate time to complete. One of: "less_than_fifteen_minutes", "less_than_one_hour", "one_to_ten_hours", "ten_to_one_hundred_hours", "more_than_one_hundred_hours", "less_than_five_minutes", "five_to_ten_minutes", "ten_to_twenty_minutes", "twenty_to_thirty_minutes", "more_than_thirty_minutes", "less_than_ten_minutes", "ten_to_thirty_minutes", "thirty_minutes_to_one_hour", "one_to_two_hours", "more_than_two_hours", "two_to_four_hours", "four_to_six_hours", "more_than_six_hours", "less_than_two_hours", "four_to_eight_hours", "eight_to_twelve_hours", "more_than_twelve_hours", "more_than_one_hour", "custom_time"
 itemCategory | audiovisual | Category. One of: "written", "audiovisual", "activity_category", "assessment", "update_category", "other_category"
 
+
+### Source Type & ID
+
+The above mentioned parameters `sourceType` and `sourceId` are used to link the item to an external system. The API will prevent creation of items with a colliding combination of `sourceType` and `sourceId` within the context of your company account. Duplication between e.g. live and test accounts is permitted.
+
 > 201 Created - successful response:
 
 ```json
