@@ -68,6 +68,7 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
     {
         "id": 1,
         "content": "<p>shout out to all my friends  <span class=\"atwho-inserted\" contenteditable=\"false\" data-atwho-at-query=\"@\"><a href=\"/en/users/198990\" data-user-id=\"198990\">@new guy</a></span> <span class=\"atwho-inserted\" contenteditable=\"false\" data-atwho-at-query=\"@\"><a href=\"/en/users/3\" data-user-id=\"3\">@Max Absurdity</a></span>&nbsp;</p>",
+        "contentAsText": "shout out to all my friends @new guy @Max Absurdity",
         "pinned": false,
         "createdAt": "2025-02-07T10:31:46.812Z",
         "user": {
