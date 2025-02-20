@@ -325,6 +325,19 @@ The above mentioned parameters `sourceType` and `sourceId` are used to link the 
 }
 ```
 
+> 400 Bad request - duplicate source item:
+
+```json
+{
+    "error": "Item with source_type 'Integration for Sheffield University' and source_id 'test123' already exists",
+    "fullErrors": {
+        "base": [
+            "Item with source_type 'Integration for Sheffield University' and source_id 'test123' already exists"
+        ]
+    }
+}
+```
+
 ## Update an Item
 
 > Update an Item:
