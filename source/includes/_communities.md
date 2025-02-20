@@ -67,8 +67,8 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
 [
     {
         "id": 1,
-        "content": "<p>shout out to all my friends  <span class=\"atwho-inserted\" contenteditable=\"false\" data-atwho-at-query=\"@\"><a href=\"/en/users/198990\" data-user-id=\"198990\">@new guy</a></span> <span class=\"atwho-inserted\" contenteditable=\"false\" data-atwho-at-query=\"@\"><a href=\"/en/users/3\" data-user-id=\"3\">@Max Absurdity</a></span>&nbsp;</p>",
-        "contentAsText": "shout out to all my friends @new guy @Max Absurdity",
+        "content": "<p>This is a post with tags  <span class=\"atwho-inserted\" contenteditable=\"false\" data-atwho-at-query=\"@\"><a href=\"/en/users/198990\" data-user-id=\"198990\">@John Smith</a></span> <span class=\"atwho-inserted\" contenteditable=\"false\" data-atwho-at-query=\"@\"><a href=\"/en/users/3\" data-user-id=\"3\">@Sarah Johnson</a></span>&nbsp;</p>",
+        "contentAsText": "This is a post with tags @John Smith @Sarah Johnson",
         "pinned": false,
         "createdAt": "2025-02-07T10:31:46.812Z",
         "user": {
@@ -95,10 +95,10 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
             {
                 "mentioned": {
                     "id": 198990,
-                    "firstName": "new",
-                    "lastName": "guy",
+                    "firstName": "John",
+                    "lastName": "Smith",
                     "jobTitle": "",
-                    "email": "new.guy@guy.guy",
+                    "email": "john.smith@company.com",
                     "timeZone": "International Date Line West",
                     "language": "en",
                     "role": "viewer",
@@ -129,10 +129,10 @@ filters[created_at][to] | "2022-01-01 15:00:00" | Assigned date range TO date/ti
             {
                 "mentioned": {
                     "id": 3,
-                    "firstName": "Max",
-                    "lastName": "Absurdity",
+                    "firstName": "Sarah",
+                    "lastName": "Johnson",
                     "jobTitle": null,
-                    "email": "max.absurdity@learnamp.com",
+                    "email": "sarah.johnson@company.com",
                     "timeZone": "International Date Line West",
                     "language": "en",
                     "role": "viewer",
