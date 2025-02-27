@@ -515,6 +515,9 @@ activity = Learnamp::Items.new(token).complete(params)
 ### HTTP Request
 `POST https://{API_BASE_URL}/v1/items/complete`
 
+### Required Scope
+This endpoint requires the `items:complete` scope.
+
 ### Query Parameters
 
 Parameter | Required | Description
@@ -583,7 +586,7 @@ The response will be an Activity object representing the completion.
 
 ```json
 {
-  "error": "Access to this resource requires scope \"items:create\"."
+  "error": "Access to this resource requires scope \"items:complete\"."
 }
 ```
 
