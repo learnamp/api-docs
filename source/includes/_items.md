@@ -225,10 +225,10 @@ end
 params = {
   title: "Sales",
   url: "https://www.test.com"
-  des1cription: "This is the description"
-  tit1le: "This is Item title"
-  ite1mType: "video"
-  tot1alTime: "less_than_one_hour"
+  description: "This is the description"
+  title: "This is Item title"
+  itemType: "video"
+  totalTime: "less_than_one_hour"
 }
 
 item = Learnamp::Items.new(token).create(params)
@@ -362,7 +362,7 @@ item = Learnamp::Items.new(token).update(1234, params)
 
 Update an Item
 
-`POST https://{API_BASE_URL}/v1/items`
+`PUT https://{API_BASE_URL}/v1/items/{itemId}`
 
 ### Data in Body
 
@@ -447,6 +447,146 @@ itemCategory | audiovisual | Category. One of: "written", "audiovisual", "activi
 }
 ```
 
+## Complete an Item
+
+> Mark an item as completed for a user:
+
+```shell
+# Complete by item ID
+curl --location --request POST 'https://api.learnamp.com/v1/items/complete' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
+--data-raw '{
+  "item_id": 3015,
+  "user_id": 123
+}'
+
+# Complete by source type and ID
+curl --location --request POST 'https://api.learnamp.com/v1/items/complete' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
+--data-raw '{
+  "source_type": "Integration for Sheffield University",
+  "source_id": "test123",
+  "email": "user@example.com"
+}'
+```
+
+```ruby
+module Learnamp
+  class Items
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+
+    attr_accessor :token
+
+    def initialize(token)
+      @token = token
+    end
+
+    def complete(params)
+      response = self.class.post("/items/complete", { body: params, headers: headers })
+      response.parsed_response
+    end
+
+    private
+
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
+
+# Complete by item ID
+params = { item_id: 3015, user_id: 123 }
+activity = Learnamp::Items.new(token).complete(params)
+
+# Complete by source type and ID
+params = {
+  source_type: 'Integration for Sheffield University',
+  source_id: 'test123',
+  email: 'user@example.com'
+}
+activity = Learnamp::Items.new(token).complete(params)
+```
+
+### HTTP Request
+`POST https://{API_BASE_URL}/v1/items/complete`
+
+### Query Parameters
+
+Parameter | Required | Description
+--------- | -------- | -----------
+item_id | Optional* | The ID of the item in LearnAmp
+source_type | Optional* | The type/name of the integration or source
+source_id | Optional* | The ID of the item in the source system
+user_id | Optional** | The ID of the user to mark completion for
+email | Optional** | The email of the user to mark completion for
+
+\* Either `item_id` OR both `source_type` and `source_id` must be provided
+\** Either `user_id` OR `email` must be provided
+
+### Response
+
+The response will be an Activity object representing the completion.
+
+> Example Response:
+
+```json
+{
+  "id": 12345,
+  "verb": "completed",
+  "completed": true,
+  "created_at": "2024-03-20"
+}
+```
+
+### Error Responses
+
+> 400 Bad Request - validation errors:
+
+```json
+{
+  "error": "When identifying an item by source, both source_type and source_id must be provided"
+}
+```
+
+```json
+{
+  "error": "user_id, email are missing, exactly one parameter must be provided"
+}
+```
+
+```json
+{
+  "error": "item_id, source_type are mutually exclusive"
+}
+```
+
+> 404 Not Found - when user or item not found:
+
+```json
+{
+  "error": "Couldn't find User"
+}
+```
+
+```json
+{
+  "error": "Couldn't find Item"
+}
+```
+
+> 403 Forbidden - when token lacks required scope:
+
+```json
+{
+  "error": "Access to this resource requires scope \"items:create\"."
+}
+```
+
 ## Delete an Item
 
 > Delete an item:
@@ -503,4 +643,4 @@ Delete an Item
 {
     "error": "Not found"
 }
-```
+``` 
