@@ -169,7 +169,8 @@ Display all details for one specific Item.
     "visibility": "Entire Company",
     "price": "Free",
     "totalTime": "< 10 mins",
-    "tags": ["marketing", "video"]
+    "tags": ["marketing", "video"],
+    "skills": ["marketing", "video"]
 }
 ```
 
@@ -305,7 +306,8 @@ skills | leadership,communication | Assign skills to the created item
     "visibility": "Entire Company",
     "price": "Free",
     "totalTime": "< 15 mins",
-    "tags": []
+    "tags": [],
+    "skills": []
 }
 ```
 
@@ -432,7 +434,8 @@ itemCategory | audiovisual | Category. One of: "written", "audiovisual", "activi
     "visibility": "Entire Company",
     "price": "Free",
     "totalTime": "< 15 mins",
-    "tags": []
+    "tags": [],
+    "skills": []
 }
 ```
 
