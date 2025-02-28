@@ -189,9 +189,9 @@ Display all details for one specific Item.
 curl --location --request POST 'https://api.learnamp.com/v1/items' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --form 'url=https://www.test.com' \
---form 'description=This is the description'
---form 'title=This is Item title'
---form 'itemType=video'
+--form 'description=This is the description' \
+--form 'title=This is Item title' \
+--form 'itemType=video' \
 --form 'totalTime=less_than_one_hour'
 ```
 
@@ -224,10 +224,10 @@ end
 
 params = {
   title: "Sales",
-  url: "https://www.test.com"
-  description: "This is the description"
-  title: "This is Item title"
-  itemType: "video"
+  url: "https://www.test.com",
+  description: "This is the description",
+  title: "This is Item title",
+  itemType: "video",
   totalTime: "less_than_one_hour"
 }
 
@@ -457,8 +457,8 @@ curl --location --request POST 'https://api.learnamp.com/v1/items/complete' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --data-raw '{
-  "item_id": 3015,
-  "user_id": 123
+  "itemId": 3015,
+  "userId": 123
 }'
 
 # Complete by source type and ID
@@ -466,8 +466,8 @@ curl --location --request POST 'https://api.learnamp.com/v1/items/complete' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --data-raw '{
-  "source_type": "Integration for Sheffield University",
-  "source_id": "test123",
+  "sourceType": "Integration for Sheffield University",
+  "sourceId": "test123",
   "email": "user@example.com"
 }'
 ```
@@ -500,13 +500,13 @@ module Learnamp
 end
 
 # Complete by item ID
-params = { item_id: 3015, user_id: 123 }
+params = { itemId: 3015, userId: 123 }
 activity = Learnamp::Items.new(token).complete(params)
 
 # Complete by source type and ID
 params = {
-  source_type: 'Integration for Sheffield University',
-  source_id: 'test123',
+  sourceType: 'Integration for Sheffield University',
+  sourceId: 'test123',
   email: 'user@example.com'
 }
 activity = Learnamp::Items.new(token).complete(params)
@@ -522,14 +522,14 @@ This endpoint requires the `items:complete` scope.
 
 Parameter | Required | Description
 --------- | -------- | -----------
-item_id | Optional* | The ID of the item in LearnAmp
-source_type | Optional* | The type/name of the integration or source
-source_id | Optional* | The ID of the item in the source system
-user_id | Optional** | The ID of the user to mark completion for
+itemId | Optional* | The ID of the item in LearnAmp
+sourceType | Optional* | The type/name of the integration or source
+sourceId | Optional* | The ID of the item in the source system
+userId | Optional** | The ID of the user to mark completion for
 email | Optional** | The email of the user to mark completion for
 
-\* Either `item_id` OR both `source_type` and `source_id` must be provided
-\** Either `user_id` OR `email` must be provided
+\* Either `itemId` OR both `sourceType` and `sourceId` must be provided
+\** Either `userId` OR `email` must be provided
 
 ### Response
 
@@ -542,7 +542,7 @@ The response will be an Activity object representing the completion.
   "id": 12345,
   "verb": "completed",
   "completed": true,
-  "created_at": "2024-03-20"
+  "createdAt": "2024-03-20"
 }
 ```
 
@@ -552,19 +552,19 @@ The response will be an Activity object representing the completion.
 
 ```json
 {
-  "error": "When identifying an item by source, both source_type and source_id must be provided"
+  "error": "When identifying an item by source, both sourceType and sourceId must be provided"
 }
 ```
 
 ```json
 {
-  "error": "user_id, email are missing, exactly one parameter must be provided"
+  "error": "userId, email are missing, exactly one parameter must be provided"
 }
 ```
 
 ```json
 {
-  "error": "item_id, source_type are mutually exclusive"
+  "error": "itemId, sourceType are mutually exclusive"
 }
 ```
 
