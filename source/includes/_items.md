@@ -449,6 +449,10 @@ itemCategory | audiovisual | Category. One of: "written", "audiovisual", "activi
 
 ## Complete an Item
 
+<aside class="notice">
+NOTE: This endpoint is currently in beta and requires special access. Please raise a ticket on our Customer Portal to request access
+</aside>
+
 > Mark an item as completed for a user:
 
 ```shell
@@ -646,4 +650,4 @@ Delete an Item
 {
     "error": "Not found"
 }
-``` 
+```
