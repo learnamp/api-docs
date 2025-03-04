@@ -189,9 +189,9 @@ Display all details for one specific Item.
 curl --location --request POST 'https://api.learnamp.com/v1/items' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --form 'url=https://www.test.com' \
---form 'description=This is the description'
---form 'title=This is Item title'
---form 'itemType=video'
+--form 'description=This is the description' \
+--form 'title=This is Item title' \
+--form 'itemType=video' \
 --form 'totalTime=less_than_one_hour'
 ```
 
@@ -224,11 +224,11 @@ end
 
 params = {
   title: "Sales",
-  url: "https://www.test.com"
-  des1cription: "This is the description"
-  tit1le: "This is Item title"
-  ite1mType: "video"
-  tot1alTime: "less_than_one_hour"
+  url: "https://www.test.com",
+  description: "This is the description",
+  title: "This is Item title",
+  itemType: "video",
+  totalTime: "less_than_one_hour"
 }
 
 item = Learnamp::Items.new(token).create(params)
@@ -371,7 +371,7 @@ item = Learnamp::Items.new(token).update(1234, params)
 
 Update an Item
 
-`POST https://{API_BASE_URL}/v1/items`
+`PUT https://{API_BASE_URL}/v1/items/{itemId}`
 
 ### Data in Body
 
@@ -453,6 +453,153 @@ itemCategory | audiovisual | Category. One of: "written", "audiovisual", "activi
             "is missing"
         ]
     }
+}
+```
+
+## Complete an Item
+
+<aside class="notice">
+NOTE: This endpoint is currently in beta and requires special access. Please raise a ticket on our Customer Portal to request access
+</aside>
+
+> Mark an item as completed for a user:
+
+```shell
+# Complete by item ID
+curl --location --request POST 'https://api.learnamp.com/v1/items/complete' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
+--data-raw '{
+  "itemId": 3015,
+  "userId": 123
+}'
+
+# Complete by source type and ID
+curl --location --request POST 'https://api.learnamp.com/v1/items/complete' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
+--data-raw '{
+  "sourceType": "Integration for Sheffield University",
+  "sourceId": "test123",
+  "email": "user@example.com"
+}'
+```
+
+```ruby
+module Learnamp
+  class Items
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+
+    attr_accessor :token
+
+    def initialize(token)
+      @token = token
+    end
+
+    def complete(params)
+      response = self.class.post("/items/complete", { body: params, headers: headers })
+      response.parsed_response
+    end
+
+    private
+
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
+
+# Complete by item ID
+params = { itemId: 3015, userId: 123 }
+activity = Learnamp::Items.new(token).complete(params)
+
+# Complete by source type and ID
+params = {
+  sourceType: 'Integration for Sheffield University',
+  sourceId: 'test123',
+  email: 'user@example.com'
+}
+activity = Learnamp::Items.new(token).complete(params)
+```
+
+### HTTP Request
+`POST https://{API_BASE_URL}/v1/items/complete`
+
+### Required Scope
+This endpoint requires the `items:complete` scope.
+
+### Query Parameters
+
+Parameter | Required | Description
+--------- | -------- | -----------
+itemId | Optional* | The ID of the item in LearnAmp
+sourceType | Optional* | The type/name of the integration or source
+sourceId | Optional* | The ID of the item in the source system
+userId | Optional** | The ID of the user to mark completion for
+email | Optional** | The email of the user to mark completion for
+
+\* Either `itemId` OR both `sourceType` and `sourceId` must be provided
+\** Either `userId` OR `email` must be provided
+
+### Response
+
+The response will be an Activity object representing the completion.
+
+> Example Response:
+
+```json
+{
+  "id": 12345,
+  "verb": "completed",
+  "completed": true,
+  "createdAt": "2024-03-20"
+}
+```
+
+### Error Responses
+
+> 400 Bad Request - validation errors:
+
+```json
+{
+  "error": "When identifying an item by source, both sourceType and sourceId must be provided"
+}
+```
+
+```json
+{
+  "error": "userId, email are missing, exactly one parameter must be provided"
+}
+```
+
+```json
+{
+  "error": "itemId, sourceType are mutually exclusive"
+}
+```
+
+> 404 Not Found - when user or item not found:
+
+```json
+{
+  "error": "Couldn't find User"
+}
+```
+
+```json
+{
+  "error": "Couldn't find Item"
+}
+```
+
+> 403 Forbidden - when token lacks required scope:
+
+```json
+{
+  "error": "Access to this resource requires scope \"items:complete\"."
 }
 ```
 
