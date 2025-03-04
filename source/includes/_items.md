@@ -270,6 +270,11 @@ Parameter | Example value | Description
 externallyControlledCompletion | true | Prevent automatic or manual completion in app. Used in conjunction with the activities creation API to control completion.
 
 
+
+### Source Type & ID
+
+The above mentioned parameters `sourceType` and `sourceId` are used to link the item to an external system. The API will prevent creation of items with a colliding combination of `sourceType` and `sourceId` within the context of your company account. Duplication between e.g. live and test accounts is permitted.
+
 > 201 Created - successful response:
 
 ```json
@@ -329,6 +334,19 @@ externallyControlledCompletion | true | Prevent automatic or manual completion i
         "title": [
             "is missing"
         ],
+    }
+}
+```
+
+> 400 Bad request - duplicate source item:
+
+```json
+{
+    "error": "Item with source_type 'Integration for Sheffield University' and source_id 'test123' already exists",
+    "fullErrors": {
+        "base": [
+            "Item with source_type 'Integration for Sheffield University' and source_id 'test123' already exists"
+        ]
     }
 }
 ```
