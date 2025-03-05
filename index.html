@@ -341,9 +341,6 @@
                   <li>
                     <a href="#view-all-activity" class="toc-h2 toc-link" data-title="View All Activity">View All Activity</a>
                   </li>
-                  <li>
-                    <a href="#create-an-activity" class="toc-h2 toc-link" data-title="Create an Activity">Create an Activity</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -464,6 +461,9 @@
                   </li>
                   <li>
                     <a href="#update-an-item" class="toc-h2 toc-link" data-title="Update an Item">Update an Item</a>
+                  </li>
+                  <li>
+                    <a href="#complete-an-item" class="toc-h2 toc-link" data-title="Complete an Item">Complete an Item</a>
                   </li>
                   <li>
                     <a href="#delete-an-item" class="toc-h2 toc-link" data-title="Delete an Item">Delete an Item</a>
@@ -912,210 +912,6 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
             </span><span class="p">}</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div><h2 id='create-an-activity'>Create an Activity</h2><h5 id='note-this-endpoint-is-currently-in-beta-and-requires-special-access-please-raise-a-ticket-on-our-customer-portal-to-request-access'>NOTE: This endpoint is currently in beta and requires special access. Please raise a ticket on our <a href="https://learnamp.atlassian.net/servicedesk/customer/portal/1/user/login?destination=portal%2F1">Customer Portal</a> to request access</h5>
-<p>Create an activty with a related <a href="#items">Item</a> record and <a href="#verbs">Verb</a>. Please check to get an appropriate ID assigned to a specific verb.</p>
-
-<blockquote>
-<p>Create a Activity record with an Item and Verb</p>
-</blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="s1">'hhttps://testaccount.learnamp.com/v1/activities'</span> <span class="se">\</span>
-<span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-<span class="nt">--header</span> <span class="s1">'Authorization: Bearer a3DWMdP8mmFRtvulvanOGgII7U1dVV8LZ9zr6jyCq4k'</span> <span class="se">\</span>
-<span class="nt">--header</span> <span class="s1">'Cookie: _learnamp_session_=aadc48937fec7520fd7cf3f7e55681e4'</span> <span class="se">\</span>
-<span class="nt">--form</span> <span class="s1">'user_id="1"'</span> <span class="se">\</span>
-<span class="nt">--form</span> <span class="s1">'verb_id="54"'</span> <span class="se">\</span>
-<span class="nt">--form</span> <span class="s1">'item_id="10"'</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
-  <span class="k">class</span> <span class="nc">Activities</span>
-    <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
-
-    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
-
-    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
-    <span class="k">end</span>
-
-    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="s2">"/activities"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">body: </span><span class="n">params</span><span class="p">,</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
-      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
-    <span class="k">end</span>
-
-    <span class="kp">private</span>
-
-    <span class="k">def</span> <span class="nf">headers</span>
-      <span class="p">{</span>
-        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
-      <span class="p">}</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="n">params_with_item_id</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="ss">user_id: </span><span class="s1">'1'</span><span class="p">,</span>
-    <span class="ss">verb_id: </span><span class="s1">'54'</span>
-    <span class="ss">item_id: </span><span class="s1">'10'</span><span class="p">,</span>
-<span class="p">}</span>
-
-<span class="n">item_activity</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Activities</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">create</span><span class="p">(</span><span class="n">params_with_item_id</span><span class="p">)</span>
-
-<span class="n">params_with_external_id_item</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="ss">user_id: </span><span class="s1">'1'</span><span class="p">,</span>
-    <span class="ss">verb_id: </span><span class="s1">'54'</span>
-    <span class="ss">external_id: </span><span class="s1">'content_1234567890abcdef'</span><span class="p">,</span>
-<span class="p">}</span>
-
-<span class="n">external_item_activity</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Activities</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">create</span><span class="p">(</span><span class="n">params_with_external_id_item</span><span class="p">)</span>
-
-<span class="n">params_with_slug</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="ss">user_id: </span><span class="s1">'1'</span><span class="p">,</span>
-    <span class="ss">verb_id: </span><span class="s1">'54'</span>
-    <span class="ss">slug: </span><span class="s1">'content-slug-for-activity'</span><span class="p">,</span>
-<span class="p">}</span>
-
-<span class="n">activity</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Activities</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">create</span><span class="p">(</span><span class="n">params_with_slug</span><span class="p">)</span>
-</code></pre></div><h3 id='data-in-body'>Data in Body</h3>
-<p><strong>Note:</strong> The following parameters are mutually exclusive. It means you can only use one of other parameters to be a valid request.
-- For the User the Activity belongs to:
-  - <code>user_id</code>
-  - <code>email</code>
-- For the Item the Activity belongs to:
-  - <code>slug</code>
-  - <code>item_id</code>
-  - <code>external_id</code></p>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Example value</th>
-<th>Description (* required)</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>user_id</td>
-<td>1</td>
-<td>ID of the User.</td>
-</tr>
-<tr>
-<td>email</td>
-<td>testuser@test.com</td>
-<td>Email address of user.</td>
-</tr>
-<tr>
-<td>verb_id</td>
-<td>54</td>
-<td>ID of the <a href="#verbs">Verb</a> for this activity. <em>(*)</em></td>
-</tr>
-<tr>
-<td>item_id</td>
-<td>1</td>
-<td>ID of the Item that is created within the Learn Amp platform.</td>
-</tr>
-<tr>
-<td>slug</td>
-<td>&#39;content-slug-for-activity&#39;</td>
-<td>Slug of an existing Item in the platform.</td>
-</tr>
-<tr>
-<td>external_id</td>
-<td>1 or &#39;content_1234567890abcdef&#39;</td>
-<td><code>source_id</code> of the Item that is in the Learn Amp platform but was created through the <a href="#items">Items</a> create endpoint.</td>
-</tr>
-</tbody></table>
-
-<blockquote>
-<p>201 Created - succesful response:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">225</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"activityable"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Content"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Item"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hhttps://testaccount.learnamp.com/en/items/content-slug-for-activity"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"addedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"First Name"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Last Name"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CTO"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"firstlast.lastname@learnamp.com"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hhttps://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 4 Apr 23"</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"displayAddedBy"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"totalTimeEstimate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt; 5 mins"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"First Name"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Last Name"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Last Name"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"firstlast.lastname@learnamp.com"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hhttps://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 4 Apr 23"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"verb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"started"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-02-17T16:08:29Z"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"expiredAt"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"completed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"expired"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"score"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"totalTime"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<blockquote>
-<p>400 Bad Request - validation errors:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email is invalid, user_id, email are mutually exclusive"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"fullErrors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"is invalid"</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="nl">"userId"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"are mutually exclusive"</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"item_id, external_id are mutually exclusive"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"fullErrors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"itemId"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"are mutually exclusive"</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"item_id, slug are mutually exclusive"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"fullErrors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"itemId"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"are mutually exclusive"</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<blockquote>
-<p>404 Not Found - unsuccessful response:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Couldn't find Verb with 'id'=666"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h1 id='channels'>Channels</h1><h2 id='channel-description'>Channel Description</h2>
 <p>In Learn Amp, a Channel is a collection of content (items, learnlists, events etc), arranged into a learning pathway.</p>
@@ -3667,7 +3463,8 @@ endpoint responsible for team member creation was implemented.</p>
     </span><span class="nl">"visibility"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Entire Company"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Free"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"totalTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt; 10 mins"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"marketing"</span><span class="p">,</span><span class="w"> </span><span class="s2">"video"</span><span class="p">]</span><span class="w">
+    </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"marketing"</span><span class="p">,</span><span class="w"> </span><span class="s2">"video"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"skills"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"marketing"</span><span class="p">,</span><span class="w"> </span><span class="s2">"video"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <blockquote>
@@ -3683,9 +3480,9 @@ endpoint responsible for team member creation was implemented.</p>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/items'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'url=https://www.test.com'</span> <span class="se">\</span>
-<span class="nt">--form</span> <span class="s1">'description=This is the description'</span>
-<span class="nt">--form</span> <span class="s1">'title=This is Item title'</span>
-<span class="nt">--form</span> <span class="s1">'itemType=video'</span>
+<span class="nt">--form</span> <span class="s1">'description=This is the description'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'title=This is Item title'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'itemType=video'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'totalTime=less_than_one_hour'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Items</span>
@@ -3715,11 +3512,11 @@ endpoint responsible for team member creation was implemented.</p>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
   <span class="ss">title: </span><span class="s2">"Sales"</span><span class="p">,</span>
-  <span class="ss">url: </span><span class="s2">"https://www.test.com"</span>
-  <span class="ss">des1cription: </span><span class="s2">"This is the description"</span>
-  <span class="ss">tit1le: </span><span class="s2">"This is Item title"</span>
-  <span class="ss">ite1mType: </span><span class="s2">"video"</span>
-  <span class="ss">tot1alTime: </span><span class="s2">"less_than_one_hour"</span>
+  <span class="ss">url: </span><span class="s2">"https://www.test.com"</span><span class="p">,</span>
+  <span class="ss">description: </span><span class="s2">"This is the description"</span><span class="p">,</span>
+  <span class="ss">title: </span><span class="s2">"This is Item title"</span><span class="p">,</span>
+  <span class="ss">itemType: </span><span class="s2">"video"</span><span class="p">,</span>
+  <span class="ss">totalTime: </span><span class="s2">"less_than_one_hour"</span>
 <span class="p">}</span>
 
 <span class="n">item</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Items</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">create</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
@@ -3810,6 +3607,16 @@ endpoint responsible for team member creation was implemented.</p>
 <td>audiovisual</td>
 <td>Category. One of: &quot;written&quot;, &quot;audiovisual&quot;, &quot;activity_category&quot;, &quot;assessment&quot;, &quot;update_category&quot;, &quot;other_category&quot;</td>
 </tr>
+<tr>
+<td>tags</td>
+<td>marketing,sales,onboarding</td>
+<td>Assign tags to the created item</td>
+</tr>
+<tr>
+<td>skills</td>
+<td>leadership,communication</td>
+<td>Assign skills to the created item</td>
+</tr>
 </tbody></table>
 
 <blockquote>
@@ -3829,6 +3636,8 @@ endpoint responsible for team member creation was implemented.</p>
 <td>Prevent automatic or manual completion in app. Used in conjunction with the activities creation API to control completion.</td>
 </tr>
 </tbody></table>
+<h3 id='source-type-amp-id'>Source Type &amp; ID</h3>
+<p>The above mentioned parameters <code>sourceType</code> and <code>sourceId</code> are used to link the item to an external system. The API will prevent creation of items with a colliding combination of <code>sourceType</code> and <code>sourceId</code> within the context of your company account. Duplication between e.g. live and test accounts is permitted.</p>
 
 <blockquote>
 <p>201 Created - successful response:</p>
@@ -3875,7 +3684,8 @@ endpoint responsible for team member creation was implemented.</p>
     </span><span class="nl">"visibility"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Entire Company"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Free"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"totalTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt; 15 mins"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nl">"skills"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <blockquote>
@@ -3887,6 +3697,18 @@ endpoint responsible for team member creation was implemented.</p>
         </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
             </span><span class="s2">"is missing"</span><span class="w">
         </span><span class="p">],</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>400 Bad request - duplicate source item:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Item with source_type 'Integration for Sheffield University' and source_id 'test123' already exists"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fullErrors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"base"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"Item with source_type 'Integration for Sheffield University' and source_id 'test123' already exists"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h2 id='update-an-item'>Update an Item</h2>
@@ -3926,7 +3748,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div>
 <p>Update an Item</p>
 
-<p><code>POST https://{API_BASE_URL}/v1/items</code></p>
+<p><code>PUT https://{API_BASE_URL}/v1/items/{itemId}</code></p>
 <h3 id='data-in-body-2'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -4057,7 +3879,8 @@ endpoint responsible for team member creation was implemented.</p>
     </span><span class="nl">"visibility"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Entire Company"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Free"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"totalTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt; 15 mins"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nl">"skills"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <blockquote>
@@ -4070,6 +3893,152 @@ endpoint responsible for team member creation was implemented.</p>
             </span><span class="s2">"is missing"</span><span class="w">
         </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='complete-an-item'>Complete an Item</h2>
+<aside class="notice">
+NOTE: This endpoint is currently in beta and requires special access. Please raise a ticket on our Customer Portal to request access
+</aside>
+
+<blockquote>
+<p>Mark an item as completed for a user:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Complete by item ID</span>
+curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/items/complete'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
+<span class="nt">--data-raw</span> <span class="s1">'{
+  "itemId": 3015,
+  "userId": 123
+}'</span>
+
+<span class="c"># Complete by source type and ID</span>
+curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/items/complete'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
+<span class="nt">--data-raw</span> <span class="s1">'{
+  "sourceType": "Integration for Sheffield University",
+  "sourceId": "test123",
+  "email": "user@example.com"
+}'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Items</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">complete</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="s2">"/items/complete"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">body: </span><span class="n">params</span><span class="p">,</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1"># Complete by item ID</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">itemId: </span><span class="mi">3015</span><span class="p">,</span> <span class="ss">userId: </span><span class="mi">123</span> <span class="p">}</span>
+<span class="n">activity</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Items</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">complete</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># Complete by source type and ID</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">sourceType: </span><span class="s1">'Integration for Sheffield University'</span><span class="p">,</span>
+  <span class="ss">sourceId: </span><span class="s1">'test123'</span><span class="p">,</span>
+  <span class="ss">email: </span><span class="s1">'user@example.com'</span>
+<span class="p">}</span>
+<span class="n">activity</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Items</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">complete</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</code></pre></div><h3 id='http-request'>HTTP Request</h3>
+<p><code>POST https://{API_BASE_URL}/v1/items/complete</code></p>
+<h3 id='required-scope'>Required Scope</h3>
+<p>This endpoint requires the <code>items:complete</code> scope.</p>
+<h3 id='query-parameters'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>itemId</td>
+<td>Optional*</td>
+<td>The ID of the item in LearnAmp</td>
+</tr>
+<tr>
+<td>sourceType</td>
+<td>Optional*</td>
+<td>The type/name of the integration or source</td>
+</tr>
+<tr>
+<td>sourceId</td>
+<td>Optional*</td>
+<td>The ID of the item in the source system</td>
+</tr>
+<tr>
+<td>userId</td>
+<td>Optional**</td>
+<td>The ID of the user to mark completion for</td>
+</tr>
+<tr>
+<td>email</td>
+<td>Optional**</td>
+<td>The email of the user to mark completion for</td>
+</tr>
+</tbody></table>
+
+<p>* Either <code>itemId</code> OR both <code>sourceType</code> and <code>sourceId</code> must be provided
+** Either <code>userId</code> OR <code>email</code> must be provided</p>
+<h3 id='response'>Response</h3>
+<p>The response will be an Activity object representing the completion.</p>
+
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"verb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"completed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-03-20"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='error-responses'>Error Responses</h3>
+<blockquote>
+<p>400 Bad Request - validation errors:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"When identifying an item by source, both sourceType and sourceId must be provided"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"userId, email are missing, exactly one parameter must be provided"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"itemId, sourceType are mutually exclusive"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>404 Not Found - when user or item not found:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Couldn't find User"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Couldn't find Item"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>403 Forbidden - when token lacks required scope:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Access to this resource requires scope </span><span class="se">\"</span><span class="s2">items:complete</span><span class="se">\"</span><span class="s2">."</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h2 id='delete-an-item'>Delete an Item</h2>
 <blockquote>
