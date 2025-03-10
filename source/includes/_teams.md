@@ -51,6 +51,9 @@ View all teams
 
 `GET https://{API_BASE_URL}/v1/teams`
 
+### Required Scope
+This endpoint requires the `teams:read` scope.
+
 Response will be paginated [see pagination](#pagination)
 
 
@@ -333,6 +336,9 @@ Create a Team
 
 `POST https://{API_BASE_URL}/v1/teams`
 
+### Required Scope
+This endpoint requires the `teams:create` scope.
+
 ### Data in Body
 
 Parameter (* required) | Example value | Description
@@ -453,6 +459,9 @@ Update a Team
 
 `PUT https://{API_BASE_URL}/v1/items`
 
+### Required Scope
+This endpoint requires the `teams:update` scope.
+
 ### Data in Body
 
 Parameter | Example value | Description
@@ -560,6 +569,8 @@ Delete a team. (Users are kept, but their association with team is removed).
 
 `DELETE https://{API_BASE_URL}/v1/teams/{teamId}`
 
+### Required Scope
+This endpoint requires the `teams:delete` scope.
 
 > 204 No Content - successful response:
 

@@ -47,6 +47,9 @@ View all items
 
 `GET https://{API_BASE_URL}/v1/items`
 
+### Required Scope
+This endpoint requires the `items:read` scope.
+
 Response will be paginated [see pagination](#pagination)
 
 > 200 OK - successful response:
@@ -118,6 +121,8 @@ Display all details for one specific Item.
 
 `GET https://{API_BASE_URL}/v1/items/{itemId}`
 
+### Required Scope
+This endpoint requires the `items:read` scope.
 
 > 200 OK - successful response:
 
@@ -238,6 +243,9 @@ item = Learnamp::Items.new(token).create(params)
 Create an Item
 
 `POST https://{API_BASE_URL}/v1/items`
+
+### Required Scope
+This endpoint requires the `items:create` scope.
 
 ### Data in Body
 
@@ -394,6 +402,9 @@ item = Learnamp::Items.new(token).update(1234, params)
 Update an Item
 
 `PUT https://{API_BASE_URL}/v1/items/{itemId}`
+
+### Required Scope
+This endpoint requires the `items:update` scope.
 
 ### Data in Body
 
@@ -669,6 +680,8 @@ Delete an Item
 
 `DELETE https://{API_BASE_URL}/v1/items/{itemId}`
 
+### Required Scope
+This endpoint requires the `items:delete` scope.
 
 > 204 No Content - successful response:
 

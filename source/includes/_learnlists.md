@@ -50,6 +50,9 @@ View all learnlists
 
 `GET https://{API_BASE_URL}/v1/learnlists`
 
+### Required Scope
+This endpoint requires the `learnlists:read` scope.
+
 Response will be paginated [see pagination](#pagination)
 
 > 200 OK - successful response:

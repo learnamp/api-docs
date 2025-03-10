@@ -53,6 +53,9 @@ View all events
 
 `GET https://{API_BASE_URL}/v1/enrollments`
 
+### Required Scope
+This endpoint requires the `enrollments:read` scope.
+
 Response will be paginated [see pagination](#pagination)
 
 
@@ -191,8 +194,10 @@ event = Learnamp::Events.new(token).find(1)
 
 Display user details for one specific event.
 
-`GET https://{API_BASE_URL}/v1/event/{eventId}`
+`GET https://{API_BASE_URL}/v1/events/{eventId}`
 
+### Required Scope
+This endpoint requires the `events:read` scope.
 
 > 200 OK - successful response:
 
@@ -267,16 +272,16 @@ Display user details for one specific event.
 
 ## Show an Enrollment
 
-> Display details for a single enrollment:
+> Show a specific enrollment:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/enrollments/1' \
+curl --location --request GET 'https://api.learnamp.com/v1/enrollments/52' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
 ```ruby
 module Learnamp
-  class Users
+  class Enrollments
     include HTTParty
     base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
 
@@ -288,7 +293,7 @@ module Learnamp
 
     def find(id)
       response = self.class.get("/enrollments/#{id}", { headers: headers })
-      response.parsed_response if response.ok?
+      response.parsed_response
     end
 
     private
@@ -301,13 +306,15 @@ module Learnamp
   end
 end
 
-enrollment = Learnamp::Enrollments.new(token).find(1)
+enrollment = Learnamp::Enrollments.new(token).find(52)
 ```
 
-Display user details for one specific user.
+Shows details of an enrollment.
 
-`GET https://{API_BASE_URL}/v1/enrollments/{enrollmentId}`
+`GET https://{API_BASE_URL}/v1/enrollments/{id}`
 
+### Required Scope
+This endpoint requires the `enrollments:read` scope.
 
 > 200 OK - successful response:
 
@@ -383,3 +390,62 @@ Display user details for one specific user.
     "error": "Not found"
 }
 ```
+
+## Create an Enrollment
+
+> Create a new enrollment:
+
+```shell
+curl --location --request POST 'https://api.learnamp.com/v1/enrollments' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "user_id": 1,
+  "event_name": "Leadership workshop",
+  "event_session_id": 5
+}'
+```
+
+```ruby
+module Learnamp
+  class Enrollments
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+
+    attr_accessor :token
+
+    def initialize(token)
+      @token = token
+    end
+
+    def create(params)
+      response = self.class.post("/enrollments", { body: params, headers: headers })
+      response.parsed_response
+    end
+
+    private
+
+    def headers
+      {
+        'Authorization' => "Bearer #{token}",
+        'Content-Type' => 'application/json'
+      }
+    end
+  end
+end
+
+params = {
+  user_id: 1,
+  event_name: "Leadership workshop",
+  event_session_id: 5
+}
+
+enrollments = Learnamp::Enrollments.new(token).create(params)
+```
+
+Creates a new enrollment. This will enrol a given user into an event session. By default, the new enrollment will have a status of 'approved'.
+
+`POST https://{API_BASE_URL}/v1/enrollments`
+
+### Required Scope
+This endpoint requires the `enrollments:create` scope.

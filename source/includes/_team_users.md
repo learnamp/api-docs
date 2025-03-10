@@ -1,8 +1,8 @@
 # Team Users
 
-## View all users in a Team
+## View All Team Users
 
-> View all users in a specific team:
+> View all users for a given team:
 
 ```shell
 curl --location --request GET 'https://api.learnamp.com/v1/teams/1/users' \
@@ -21,7 +21,7 @@ module Learnamp
       @token = token
     end
 
-    def find(team_id)
+    def all(team_id)
       response = self.class.get("/teams/#{team_id}/users", { headers: headers })
       response.parsed_response
     end
@@ -36,100 +36,19 @@ module Learnamp
   end
 end
 
-users = Learnamp::TeamUsers.new(token).find(245)
+team_users = Learnamp::TeamUsers.new(token).all(1)
 ```
 
-View a specific team, and include all users in that team.
+View all users for a given team.
 
-`GET https://{API_BASE_URL}/v1/teams/{teamId}/users`
+### HTTP Request
 
-> 200 OK - successful response:
+`GET https://{API_BASE_URL}/v1/teams/{team_id}/users`
 
-```json
-{
+### Required Scope
+This endpoint requires the `team_users:read` scope.
 
-  "id": 379,
-  "name": "Test Team",
-  "teamUsersCount": 2,
-  "apiTeamPath": "/v1/teams/379.json",
-  "apiTeamUsersPath": "/v1/teams/379/users.json",
-  "manager": {
-      "id": 7,
-      "firstName": "Test",
-      "lastName": "Manager",
-      "jobTitle": "Ops Director",
-      "email": "admin@example.com",
-      "timeZone": "London",
-      "language": "en",
-      "role": "admin",
-      "profileUrl": "http://testaccount.learnamp.com/en/users/7",
-      "status": {
-          "status": "Invite pending",
-          "time": "Sent 25 Sep 19"
-      }
-  },
-  "users": [
-        {
-          "id": 1,
-          "firstName": "Test",
-          "lastName": "User",
-          "jobTitle": "Developer",
-          "email": "test@email.com",
-          "timeZone": "London",
-          "language": "en",
-          "role": "viewer",
-          "profileUrl": "https://testaccount.learnamp.com/en/users/1",
-          "status": {
-              "status": "Confirmed",
-              "time": "On 29 Nov 16"
-          },
-          "avatar": "AVATAR_IMAGE_URL",
-          "manager": {
-              "id": 17,
-              "firstName": "Manager",
-              "lastName": "User",
-              "jobTitle": "Head of Ops",
-              "email": "testuser2@email.com",
-              "timeZone": "New York",
-              "language": "en-US",
-              "role": "admin",
-              "profileUrl": "https://testaccount.learnamp.com/en/users/17",
-              "status": {
-                  "status": "Confirmed",
-                  "time": "On 20 Feb 17"
-              }
-          },
-          "location": "London, UK",
-          "primaryTeam": {
-            "id": 15,
-            "name": "Operations",
-            "teamUsersCount": 10,
-            "apiTeamPath": "/v1/teams/15.json",
-            "apiTeamUsersPath": "/v1/teams/15/users.json",
-            "manager": {
-              "id": 17,
-              "firstName": "Manager",
-              "lastName": "User",
-              "jobTitle": "Head of Ops",
-              "email": "testuser2@email.com",
-              "timeZone": "New York",
-              "language": "en-US",
-              "role": "admin",
-              "profileUrl": "https://testaccount.learnamp.com/en/users/17",
-              "status": {
-                "status": "Confirmed",
-                "time": "On 20 Feb 17"
-              }
-            }
-          },
-          "secondaryTeams": []
-        },
-      ]
-    }
-  ]
-}
-
-```
+Response will be paginated [see pagination](#pagination)
 
 ## Add a User to a Team
 
@@ -138,7 +57,11 @@ View a specific team, and include all users in that team.
 ```shell
 curl --location --request POST 'https://api.learnamp.com/v1/teams/1/users' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
---form 'userId=1'
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "userId": 1,
+  "isPrimary": true
+}'
 ```
 
 ```ruby
@@ -153,8 +76,13 @@ module Learnamp
       @token = token
     end
 
-    def create(team_id, params)
-      response = self.class.post("/teams/#{team_id}/users", { body: params, headers: headers })
+    def add(team_id, user_details)
+      response = self.class.post("/teams/#{team_id}/users",
+        {
+          headers: headers,
+          body: user_details.to_json
+        }
+      )
       response.parsed_response
     end
 
@@ -162,304 +90,33 @@ module Learnamp
 
     def headers
       {
-        'Authorization' => "Bearer #{token}"
+        'Authorization' => "Bearer #{token}",
+        'Content-Type' => 'application/json'
       }
     end
   end
 end
 
-params = {
-  userId: 1
+user_details = {
+  userId: 1,
+  isPrimary: true
 }
 
-Learnamp::TeamUsers.new(token).create(245, params)
+result = Learnamp::TeamUsers.new(token).add(1, user_details)
 ```
 
-Adds a user to a Team.
+Add a user to a team.
 
-`POST https://{API_BASE_URL}/v1/teams/{teamId}/users`
+### HTTP Request
 
-Note that Team ID is passed in as a URL segment.
+`POST https://{API_BASE_URL}/v1/teams/{team_id}/users`
 
-### Data in Body
-
-Parameter | Example value | Description (* required)
---------- | ------- | -----------
-userId | 1 | User ID of user to add to team
-
-> 201 Created - successful response:
-
-```json
-```json
-{
-
-  "id": 1,
-  "name": "Test Team",
-  "teamUsersCount": 2,
-  "apiTeamPath": "/v1/teams/1.json",
-  "apiTeamUsersPath": "/v1/teams/1/users.json",
-  "manager": {
-      "id": 7,
-      "firstName": "Test",
-      "lastName": "Manager",
-      "jobTitle": "Ops Director",
-      "email": "admin@example.com",
-      "timeZone": "London",
-      "language": "en",
-      "role": "admin",
-      "profileUrl": "http://testaccount.learnamp.com/en/users/7",
-      "status": {
-          "status": "Invite pending",
-          "time": "Sent 25 Sep 19"
-      }
-  },
-  "users": [
-        {
-          "id": 1,
-          "firstName": "Test",
-          "lastName": "User",
-          "jobTitle": "Developer",
-          "email": "test@email.com",
-          "timeZone": "London",
-          "language": "en",
-          "role": "viewer",
-          "profileUrl": "https://testaccount.learnamp.com/en/users/1",
-          "status": {
-              "status": "Confirmed",
-              "time": "On 29 Nov 16"
-          },
-          "avatar": "AVATAR_IMAGE_URL",
-          "manager": {
-              "id": 17,
-              "firstName": "Manager",
-              "lastName": "User",
-              "jobTitle": "Head of Ops",
-              "email": "testuser2@email.com",
-              "timeZone": "New York",
-              "language": "en-US",
-              "role": "admin",
-              "profileUrl": "https://testaccount.learnamp.com/en/users/17",
-              "status": {
-                  "status": "Confirmed",
-                  "time": "On 20 Feb 17"
-              }
-          },
-          "location": "London, UK",
-          "primaryTeam": {
-            "id": 15,
-            "name": "Operations",
-            "teamUsersCount": 10,
-            "apiTeamPath": "/v1/teams/15.json",
-            "apiTeamUsersPath": "/v1/teams/15/users.json",
-            "manager": {
-              "id": 17,
-              "firstName": "Manager",
-              "lastName": "User",
-              "jobTitle": "Head of Ops",
-              "email": "testuser2@email.com",
-              "timeZone": "New York",
-              "language": "en-US",
-              "role": "admin",
-              "profileUrl": "https://testaccount.learnamp.com/en/users/17",
-              "status": {
-                "status": "Confirmed",
-                "time": "On 20 Feb 17"
-              }
-            }
-          },
-          "secondaryTeams": []
-        },
-      ]
-    }
-  ]
-}
-
-```
-```
-
-> 400 Bad request - validation errors:
-
-```json
-{
-    "error": "userId is missing, userId is empty",
-    "fullErrors": {
-        "userId": [
-            "is missing",
-            "is empty"
-        ]
-    }
-}
-```
-
-## Add a User to a Team - second version
-
-```shell
-curl --location --request POST 'https://api.learnamp.com/v1/teams/users' \
---header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
---form 'teamName=Marketing'
---form 'userEmail=new@member.com'
-```
-
-```ruby
-module Learnamp
-  class TeamUsers
-    include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
-
-    attr_accessor :token
-
-    def initialize(token)
-      @token = token
-    end
-
-    def create(params)
-      response = self.class.post('/teams/users', { body: params, headers: headers })
-      response.parsed_response
-    end
-
-    private
-
-    def headers
-      {
-        'Authorization' => "Bearer #{token}"
-      }
-    end
-  end
-end
-
-params = {
-  userEmail: 'user@email.com',
-  teamName: 'Tech Team'
-}
-
-Learnamp::TeamUsers.new(token).create(params)
-```
-
-Adds a user to a Team.
-
-In order to simplify integration with third party services, another
-endpoint responsible for team member creation was implemented.
-
-`POST https://{API_BASE_URL}/v1/teams/users`
-
-### Data in Body
-
-Parameter | Example value | Description (* required)
---------- | ------- | -----------
-teamId | 1200 | ID of the team
-teamName | "Marketing" | Name of the team
-userId | 1 | User ID of user to add to team
-userEmail | "user@email.com" | Email of the new team member
-
-Parameters `teamId` and `teamName` are mutually exclusive - only one of them can be present in the request payload. Same rule applies for `userId` and `userEmail`.
-
-> 201 Created - successful response:
-
-```json
-```json
-{
-
-  "id": 1,
-  "name": "Test Team",
-  "teamUsersCount": 2,
-  "apiTeamPath": "/v1/teams/1.json",
-  "apiTeamUsersPath": "/v1/teams/1/users.json",
-  "manager": {
-      "id": 7,
-      "firstName": "Test",
-      "lastName": "Manager",
-      "jobTitle": "Ops Director",
-      "email": "admin@example.com",
-      "timeZone": "London",
-      "language": "en",
-      "role": "admin",
-      "profileUrl": "http://testaccount.learnamp.com/en/users/7",
-      "status": {
-          "status": "Invite pending",
-          "time": "Sent 25 Sep 19"
-      }
-  },
-  "users": [
-        {
-          "id": 1,
-          "firstName": "Test",
-          "lastName": "User",
-          "jobTitle": "Developer",
-          "email": "test@email.com",
-          "timeZone": "London",
-          "language": "en",
-          "role": "viewer",
-          "profileUrl": "https://testaccount.learnamp.com/en/users/1",
-          "status": {
-              "status": "Confirmed",
-              "time": "On 29 Nov 16"
-          },
-          "avatar": "AVATAR_IMAGE_URL",
-          "manager": {
-              "id": 17,
-              "firstName": "Manager",
-              "lastName": "User",
-              "jobTitle": "Head of Ops",
-              "email": "testuser2@email.com",
-              "timeZone": "New York",
-              "language": "en-US",
-              "role": "admin",
-              "profileUrl": "https://testaccount.learnamp.com/en/users/17",
-              "status": {
-                  "status": "Confirmed",
-                  "time": "On 20 Feb 17"
-              }
-          },
-          "location": "London, UK",
-          "primaryTeam": {
-            "id": 15,
-            "name": "Operations",
-            "teamUsersCount": 10,
-            "apiTeamPath": "/v1/teams/15.json",
-            "apiTeamUsersPath": "/v1/teams/15/users.json",
-            "manager": {
-              "id": 17,
-              "firstName": "Manager",
-              "lastName": "User",
-              "jobTitle": "Head of Ops",
-              "email": "testuser2@email.com",
-              "timeZone": "New York",
-              "language": "en-US",
-              "role": "admin",
-              "profileUrl": "https://testaccount.learnamp.com/en/users/17",
-              "status": {
-                "status": "Confirmed",
-                "time": "On 20 Feb 17"
-              }
-            }
-          },
-          "secondaryTeams": []
-        },
-      ]
-    }
-  ]
-}
-
-```
-```
-
-> 400 Bad request - validation errors:
-
-```json
-{
-    "error": "userId is missing, userId is empty",
-    "fullErrors": {
-        "userId": [
-            "is missing",
-            "is empty"
-        ]
-    }
-}
-```
+### Required Scope
+This endpoint requires the `team_users:create` scope.
 
 ## Remove a User from a Team
 
-> Remove a user from team:
+> Remove a user from a team:
 
 ```shell
 curl --location --request DELETE 'https://api.learnamp.com/v1/teams/1/users/1' \
@@ -478,9 +135,9 @@ module Learnamp
       @token = token
     end
 
-    def delete(team_id, user_id)
+    def remove(team_id, user_id)
       response = self.class.delete("/teams/#{team_id}/users/#{user_id}", { headers: headers })
-      response.parsed_response
+      response.ok?
     end
 
     private
@@ -493,24 +150,78 @@ module Learnamp
   end
 end
 
-Learnamp::TeamUsers.new(token).delete(245, 1)
+success = Learnamp::TeamUsers.new(token).remove(1, 1)
 ```
 
-Delete a user from a team. (User and team are kept, but their association is removed).
+Remove a user from a team.
 
-`DELETE https://{API_BASE_URL}/v1/teams/{teamId}/users/{userId}`
+### HTTP Request
 
+`DELETE https://{API_BASE_URL}/v1/teams/{team_id}/users/{user_id}`
 
-> 204 No Content - successful response:
+### Required Scope
+This endpoint requires the `team_users:delete` scope.
 
-```json
+## Add Users to a Team
 
+> Add multiple users to a team:
+
+```shell
+curl --location --request POST 'https://api.learnamp.com/v1/teams/1/bulk/users' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "userIds": [1, 2, 3],
+  "isPrimary": true
+}'
 ```
 
-> 404 Not Found - unsuccessful response:
+```ruby
+module Learnamp
+  class TeamUsers
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
 
-```json
-{
-    "error": "Not found"
+    attr_accessor :token
+
+    def initialize(token)
+      @token = token
+    end
+
+    def bulk_add(team_id, users_details)
+      response = self.class.post("/teams/#{team_id}/bulk/users",
+        {
+          headers: headers,
+          body: users_details.to_json
+        }
+      )
+      response.parsed_response
+    end
+
+    private
+
+    def headers
+      {
+        'Authorization' => "Bearer #{token}",
+        'Content-Type' => 'application/json'
+      }
+    end
+  end
+end
+
+users_details = {
+  userIds: [1, 2, 3],
+  isPrimary: true
 }
+
+result = Learnamp::TeamUsers.new(token).bulk_add(1, users_details)
 ```
+
+Add multiple users to a team in a single request.
+
+### HTTP Request
+
+`POST https://{API_BASE_URL}/v1/teams/{team_id}/bulk/users`
+
+### Required Scope
+This endpoint requires the `team_users:create` scope.

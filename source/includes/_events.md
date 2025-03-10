@@ -57,6 +57,9 @@ View all events
 
 `GET https://{API_BASE_URL}/v1/events`
 
+### Required Scope
+This endpoint requires the `events:read` scope.
+
 Response will be paginated [see pagination](#pagination)
 
 
@@ -151,6 +154,8 @@ Display user details for one specific event.
 
 `GET https://{API_BASE_URL}/v1/events/{eventId}`
 
+### Required Scope
+This endpoint requires the `events:read` scope.
 
 > 200 OK - successful response:
 

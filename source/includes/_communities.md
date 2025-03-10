@@ -47,6 +47,9 @@ View all community posts
 
 `GET https://{API_BASE_URL}/v1/communities/:id/posts`
 
+### Required Scope
+This endpoint requires the `communities_posts:read` scope.
+
 Response will be paginated [see pagination](#pagination)
 
 

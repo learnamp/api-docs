@@ -47,6 +47,9 @@ View all verbs
 
 `GET https://{API_BASE_URL}/v1/verbs`
 
+### Required Scope
+This endpoint requires the `verbs:read` scope.
+
 Response will be paginated [see pagination](#pagination)
 
 

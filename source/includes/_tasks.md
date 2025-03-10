@@ -74,6 +74,9 @@ View all tasks
 
 `GET https://{API_BASE_URL}/v1/tasks`
 
+### Required Scope
+This endpoint requires the `tasks:read` scope.
+
 Response will be paginated [see pagination](#pagination)
 
 
