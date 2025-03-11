@@ -330,6 +330,9 @@
                   <li>
                     <a href="#data-in-body" class="toc-h2 toc-link" data-title="Data in Body">Data in Body</a>
                   </li>
+                  <li>
+                    <a href="#oauth-scopes" class="toc-h2 toc-link" data-title="OAuth Scopes">OAuth Scopes</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -386,6 +389,9 @@
                   <li>
                     <a href="#show-an-enrollment" class="toc-h2 toc-link" data-title="Show an Enrollment">Show an Enrollment</a>
                   </li>
+                  <li>
+                    <a href="#create-an-enrollment" class="toc-h2 toc-link" data-title="Create an Enrollment">Create an Enrollment</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -426,16 +432,19 @@
             <a href="#team-users" class="toc-h1 toc-link" data-title="Team Users">Team Users</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#view-all-users-in-a-team" class="toc-h2 toc-link" data-title="View all users in a Team">View all users in a Team</a>
+                    <a href="#view-all-team-users" class="toc-h2 toc-link" data-title="View All Team Users">View All Team Users</a>
                   </li>
                   <li>
                     <a href="#add-a-user-to-a-team" class="toc-h2 toc-link" data-title="Add a User to a Team">Add a User to a Team</a>
                   </li>
                   <li>
-                    <a href="#add-a-user-to-a-team-second-version" class="toc-h2 toc-link" data-title="Add a User to a Team - second version">Add a User to a Team - second version</a>
+                    <a href="#add-a-user-to-a-team-alternative-method" class="toc-h2 toc-link" data-title="Add a User to a Team - Alternative Method">Add a User to a Team - Alternative Method</a>
                   </li>
                   <li>
                     <a href="#remove-a-user-from-a-team" class="toc-h2 toc-link" data-title="Remove a User from a Team">Remove a User from a Team</a>
+                  </li>
+                  <li>
+                    <a href="#add-users-to-a-team" class="toc-h2 toc-link" data-title="Add Users to a Team">Add Users to a Team</a>
                   </li>
               </ul>
           </li>
@@ -670,7 +679,175 @@ You must replace <code>YOUR-CLIENT-ID</code> and <code>YOUR-CLIENT-SECRET</code>
 <aside class="success">
 A successful response will return an <code>access_token</code>, please replace <code>YOUR-ACCESS-TOKEN</code> with this value in all authorization headers.
 </aside>
-<h1 id='activities'>Activities</h1><h2 id='activity-description'>Activity Description</h2>
+<h2 id='oauth-scopes'>OAuth Scopes</h2>
+<p>The Learn Amp API uses OAuth 2.0 scopes to control access to different parts of the API. When requesting an access token, you can specify which scopes you need access to.</p>
+
+<p>By default, tokens are issued with the <code>public</code> scope, which provides basic access. For more specific operations, you should request additional scopes.</p>
+
+<p>Legacy scopes are created with full access, and implicitly request and are granted the <code>public</code> scope. Moving forward, API credentials should be provisioned with the specific scopes they require.</p>
+<h3 id='available-scopes'>Available Scopes</h3>
+<table><thead>
+<tr>
+<th>Scope</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>public</td>
+<td>Basic access scope - included by default</td>
+</tr>
+<tr>
+<td>items:read</td>
+<td>Read access to items</td>
+</tr>
+<tr>
+<td>items:create</td>
+<td>Create new items</td>
+</tr>
+<tr>
+<td>items:update</td>
+<td>Update existing items</td>
+</tr>
+<tr>
+<td>items:delete</td>
+<td>Delete items</td>
+</tr>
+<tr>
+<td>items:complete</td>
+<td>Mark items as complete</td>
+</tr>
+<tr>
+<td>activities:read</td>
+<td>Read access to activities</td>
+</tr>
+<tr>
+<td>enrollments:read</td>
+<td>Read access to enrollments</td>
+</tr>
+<tr>
+<td>enrollments:create</td>
+<td>Create new enrollments</td>
+</tr>
+<tr>
+<td>events:read</td>
+<td>Read access to events</td>
+</tr>
+<tr>
+<td>teams:read</td>
+<td>Read access to teams</td>
+</tr>
+<tr>
+<td>teams:create</td>
+<td>Create new teams</td>
+</tr>
+<tr>
+<td>teams:update</td>
+<td>Update existing teams</td>
+</tr>
+<tr>
+<td>teams:delete</td>
+<td>Delete teams</td>
+</tr>
+<tr>
+<td>team_users:read</td>
+<td>Read access to team users</td>
+</tr>
+<tr>
+<td>team_users:create</td>
+<td>Add users to teams</td>
+</tr>
+<tr>
+<td>team_users:delete</td>
+<td>Remove users from teams</td>
+</tr>
+<tr>
+<td>users:read</td>
+<td>Read access to users</td>
+</tr>
+<tr>
+<td>users:create</td>
+<td>Create new users</td>
+</tr>
+<tr>
+<td>users:update</td>
+<td>Update existing users</td>
+</tr>
+<tr>
+<td>users:delete</td>
+<td>Delete users</td>
+</tr>
+<tr>
+<td>users:deactivate</td>
+<td>Deactivate users</td>
+</tr>
+<tr>
+<td>users:reactivate</td>
+<td>Reactivate users</td>
+</tr>
+<tr>
+<td>communities:read</td>
+<td>Read access to communities</td>
+</tr>
+<tr>
+<td>tasks:read</td>
+<td>Read access to tasks</td>
+</tr>
+<tr>
+<td>verbs:read</td>
+<td>Read access to verbs</td>
+</tr>
+<tr>
+<td>languages:read</td>
+<td>Read access to languages</td>
+</tr>
+<tr>
+<td>learnlists:read</td>
+<td>Read access to learnlists</td>
+</tr>
+<tr>
+<td>channels:read</td>
+<td>Read access to channels</td>
+</tr>
+<tr>
+<td>channel_users_progress:read</td>
+<td>Read access to channel users progress</td>
+</tr>
+<tr>
+<td>user_channels_progress:read</td>
+<td>Read access to user channels progress</td>
+</tr>
+<tr>
+<td>roles:read</td>
+<td>Read access to roles</td>
+</tr>
+</tbody></table>
+<h3 id='requesting-scopes'>Requesting Scopes</h3>
+<p>To request specific scopes, add the <code>scope</code> parameter to your token request:</p>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/oauth/token'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'client_id=YOUR-CLIENT-ID'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'client_secret=YOUR-CLIENT-SECRET'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'grant_type=client_credentials'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'scope=items:read items:create'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Auth</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">access_token</span>
+      <span class="n">post</span><span class="p">(</span><span class="s1">'/oauth/token'</span><span class="p">,</span>
+           <span class="ss">body: </span><span class="p">{</span>
+             <span class="ss">grant_type: </span><span class="s1">'client_credentials'</span><span class="p">,</span>
+             <span class="ss">client_id: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'CLIENT_ID'</span><span class="p">],</span>
+             <span class="ss">client_secret: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'CLIENT_SECRET'</span><span class="p">],</span>
+             <span class="ss">scope: </span><span class="s1">'items:read items:create'</span>
+           <span class="p">})</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Auth</span><span class="p">.</span><span class="nf">access_token</span>
+<span class="nb">puts</span> <span class="n">response</span><span class="p">[</span><span class="s2">"access_token"</span><span class="p">]</span> <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="nf">ok?</span>
+</code></pre></div><h1 id='activities'>Activities</h1><h2 id='activity-description'>Activity Description</h2>
 <p>In Learn Amp, an Activity describes an event that takes place on the platform. For example, User X completed Item Y, or User A started Learnlist B.
 All activity records are associated to a User. They contain a <a href="#verbs">verb</a>, like &quot;logged in&quot;, &quot;watched&quot; etc. They have a datetime for when the activity took place.</p>
 <h2 id='view-all-activity'>View All Activity</h2>
@@ -719,6 +896,8 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <p>View all activity</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/activities</code></p>
+<h3 id='required-scope'>Required Scope</h3>
+<p>This endpoint requires the <code>activities:read</code> scope.</p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
@@ -955,6 +1134,8 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <p>View all channels</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/channels</code></p>
+<h3 id='required-scope'>Required Scope</h3>
+<p>This endpoint requires the <code>channels:read</code> scope.</p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 
@@ -1007,6 +1188,8 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <p>View progress of all assigned users through a specified channel. This is analogous to Learn Amp&#39;s Content Log feature, for a single channel.</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/channels/{channelId}/users_progress</code></p>
+<h3 id='required-scope-2'>Required Scope</h3>
+<p>This endpoint requires the <code>channel_users_progress:read</code> scope.</p>
 
 <p>This end-point will return a paginated array of users who are assigned the specified channel. Each element will contain the completion percentage of the channel by that user, as well as the datetime (if any) when the channel was completed.</p>
 
@@ -1116,6 +1299,8 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <p>View all events</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/events</code></p>
+<h3 id='required-scope'>Required Scope</h3>
+<p>This endpoint requires the <code>events:read</code> scope.</p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
@@ -1218,6 +1403,8 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <p>Display user details for one specific event.</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/events/{eventId}</code></p>
+<h3 id='required-scope-2'>Required Scope</h3>
+<p>This endpoint requires the <code>events:read</code> scope.</p>
 
 <blockquote>
 <p>200 OK - successful response:</p>
@@ -1320,6 +1507,8 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <p>View all events</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/enrollments</code></p>
+<h3 id='required-scope'>Required Scope</h3>
+<p>This endpoint requires the <code>enrollments:read</code> scope.</p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
@@ -1511,7 +1700,9 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 </code></pre></div>
 <p>Display user details for one specific event.</p>
 
-<p><code>GET https://{API_BASE_URL}/v1/event/{eventId}</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/events/{eventId}</code></p>
+<h3 id='required-scope-2'>Required Scope</h3>
+<p>This endpoint requires the <code>events:read</code> scope.</p>
 
 <blockquote>
 <p>200 OK - successful response:</p>
@@ -1584,12 +1775,12 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h2 id='show-an-enrollment'>Show an Enrollment</h2>
 <blockquote>
-<p>Display details for a single enrollment:</p>
+<p>Show a specific enrollment:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/enrollments/1'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/enrollments/52'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
-  <span class="k">class</span> <span class="nc">Users</span>
+  <span class="k">class</span> <span class="nc">Enrollments</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
     <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
 
@@ -1601,7 +1792,7 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 
     <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
       <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/enrollments/</span><span class="si">#{</span><span class="nb">id</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
-      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span> <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="nf">ok?</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
     <span class="k">end</span>
 
     <span class="kp">private</span>
@@ -1614,11 +1805,13 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
   <span class="k">end</span>
 <span class="k">end</span>
 
-<span class="n">enrollment</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Enrollments</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">find</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">enrollment</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Enrollments</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">find</span><span class="p">(</span><span class="mi">52</span><span class="p">)</span>
 </code></pre></div>
-<p>Display user details for one specific user.</p>
+<p>Shows details of an enrollment.</p>
 
-<p><code>GET https://{API_BASE_URL}/v1/enrollments/{enrollmentId}</code></p>
+<p><code>GET https://{API_BASE_URL}/v1/enrollments/{id}</code></p>
+<h3 id='required-scope-3'>Required Scope</h3>
+<p>This endpoint requires the <code>enrollments:read</code> scope.</p>
 
 <blockquote>
 <p>200 OK - successful response:</p>
@@ -1692,7 +1885,59 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h1 id='tasks'>Tasks</h1><h2 id='task-description'>Task Description</h2>
+</span></code></pre></div><h2 id='create-an-enrollment'>Create an Enrollment</h2>
+<blockquote>
+<p>Create a new enrollment:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/enrollments'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+<span class="nt">--data-raw</span> <span class="s1">'{
+  "user_id": 1,
+  "event_name": "Leadership workshop",
+  "event_session_id": 5
+}'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Enrollments</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="s2">"/enrollments"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">body: </span><span class="n">params</span><span class="p">,</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">user_id: </span><span class="mi">1</span><span class="p">,</span>
+  <span class="ss">event_name: </span><span class="s2">"Leadership workshop"</span><span class="p">,</span>
+  <span class="ss">event_session_id: </span><span class="mi">5</span>
+<span class="p">}</span>
+
+<span class="n">enrollments</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Enrollments</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">create</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</code></pre></div>
+<p>Creates a new enrollment. This will enrol a given user into an event session. By default, the new enrollment will have a status of &#39;approved&#39;.</p>
+
+<p><code>POST https://{API_BASE_URL}/v1/enrollments</code></p>
+<h3 id='required-scope-4'>Required Scope</h3>
+<p>This endpoint requires the <code>enrollments:create</code> scope.</p>
+<h1 id='tasks'>Tasks</h1><h2 id='task-description'>Task Description</h2>
 <p>In Learn Amp, a Task is a piece of learning content that a user is given a specific deadline to complete.</p>
 
 <p>A task has an assigner - the person who set the task. It also has a setFor user - the person required to complete the task.</p>
@@ -1758,6 +2003,8 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <p>View all tasks</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/tasks</code></p>
+<h3 id='required-scope'>Required Scope</h3>
+<p>This endpoint requires the <code>tasks:read</code> scope.</p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
@@ -2074,6 +2321,8 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <p>View all teams</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/teams</code></p>
+<h3 id='required-scope'>Required Scope</h3>
+<p>This endpoint requires the <code>teams:read</code> scope.</p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
@@ -2347,6 +2596,8 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <p>Create a Team</p>
 
 <p><code>POST https://{API_BASE_URL}/v1/teams</code></p>
+<h3 id='required-scope-2'>Required Scope</h3>
+<p>This endpoint requires the <code>teams:create</code> scope.</p>
 <h3 id='data-in-body'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -2499,6 +2750,8 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <p>Update a Team</p>
 
 <p><code>PUT https://{API_BASE_URL}/v1/items</code></p>
+<h3 id='required-scope-3'>Required Scope</h3>
+<p>This endpoint requires the <code>teams:update</code> scope.</p>
 <h3 id='data-in-body-2'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -2618,6 +2871,8 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <p>Delete a team. (Users are kept, but their association with team is removed).</p>
 
 <p><code>DELETE https://{API_BASE_URL}/v1/teams/{teamId}</code></p>
+<h3 id='required-scope-4'>Required Scope</h3>
+<p>This endpoint requires the <code>teams:delete</code> scope.</p>
 
 <blockquote>
 <p>204 No Content - successful response:</p>
@@ -2630,9 +2885,9 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h1 id='team-users'>Team Users</h1><h2 id='view-all-users-in-a-team'>View all users in a Team</h2>
+</span></code></pre></div><h1 id='team-users'>Team Users</h1><h2 id='view-all-team-users'>View All Team Users</h2>
 <blockquote>
-<p>View all users in a specific team:</p>
+<p>View all users for a given team:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/teams/1/users'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
@@ -2647,7 +2902,7 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
       <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
     <span class="k">end</span>
 
-    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">team_id</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="n">team_id</span><span class="p">)</span>
       <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/teams/</span><span class="si">#{</span><span class="n">team_id</span><span class="si">}</span><span class="s2">/users"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
       <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
     <span class="k">end</span>
@@ -2662,17 +2917,20 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
   <span class="k">end</span>
 <span class="k">end</span>
 
-<span class="n">users</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">TeamUsers</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">find</span><span class="p">(</span><span class="mi">245</span><span class="p">)</span>
+<span class="n">team_users</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">TeamUsers</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">all</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div>
-<p>View a specific team, and include all users in that team.</p>
+<p>View all users for a given team.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>GET https://{API_BASE_URL}/v1/teams/{team_id}/users</code></p>
+<h3 id='required-scope'>Required Scope</h3>
+<p>This endpoint requires the <code>team_users:read</code> scope.</p>
 
-<p><code>GET https://{API_BASE_URL}/v1/teams/{teamId}/users</code></p>
+<p>Response will be paginated <a href="#pagination">see pagination</a></p>
 
 <blockquote>
 <p>200 OK - successful response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-
   </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">379</span><span class="p">,</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Team"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
@@ -2694,73 +2952,74 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
       </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Developer"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@email.com"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 29 Nov 16"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AVATAR_IMAGE_URL"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
           </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Developer"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@email.com"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Head of Ops"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testuser2@email.com"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
           </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
               </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 29 Nov 16"</span><span class="w">
-          </span><span class="p">},</span><span class="w">
-          </span><span class="nl">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AVATAR_IMAGE_URL"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Head of Ops"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testuser2@email.com"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
-                  </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
-              </span><span class="p">}</span><span class="w">
-          </span><span class="p">},</span><span class="w">
-          </span><span class="nl">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London, UK"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"primaryTeam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Operations"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"apiTeamPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15.json"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15/users.json"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Head of Ops"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testuser2@email.com"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
-              </span><span class="p">}</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-          </span><span class="p">},</span><span class="w">
-          </span><span class="nl">"secondaryTeams"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-      </span><span class="p">]</span><span class="w">
+              </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London, UK"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"primaryTeam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Operations"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"apiTeamPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15.json"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15/users.json"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Head of Ops"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testuser2@email.com"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"secondaryTeams"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-
 </span></code></pre></div><h2 id='add-a-user-to-a-team'>Add a User to a Team</h2>
 <blockquote>
 <p>Add a user to a team:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/teams/1/users'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
-<span class="nt">--form</span> <span class="s1">'userId=1'</span>
+<span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+<span class="nt">--data-raw</span> <span class="s1">'{
+  "userId": 1,
+  "isPrimary": true
+}'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">TeamUsers</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
@@ -2772,8 +3031,13 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
       <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
     <span class="k">end</span>
 
-    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">team_id</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="s2">"/teams/</span><span class="si">#{</span><span class="n">team_id</span><span class="si">}</span><span class="s2">/users"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">body: </span><span class="n">params</span><span class="p">,</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">team_id</span><span class="p">,</span> <span class="n">user_details</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="s2">"/teams/</span><span class="si">#{</span><span class="n">team_id</span><span class="si">}</span><span class="s2">/users"</span><span class="p">,</span>
+        <span class="p">{</span>
+          <span class="ss">headers: </span><span class="n">headers</span><span class="p">,</span>
+          <span class="ss">body: </span><span class="n">user_details</span><span class="p">.</span><span class="nf">to_json</span>
+        <span class="p">}</span>
+      <span class="p">)</span>
       <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
     <span class="k">end</span>
 
@@ -2781,44 +3045,30 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 
     <span class="k">def</span> <span class="nf">headers</span>
       <span class="p">{</span>
-        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
       <span class="p">}</span>
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span>
 
-<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="ss">userId: </span><span class="mi">1</span>
+<span class="n">user_details</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">userId: </span><span class="mi">1</span><span class="p">,</span>
+  <span class="ss">isPrimary: </span><span class="kp">true</span>
 <span class="p">}</span>
 
-<span class="no">Learnamp</span><span class="o">::</span><span class="no">TeamUsers</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">create</span><span class="p">(</span><span class="mi">245</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">TeamUsers</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">user_details</span><span class="p">)</span>
 </code></pre></div>
-<p>Adds a user to a Team.</p>
-
-<p><code>POST https://{API_BASE_URL}/v1/teams/{teamId}/users</code></p>
-
-<p>Note that Team ID is passed in as a URL segment.</p>
-<h3 id='data-in-body'>Data in Body</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Example value</th>
-<th>Description (* required)</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>userId</td>
-<td>1</td>
-<td>User ID of user to add to team</td>
-</tr>
-</tbody></table>
+<p>Add a user to a team.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>POST https://{API_BASE_URL}/v1/teams/{team_id}/users</code></p>
+<h3 id='required-scope-2'>Required Scope</h3>
+<p>This endpoint requires the <code>team_users:create</code> scope.</p>
 
 <blockquote>
 <p>201 Created - successful response:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="err">```json</span><span class="w">
-</span><span class="p">{</span><span class="w">
-
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Team"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
@@ -2840,83 +3090,87 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
       </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Developer"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@email.com"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 29 Nov 16"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AVATAR_IMAGE_URL"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
           </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Developer"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@email.com"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Head of Ops"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testuser2@email.com"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
           </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
               </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 29 Nov 16"</span><span class="w">
-          </span><span class="p">},</span><span class="w">
-          </span><span class="nl">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AVATAR_IMAGE_URL"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Head of Ops"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testuser2@email.com"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
-                  </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
-              </span><span class="p">}</span><span class="w">
-          </span><span class="p">},</span><span class="w">
-          </span><span class="nl">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London, UK"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"primaryTeam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Operations"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"apiTeamPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15.json"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15/users.json"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Head of Ops"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testuser2@email.com"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
-              </span><span class="p">}</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-          </span><span class="p">},</span><span class="w">
-          </span><span class="nl">"secondaryTeams"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-      </span><span class="p">]</span><span class="w">
+              </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London, UK"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"primaryTeam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Operations"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"apiTeamPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15.json"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15/users.json"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Head of Ops"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testuser2@email.com"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"secondaryTeams"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-
-</span></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code>
-&gt; 400 Bad request - validation errors:
-
-```json
-{
-    "error": "userId is missing, userId is empty",
-    "fullErrors": {
-        "userId": [
-            "is missing",
-            "is empty"
-        ]
-    }
-}
-</code></pre></div><h2 id='add-a-user-to-a-team-second-version'>Add a User to a Team - second version</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/teams/users'</span> <span class="se">\</span>
+</span></code></pre></div>
+<blockquote>
+<p>400 Bad request - validation errors:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"userId is missing, userId is empty"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fullErrors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"userId"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"is missing"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"is empty"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='add-a-user-to-a-team-alternative-method'>Add a User to a Team - Alternative Method</h2>
+<blockquote>
+<p>Add a user to a team by email and team name:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/teams/users'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
-<span class="nt">--form</span> <span class="s1">'teamName=Marketing'</span>
-<span class="nt">--form</span> <span class="s1">'userEmail=new@member.com'</span>
+<span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+<span class="nt">--data-raw</span> <span class="s1">'{
+  "teamName": "Marketing",
+  "userEmail": "new@member.com"
+}'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">TeamUsers</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
@@ -2929,7 +3183,10 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
     <span class="k">end</span>
 
     <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="s1">'/teams/users'</span><span class="p">,</span> <span class="p">{</span> <span class="ss">body: </span><span class="n">params</span><span class="p">,</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="s1">'/teams/users'</span><span class="p">,</span> <span class="p">{</span> 
+        <span class="ss">headers: </span><span class="n">headers</span><span class="p">,</span>
+        <span class="ss">body: </span><span class="n">params</span><span class="p">.</span><span class="nf">to_json</span> 
+      <span class="p">})</span>
       <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
     <span class="k">end</span>
 
@@ -2937,7 +3194,8 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 
     <span class="k">def</span> <span class="nf">headers</span>
       <span class="p">{</span>
-        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
       <span class="p">}</span>
     <span class="k">end</span>
   <span class="k">end</span>
@@ -2950,18 +3208,20 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 
 <span class="no">Learnamp</span><span class="o">::</span><span class="no">TeamUsers</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">create</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
 </code></pre></div>
-<p>Adds a user to a Team.</p>
+<p>Adds a user to a Team using email and team name instead of IDs.</p>
 
 <p>In order to simplify integration with third party services, another
 endpoint responsible for team member creation was implemented.</p>
-
+<h3 id='http-request-3'>HTTP Request</h3>
 <p><code>POST https://{API_BASE_URL}/v1/teams/users</code></p>
-<h3 id='data-in-body-2'>Data in Body</h3>
+<h3 id='required-scope-3'>Required Scope</h3>
+<p>This endpoint requires the <code>team_users:create</code> scope.</p>
+<h3 id='data-in-body'>Data in Body</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
 <th>Example value</th>
-<th>Description (* required)</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
@@ -2991,9 +3251,7 @@ endpoint responsible for team member creation was implemented.</p>
 <blockquote>
 <p>201 Created - successful response:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="err">```json</span><span class="w">
-</span><span class="p">{</span><span class="w">
-
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Team"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
@@ -3015,82 +3273,79 @@ endpoint responsible for team member creation was implemented.</p>
       </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Developer"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@email.com"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 29 Nov 16"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AVATAR_IMAGE_URL"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
           </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Developer"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@email.com"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Head of Ops"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testuser2@email.com"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
           </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
               </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 29 Nov 16"</span><span class="w">
-          </span><span class="p">},</span><span class="w">
-          </span><span class="nl">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AVATAR_IMAGE_URL"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Head of Ops"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testuser2@email.com"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
-                  </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
-              </span><span class="p">}</span><span class="w">
-          </span><span class="p">},</span><span class="w">
-          </span><span class="nl">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London, UK"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"primaryTeam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Operations"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"apiTeamPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15.json"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15/users.json"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Head of Ops"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testuser2@email.com"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
-              </span><span class="p">}</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-          </span><span class="p">},</span><span class="w">
-          </span><span class="nl">"secondaryTeams"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-      </span><span class="p">]</span><span class="w">
+              </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London, UK"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"primaryTeam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Operations"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"apiTeamPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15.json"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15/users.json"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Head of Ops"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testuser2@email.com"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"secondaryTeams"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-
-</span></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code>
-&gt; 400 Bad request - validation errors:
-
-```json
-{
-    "error": "userId is missing, userId is empty",
-    "fullErrors": {
-        "userId": [
-            "is missing",
-            "is empty"
-        ]
-    }
-}
-</code></pre></div><h2 id='remove-a-user-from-a-team'>Remove a User from a Team</h2>
+</span></code></pre></div>
 <blockquote>
-<p>Remove a user from team:</p>
+<p>400 Bad request - validation errors:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"userId is missing, userId is empty"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fullErrors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"userId"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"is missing"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"is empty"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='remove-a-user-from-a-team'>Remove a User from a Team</h2>
+<blockquote>
+<p>Remove a user from a team:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> DELETE <span class="s1">'https://api.learnamp.com/v1/teams/1/users/1'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
@@ -3105,9 +3360,9 @@ endpoint responsible for team member creation was implemented.</p>
       <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
     <span class="k">end</span>
 
-    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="n">team_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="n">team_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
       <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="s2">"/teams/</span><span class="si">#{</span><span class="n">team_id</span><span class="si">}</span><span class="s2">/users/</span><span class="si">#{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
-      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">ok?</span>
     <span class="k">end</span>
 
     <span class="kp">private</span>
@@ -3120,24 +3375,80 @@ endpoint responsible for team member creation was implemented.</p>
   <span class="k">end</span>
 <span class="k">end</span>
 
-<span class="no">Learnamp</span><span class="o">::</span><span class="no">TeamUsers</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">delete</span><span class="p">(</span><span class="mi">245</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">success</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">TeamUsers</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">remove</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre></div>
-<p>Delete a user from a team. (User and team are kept, but their association is removed).</p>
-
-<p><code>DELETE https://{API_BASE_URL}/v1/teams/{teamId}/users/{userId}</code></p>
+<p>Remove a user from a team.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>DELETE https://{API_BASE_URL}/v1/teams/{team_id}/users/{user_id}</code></p>
+<h3 id='required-scope-4'>Required Scope</h3>
+<p>This endpoint requires the <code>team_users:delete</code> scope.</p>
 
 <blockquote>
 <p>204 No Content - successful response:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="w">
-</span></code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code></code></pre></div>
 <blockquote>
 <p>404 Not Found - unsuccessful response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h1 id='communities'>Communities</h1><h2 id='view-all-community-posts'>View All Community Posts</h2>
+</span></code></pre></div><h2 id='add-users-to-a-team'>Add Users to a Team</h2>
+<blockquote>
+<p>Add multiple users to a team:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/teams/1/bulk/users'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+<span class="nt">--data-raw</span> <span class="s1">'{
+  "userIds": [1, 2, 3],
+  "isPrimary": true
+}'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">TeamUsers</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">bulk_add</span><span class="p">(</span><span class="n">team_id</span><span class="p">,</span> <span class="n">users_details</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="s2">"/teams/</span><span class="si">#{</span><span class="n">team_id</span><span class="si">}</span><span class="s2">/bulk/users"</span><span class="p">,</span>
+        <span class="p">{</span>
+          <span class="ss">headers: </span><span class="n">headers</span><span class="p">,</span>
+          <span class="ss">body: </span><span class="n">users_details</span><span class="p">.</span><span class="nf">to_json</span>
+        <span class="p">}</span>
+      <span class="p">)</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">users_details</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">userIds: </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+  <span class="ss">isPrimary: </span><span class="kp">true</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">TeamUsers</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">bulk_add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">users_details</span><span class="p">)</span>
+</code></pre></div>
+<p>Add multiple users to a team in a single request.</p>
+<h3 id='http-request-5'>HTTP Request</h3>
+<p><code>POST https://{API_BASE_URL}/v1/teams/{team_id}/bulk/users</code></p>
+<h3 id='required-scope-5'>Required Scope</h3>
+<p>This endpoint requires the <code>team_users:create</code> scope.</p>
+<h1 id='communities'>Communities</h1><h2 id='view-all-community-posts'>View All Community Posts</h2>
 <blockquote>
 <p>For a given community, view all posts</p>
 </blockquote>
@@ -3178,6 +3489,8 @@ endpoint responsible for team member creation was implemented.</p>
 <p>View all community posts</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/communities/:id/posts</code></p>
+<h3 id='required-scope'>Required Scope</h3>
+<p>This endpoint requires the <code>communities_posts:read</code> scope.</p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
@@ -3348,6 +3661,8 @@ endpoint responsible for team member creation was implemented.</p>
 <p>View all items</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/items</code></p>
+<h3 id='required-scope'>Required Scope</h3>
+<p>This endpoint requires the <code>items:read</code> scope.</p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 
@@ -3412,6 +3727,8 @@ endpoint responsible for team member creation was implemented.</p>
 <p>Display all details for one specific Item.</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/items/{itemId}</code></p>
+<h3 id='required-scope-2'>Required Scope</h3>
+<p>This endpoint requires the <code>items:read</code> scope.</p>
 
 <blockquote>
 <p>200 OK - successful response:</p>
@@ -3524,6 +3841,8 @@ endpoint responsible for team member creation was implemented.</p>
 <p>Create an Item</p>
 
 <p><code>POST https://{API_BASE_URL}/v1/items</code></p>
+<h3 id='required-scope-3'>Required Scope</h3>
+<p>This endpoint requires the <code>items:create</code> scope.</p>
 <h3 id='data-in-body'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -3749,6 +4068,8 @@ endpoint responsible for team member creation was implemented.</p>
 <p>Update an Item</p>
 
 <p><code>PUT https://{API_BASE_URL}/v1/items/{itemId}</code></p>
+<h3 id='required-scope-4'>Required Scope</h3>
+<p>This endpoint requires the <code>items:update</code> scope.</p>
 <h3 id='data-in-body-2'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -3964,7 +4285,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <span class="n">activity</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Items</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">complete</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
 </code></pre></div><h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://{API_BASE_URL}/v1/items/complete</code></p>
-<h3 id='required-scope'>Required Scope</h3>
+<h3 id='required-scope-5'>Required Scope</h3>
 <p>This endpoint requires the <code>items:complete</code> scope.</p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
@@ -4082,6 +4403,8 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Delete an Item</p>
 
 <p><code>DELETE https://{API_BASE_URL}/v1/items/{itemId}</code></p>
+<h3 id='required-scope-6'>Required Scope</h3>
+<p>This endpoint requires the <code>items:delete</code> scope.</p>
 
 <blockquote>
 <p>204 No Content - successful response:</p>
@@ -4136,6 +4459,8 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>View all learnlists</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/learnlists</code></p>
+<h3 id='required-scope'>Required Scope</h3>
+<p>This endpoint requires the <code>learnlists:read</code> scope.</p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 
@@ -4191,6 +4516,8 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>View all users.</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/users</code></p>
+<h3 id='required-scope'>Required Scope</h3>
+<p>This endpoint requires the <code>users:read</code> scope.</p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 <h3 id='optional-filters-in-url-params'>Optional Filters in URL Params</h3>
@@ -4398,6 +4725,8 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Display user details for one specific user.</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/users/{userId}</code></p>
+<h3 id='required-scope-2'>Required Scope</h3>
+<p>This endpoint requires the <code>users:read</code> scope.</p>
 
 <blockquote>
 <p>200 OK - successful response:</p>
@@ -4533,6 +4862,8 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Create a user and trigger an invite email.</p>
 
 <p><code>POST https://{API_BASE_URL}/v1/users</code></p>
+<h3 id='required-scope-3'>Required Scope</h3>
+<p>This endpoint requires the <code>users:create</code> scope.</p>
 <h3 id='data-in-body'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -4755,6 +5086,8 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Update a user&#39;s details&#39;.</p>
 
 <p><code>PUT https://{API_BASE_URL}/v1/users/{userId}</code></p>
+<h3 id='required-scope-4'>Required Scope</h3>
+<p>This endpoint requires the <code>users:update</code> scope.</p>
 <h3 id='data-in-body-2'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -4955,6 +5288,8 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Deactivate a user, so that they can no longer login. Their data is not removed.</p>
 
 <p><code>PUT https://{API_BASE_URL}/v1/users/{userId}/deactivate</code></p>
+<h3 id='required-scope-5'>Required Scope</h3>
+<p>This endpoint requires the <code>users:deactivate</code> scope.</p>
 
 <blockquote>
 <p>204 No Content - successful response:</p>
@@ -5004,6 +5339,8 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Reactivate a user, so that they login again.</p>
 
 <p><code>PUT https://{API_BASE_URL}/v1/users/{userId}/reactivate</code></p>
+<h3 id='required-scope-6'>Required Scope</h3>
+<p>This endpoint requires the <code>users:reactivate</code> scope.</p>
 
 <blockquote>
 <p>204 No Content - successful response:</p>
@@ -5053,6 +5390,8 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Delete a user, so that they can no longer login. Their data is removed.</p>
 
 <p><code>DELETE https://{API_BASE_URL}/v1/users/{userId}</code></p>
+<h3 id='required-scope-7'>Required Scope</h3>
+<p>This endpoint requires the <code>users:delete</code> scope.</p>
 
 <blockquote>
 <p>204 No Content - successful response:</p>
@@ -5102,6 +5441,8 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>View progress of all assigned channels by a specified user. This is analogous to Learn Amp&#39;s People Log feature, for a single user.</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/users/{userId}/channels_progress</code></p>
+<h3 id='required-scope-8'>Required Scope</h3>
+<p>This endpoint requires the <code>user_channels_progress:read</code> scope.</p>
 
 <p>This end-point will return a paginated array of channels that are assigned to the specified user. Each element will contain the completion percentage of the channel by that user, as well as the datetime (if any) when the channel was completed.</p>
 
@@ -5201,6 +5542,8 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>View all verbs</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/verbs</code></p>
+<h3 id='required-scope'>Required Scope</h3>
+<p>This endpoint requires the <code>verbs:read</code> scope.</p>
 
 <p>Response will be paginated <a href="#pagination">see pagination</a></p>
 
