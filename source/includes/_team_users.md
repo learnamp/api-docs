@@ -50,6 +50,90 @@ This endpoint requires the `team_users:read` scope.
 
 Response will be paginated [see pagination](#pagination)
 
+> 200 OK - successful response:
+
+```json
+{
+  "id": 379,
+  "name": "Test Team",
+  "teamUsersCount": 2,
+  "apiTeamPath": "/v1/teams/379.json",
+  "apiTeamUsersPath": "/v1/teams/379/users.json",
+  "manager": {
+      "id": 7,
+      "firstName": "Test",
+      "lastName": "Manager",
+      "jobTitle": "Ops Director",
+      "email": "admin@example.com",
+      "timeZone": "London",
+      "language": "en",
+      "role": "admin",
+      "profileUrl": "http://testaccount.learnamp.com/en/users/7",
+      "status": {
+          "status": "Invite pending",
+          "time": "Sent 25 Sep 19"
+      }
+  },
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Test",
+      "lastName": "User",
+      "jobTitle": "Developer",
+      "email": "test@email.com",
+      "timeZone": "London",
+      "language": "en",
+      "role": "viewer",
+      "profileUrl": "https://testaccount.learnamp.com/en/users/1",
+      "status": {
+          "status": "Confirmed",
+          "time": "On 29 Nov 16"
+      },
+      "avatar": "AVATAR_IMAGE_URL",
+      "manager": {
+          "id": 17,
+          "firstName": "Manager",
+          "lastName": "User",
+          "jobTitle": "Head of Ops",
+          "email": "testuser2@email.com",
+          "timeZone": "New York",
+          "language": "en-US",
+          "role": "admin",
+          "profileUrl": "https://testaccount.learnamp.com/en/users/17",
+          "status": {
+              "status": "Confirmed",
+              "time": "On 20 Feb 17"
+          }
+      },
+      "location": "London, UK",
+      "primaryTeam": {
+        "id": 15,
+        "name": "Operations",
+        "teamUsersCount": 10,
+        "apiTeamPath": "/v1/teams/15.json",
+        "apiTeamUsersPath": "/v1/teams/15/users.json",
+        "manager": {
+          "id": 17,
+          "firstName": "Manager",
+          "lastName": "User",
+          "jobTitle": "Head of Ops",
+          "email": "testuser2@email.com",
+          "timeZone": "New York",
+          "language": "en-US",
+          "role": "admin",
+          "profileUrl": "https://testaccount.learnamp.com/en/users/17",
+          "status": {
+            "status": "Confirmed",
+            "time": "On 20 Feb 17"
+          }
+        }
+      },
+      "secondaryTeams": []
+    }
+  ]
+}
+```
+
 ## Add a User to a Team
 
 > Add a user to a team:
@@ -113,6 +197,104 @@ Add a user to a team.
 
 ### Required Scope
 This endpoint requires the `team_users:create` scope.
+
+> 201 Created - successful response:
+
+```json
+{
+  "id": 1,
+  "name": "Test Team",
+  "teamUsersCount": 2,
+  "apiTeamPath": "/v1/teams/1.json",
+  "apiTeamUsersPath": "/v1/teams/1/users.json",
+  "manager": {
+      "id": 7,
+      "firstName": "Test",
+      "lastName": "Manager",
+      "jobTitle": "Ops Director",
+      "email": "admin@example.com",
+      "timeZone": "London",
+      "language": "en",
+      "role": "admin",
+      "profileUrl": "http://testaccount.learnamp.com/en/users/7",
+      "status": {
+          "status": "Invite pending",
+          "time": "Sent 25 Sep 19"
+      }
+  },
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Test",
+      "lastName": "User",
+      "jobTitle": "Developer",
+      "email": "test@email.com",
+      "timeZone": "London",
+      "language": "en",
+      "role": "viewer",
+      "profileUrl": "https://testaccount.learnamp.com/en/users/1",
+      "status": {
+          "status": "Confirmed",
+          "time": "On 29 Nov 16"
+      },
+      "avatar": "AVATAR_IMAGE_URL",
+      "manager": {
+          "id": 17,
+          "firstName": "Manager",
+          "lastName": "User",
+          "jobTitle": "Head of Ops",
+          "email": "testuser2@email.com",
+          "timeZone": "New York",
+          "language": "en-US",
+          "role": "admin",
+          "profileUrl": "https://testaccount.learnamp.com/en/users/17",
+          "status": {
+              "status": "Confirmed",
+              "time": "On 20 Feb 17"
+          }
+      },
+      "location": "London, UK",
+      "primaryTeam": {
+        "id": 15,
+        "name": "Operations",
+        "teamUsersCount": 10,
+        "apiTeamPath": "/v1/teams/15.json",
+        "apiTeamUsersPath": "/v1/teams/15/users.json",
+        "manager": {
+          "id": 17,
+          "firstName": "Manager",
+          "lastName": "User",
+          "jobTitle": "Head of Ops",
+          "email": "testuser2@email.com",
+          "timeZone": "New York",
+          "language": "en-US",
+          "role": "admin",
+          "profileUrl": "https://testaccount.learnamp.com/en/users/17",
+          "status": {
+            "status": "Confirmed",
+            "time": "On 20 Feb 17"
+          }
+        }
+      },
+      "secondaryTeams": []
+    }
+  ]
+}
+```
+
+> 400 Bad request - validation errors:
+
+```json
+{
+    "error": "userId is missing, userId is empty",
+    "fullErrors": {
+        "userId": [
+            "is missing",
+            "is empty"
+        ]
+    }
+}
+```
 
 ## Add a User to a Team - Alternative Method
 
@@ -335,6 +517,19 @@ Remove a user from a team.
 
 ### Required Scope
 This endpoint requires the `team_users:delete` scope.
+
+> 204 No Content - successful response:
+
+```json
+```
+
+> 404 Not Found - unsuccessful response:
+
+```json
+{
+    "error": "Not found"
+}
+```
 
 ## Add Users to a Team
 
