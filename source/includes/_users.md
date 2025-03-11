@@ -48,6 +48,9 @@ View all users.
 
 `GET https://{API_BASE_URL}/v1/users`
 
+### Required Scope
+This endpoint requires the `users:read` scope.
+
 Response will be paginated [see pagination](#pagination)
 
 ### Optional Filters in URL Params
@@ -208,6 +211,8 @@ Display user details for one specific user.
 
 `GET https://{API_BASE_URL}/v1/users/{userId}`
 
+### Required Scope
+This endpoint requires the `users:read` scope.
 
 > 200 OK - successful response:
 
@@ -351,6 +356,9 @@ user = Learnamp::Users.new(token).create(params)
 Create a user and trigger an invite email.
 
 `POST https://{API_BASE_URL}/v1/users`
+
+### Required Scope
+This endpoint requires the `users:create` scope.
 
 ### Data in Body
 
@@ -522,6 +530,9 @@ Update a user's details'.
 
 `PUT https://{API_BASE_URL}/v1/users/{userId}`
 
+### Required Scope
+This endpoint requires the `users:update` scope.
+
 ### Data in Body
 
 Parameter | type | Example value | Description (* required)
@@ -660,6 +671,8 @@ Deactivate a user, so that they can no longer login. Their data is not removed.
 
 `PUT https://{API_BASE_URL}/v1/users/{userId}/deactivate`
 
+### Required Scope
+This endpoint requires the `users:deactivate` scope.
 
 > 204 No Content - successful response:
 
@@ -718,6 +731,8 @@ Reactivate a user, so that they login again.
 
 `PUT https://{API_BASE_URL}/v1/users/{userId}/reactivate`
 
+### Required Scope
+This endpoint requires the `users:reactivate` scope.
 
 > 204 No Content - successful response:
 
@@ -776,6 +791,8 @@ Delete a user, so that they can no longer login. Their data is removed.
 
 `DELETE https://{API_BASE_URL}/v1/users/{userId}`
 
+### Required Scope
+This endpoint requires the `users:delete` scope.
 
 > 204 No Content - successful response:
 
@@ -833,6 +850,9 @@ data = Learnamp::Users.new(token).Channels_progress(123)
 View progress of all assigned channels by a specified user. This is analogous to Learn Amp's People Log feature, for a single user.
 
 `GET https://{API_BASE_URL}/v1/users/{userId}/channels_progress`
+
+### Required Scope
+This endpoint requires the `user_channels_progress:read` scope.
 
 This end-point will return a paginated array of channels that are assigned to the specified user. Each element will contain the completion percentage of the channel by that user, as well as the datetime (if any) when the channel was completed.
 

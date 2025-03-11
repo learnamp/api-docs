@@ -70,3 +70,82 @@ Subsequent API calls then require this access token to be present in an **Author
 <aside class="success">
 A successful response will return an <code>access_token</code>, please replace <code>YOUR-ACCESS-TOKEN</code> with this value in all authorization headers.
 </aside>
+
+## OAuth Scopes
+
+The Learn Amp API uses OAuth 2.0 scopes to control access to different parts of the API. When requesting an access token, you can specify which scopes you need access to.
+
+By default, tokens are issued with the `public` scope, which provides basic access. For more specific operations, you should request additional scopes.
+
+Legacy scopes are created with full access, and implicitly request and are granted the `public` scope. Moving forward, API credentials should be provisioned with the specific scopes they require.
+
+### Available Scopes
+
+Scope | Description
+--------- | -----------
+public | Basic access scope - included by default
+items:read | Read access to items
+items:create | Create new items
+items:update | Update existing items
+items:delete | Delete items
+items:complete | Mark items as complete
+activities:read | Read access to activities
+enrollments:read | Read access to enrollments
+enrollments:create | Create new enrollments
+events:read | Read access to events
+teams:read | Read access to teams
+teams:create | Create new teams
+teams:update | Update existing teams
+teams:delete | Delete teams
+team_users:read | Read access to team users
+team_users:create | Add users to teams
+team_users:delete | Remove users from teams
+users:read | Read access to users
+users:create | Create new users
+users:update | Update existing users
+users:delete | Delete users
+users:deactivate | Deactivate users
+users:reactivate | Reactivate users
+communities:read | Read access to communities
+tasks:read | Read access to tasks
+verbs:read | Read access to verbs
+languages:read | Read access to languages
+learnlists:read | Read access to learnlists
+channels:read | Read access to channels
+channel_users_progress:read | Read access to channel users progress
+user_channels_progress:read | Read access to user channels progress
+roles:read | Read access to roles
+
+### Requesting Scopes
+
+To request specific scopes, add the `scope` parameter to your token request:
+
+```shell
+curl --location --request POST 'https://api.learnamp.com/oauth/token' \
+--form 'client_id=YOUR-CLIENT-ID' \
+--form 'client_secret=YOUR-CLIENT-SECRET' \
+--form 'grant_type=client_credentials' \
+--form 'scope=items:read items:create'
+```
+
+```ruby
+module Learnamp
+  class Auth
+    include HTTParty
+    base_uri ENV['BASE_URL']
+
+    def self.access_token
+      post('/oauth/token',
+           body: {
+             grant_type: 'client_credentials',
+             client_id: ENV['CLIENT_ID'],
+             client_secret: ENV['CLIENT_SECRET'],
+             scope: 'items:read items:create'
+           })
+    end
+  end
+end
+
+response = Learnamp::Auth.access_token
+puts response["access_token"] if response.ok?
+```

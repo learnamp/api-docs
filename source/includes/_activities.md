@@ -57,6 +57,9 @@ View all activity
 
 `GET https://{API_BASE_URL}/v1/activities`
 
+### Required Scope
+This endpoint requires the `activities:read` scope.
+
 Response will be paginated [see pagination](#pagination)
 
 
