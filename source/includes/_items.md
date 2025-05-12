@@ -485,10 +485,6 @@ archive | true | If item must be archived, set to true
 
 ## Complete an Item
 
-<aside class="notice">
-NOTE: This endpoint is currently in beta and requires special access. Please raise a ticket on our Customer Portal to request access
-</aside>
-
 > Mark an item as completed for a user:
 
 ```shell
