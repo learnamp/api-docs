@@ -268,13 +268,6 @@ totalTime | less_than_one_hour | Approximate time to complete. One of: "less_tha
 itemCategory | audiovisual | Category. One of: "written", "audiovisual", "activity_category", "assessment", "update_category", "other_category"
 tags | marketing,sales,onboarding | Assign tags to the created item
 skills | leadership,communication | Assign skills to the created item
-
-> **Beta** The following parameters are in beta and subject to change
-
-### Beta Parameters
-
-Parameter | Example value | Description
---------- | ------- | -----------
 externallyControlledCompletion | true | Prevent automatic or manual completion in app. Used in conjunction with the activities creation API to control completion.
 
 
@@ -491,10 +484,6 @@ archive | true | If item must be archived, set to true
 ```
 
 ## Complete an Item
-
-<aside class="notice">
-NOTE: This endpoint is currently in beta and requires special access. Please raise a ticket on our Customer Portal to request access
-</aside>
 
 > Mark an item as completed for a user:
 
