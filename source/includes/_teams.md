@@ -460,7 +460,8 @@ Parameter | Example value | Description
 name | Marketing | Team Name
 managerId | 1 | User ID of Team Manager
 parentTeamId | 10 | ID of the parent team
-tags | "developers,product,compliance" | Tags - comma seperated string
+tags | developers,product,compliance | Tags - comma seperated string
+response | Simple | Optional: Either "Simple" (default) or "Extended". Value of "Extended" will include full list of users, sub-teams and tags in the JSON response. Only use the "Extended" response if all this data is required.
 
 > 200 OK - successful response:
 
@@ -487,19 +488,95 @@ tags | "developers,product,compliance" | Tags - comma seperated string
         }
     },
     "secondaryManagers": [],
-    "users": [],
+
+}
+```
+
+> 200 OK - successful response, with response="Extended" param:
+
+```json
+{
+    "id": 383,
+    "name": "New Team Name",
+    "teamUsersCount": 0,
+    "apiTeamPath": "/v1/teams/383.json",
+    "apiTeamUsersPath": "/v1/teams/383/users.json",
+    "manager": {
+        "id": 1,
+        "firstName": "Test",
+        "lastName": "User",
+        "jobTitle": "Sales Manager",
+        "email": "test@example.com",
+        "timeZone": "London",
+        "language": "en",
+        "role": "viewer",
+        "profileUrl": "http://testaccount.learnamp.com/en/users/1",
+        "status": {
+            "status": "Confirmed",
+            "time": "On 29 Nov 16"
+        }
+    },
+    "secondaryManagers": [],
+    "users": [
+        {
+            "id": 1186,
+            "firstName": "Test",
+            "lastName": "User2",
+            "jobTitle": "Customer Retention Manager",
+            "email": "testuser2@example.com",
+            "timeZone": "London",
+            "language": "en",
+            "role": "viewer",
+            "profileUrl": "https://testaccount.learnamp.com/en/users/1186",
+            "status": {
+                "status": "Confirmed",
+                "time": "On 4 Mar 20"
+            },
+            "removeFromTeamUrl": "/v1/teams/383/users/1186.json"
+        },
+        {
+            "id": 1281,
+            "firstName": "Test",
+            "lastName": "User",
+            "jobTitle": "Sales director",
+            "email": "testuser@example.com",
+            "timeZone": "London",
+            "language": "en",
+            "role": "admin",
+            "profileUrl": "https://testaccount.learnamp.com/en/users/1281",
+            "status": {
+                "status": "Confirmed",
+                "time": "On 3 Mar 20"
+            },
+            "removeFromTeamUrl": "/v1/teams/383/users/1281.json"
+        }
+    ],
+    "subTeams": [
+        {
+            "id": 169,
+            "name": "Middle team",
+            "teamUsersCount": 2,
+            "parentTeamId": 383,
+            "apiTeamPath": "/v1/teams/169.json",
+            "apiTeamUsersPath": "/v1/teams/169/users.json",
+            "manager": null,
+            "secondaryManagers": []
+        }
+    ],
     "parentTeam": {
-        "id": 10,
+        "id": 1,
         "name": "Super team",
         "teamUsersCount": 2,
         "parentTeamId": null,
-        "apiTeamPath": "/v1/teams/10.json",
-        "apiTeamUsersPath": "/v1/teams/10/users.json",
+        "apiTeamPath": "/v1/teams/1.json",
+        "apiTeamUsersPath": "/v1/teams/1/users.json",
         "manager": null,
         "secondaryManagers": []
     },
-    "subTeams": [],
-    "tags": []
+    "tags": [
+      "example team tag 1",
+      "example team tag 2"
+    ],
 }
 ```
 
