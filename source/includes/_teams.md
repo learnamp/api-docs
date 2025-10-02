@@ -457,7 +457,7 @@ team = Learnamp::Teams.new(token).update(456, params)
 
 Update a Team
 
-`PUT https://{API_BASE_URL}/v1/items`
+`PUT https://{API_BASE_URL}/v1/teams/{teamId}`
 
 ### Required Scope
 This endpoint requires the `teams:update` scope.
