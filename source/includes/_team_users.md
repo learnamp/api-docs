@@ -183,7 +183,6 @@ end
 
 user_details = {
   userId: 1,
-  isPrimary: true
 }
 
 result = Learnamp::TeamUsers.new(token).add(1, user_details)
@@ -198,7 +197,24 @@ Add a user to a team.
 ### Required Scope
 This endpoint requires the `team_users:create` scope.
 
+### Data in Body
+
+Parameter | Example value | Description
+--------- | ------- | -----------
+userId | 1 | User ID of user to add to team
+response | Simple | Optional: Either "Simple" (default) or "Teams::Simple" or "Teams::Extended". Value of "Teams::Simple" will include basic team information in the response. Value of "Teams::Extended: will include full team information in the response, including full list of users, sub-teams and tags in the JSON response. Only use the "Teams::Extended" response if all this data is required.
+
 > 201 Created - successful response:
+
+```json
+{
+  "id": 1,
+  "teamId": 3,
+  "userId": 1
+}
+```
+
+> 201 Created - successful response, using response = Teams::Extended param
 
 ```json
 {
