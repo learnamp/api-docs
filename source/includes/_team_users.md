@@ -202,7 +202,7 @@ This endpoint requires the `team_users:create` scope.
 Parameter | Example value | Description
 --------- | ------- | -----------
 userId | 1 | User ID of user to add to team
-response | Simple | Optional: Either "Simple" (default) or "Teams::Simple" or "Teams::Extended". Value of "Teams::Simple" will include basic team information in the response. Value of "Teams::Extended: will include full team information in the response, including full list of users, sub-teams and tags in the JSON response. Only use the "Teams::Extended" response if all this data is required.
+response | Teams::Simple | Optional: (blank value is the default) or "Teams::Simple" or "Teams::Extended". Value of "Teams::Simple" will include basic team information in the response. Value of "Teams::Extended: will include full team information in the response, including full list of users, sub-teams and tags in the JSON response. Only use the "Teams::Extended" response if all this data is required.
 
 > 201 Created - successful response:
 
@@ -385,10 +385,21 @@ teamId | 1200 | ID of the team
 teamName | "Marketing" | Name of the team
 userId | 1 | User ID of user to add to team
 userEmail | "user@email.com" | Email of the new team member
+response | Teams::Simple | Optional: (blank value is the default) or "Teams::Simple" or "Teams::Extended". Value of "Teams::Simple" will include basic team information in the response. Value of "Teams::Extended: will include full team information in the response, including full list of users, sub-teams and tags in the JSON response. Only use the "Teams::Extended" response if all this data is required.
 
 Parameters `teamId` and `teamName` are mutually exclusive - only one of them can be present in the request payload. Same rule applies for `userId` and `userEmail`.
 
 > 201 Created - successful response:
+
+```json
+{
+  "id": 1,
+  "teamId": 3,
+  "userId": 1
+}
+```
+
+> 201 Created - successful response, using response = Teams::Extended param
 
 ```json
 {
