@@ -490,7 +490,7 @@ This endpoint requires the `teams:update` scope.
 Parameter | Example value | Description
 --------- | ------- | -----------
 name | Marketing | Team Name
-integrationExternalId | "EPOS-001" | Optional third-party identifier for the team. Must be unique within your company.
+integrationExternalId | "EPOS-001" | Optional third-party identifier for the team. Must be unique within your company. Send `null` or `""` to clear an existing value.
 managerId | 1 | User ID of Team Manager
 parentTeamId | 10 | ID of the parent team
 tags | developers,product,compliance | Tags - comma seperated string
