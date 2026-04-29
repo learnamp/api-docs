@@ -371,7 +371,9 @@ language | fr | Primary language short code. One of:  en, en-US, de, es-CO, fr, 
 jobTitle | Developer | Job title of user
 role | viewer | user's role. One of: viewer, curator, admin, hr, reporter
 primaryTeamId | 15 | Team ID of primary team [see Teams](#teams)
+primaryTeamIntegrationExternalId | "EPOS-001" | Primary team's `integrationExternalId` [see Teams](#teams). Mutually exclusive with `primaryTeamId`.
 secondaryTeamIds | [376,377] | Array of Team IDs of seconary teams
+secondaryTeamIntegrationExternalIds | ["EPOS-001","EPOS-002"] | Array of `integrationExternalId`s for secondary teams. Mutually exclusive with `secondaryTeamIds`.
 managerId | 1 | User ID of this user's Manager (override manager, not primary team manager)
 skipInvitation | true | Skip sending the user an invitation email immediately. If skipInvitation is not set, the user will be immediately sent an invitation email
 hireDate | 2021-02-28 | Employment start date for user in ISO 8601 date format
@@ -462,6 +464,27 @@ customFields | [{ name: "Employee ID", value: "12-34-56" }] | CustomFields param
 }
 ```
 
+> 400 Bad request - unknown team `integrationExternalId`:
+
+```json
+{
+    "error": "primaryTeamIntegrationExternalId must match existing teams integration external IDs",
+    "fullErrors": {
+        "primaryTeamIntegrationExternalId": [
+            "must match existing teams integration external IDs"
+        ]
+    }
+}
+```
+
+> 400 Bad request - both id-keyed and external-id-keyed team params sent:
+
+```json
+{
+    "error": "primaryTeamId, primaryTeamIntegrationExternalId are mutually exclusive"
+}
+```
+
 ## Update a user
 
 > Update an existing user:
@@ -543,7 +566,9 @@ lastName | string | User | Last name of user *(\*)*
 language | enum | fr | Primary language short code. One of:  en, en-US, de, es-CO, fr, it, nl, pt-BR, pl, ru, zh-CN, zh-TW, ja, ar
 jobTitle | string |Developer | Job title of user
 primaryTeamId | integer | 15 | Team ID of primary team [see Teams](#teams)
+primaryTeamIntegrationExternalId | string | "EPOS-001" | Primary team's `integrationExternalId` [see Teams](#teams). Mutually exclusive with `primaryTeamId`.
 secondaryTeamIds | Array(integer) | [376,377] | Array of Team IDs of seconary teams
+secondaryTeamIntegrationExternalIds | Array(string) | ["EPOS-001","EPOS-002"] | Array of `integrationExternalId`s for secondary teams. Mutually exclusive with `secondaryTeamIds`.
 managerId | integer | 1 | User ID of this user's Manager (override manager, not primary team manager)
 hireDate | date | 2021-02-28 | Employment start date for user in ISO 8601 date format
 location | string | London | Primary location of user
