@@ -162,11 +162,11 @@ Display details for one specific Team.
 
 `GET https://{API_BASE_URL}/v1/teams/{teamId}`
 
-A team may also be looked up by its `integrationExternalId` instead of its Learn Amp `id`. When the path segment is non-numeric, it is matched against `integrationExternalId` (scoped to your company):
+A team may also be looked up by its `integrationExternalId` via a dedicated subroute, so external systems do not need to know the Learn Amp `id`:
 
-`GET https://{API_BASE_URL}/v1/teams/{integrationExternalId}`
+`GET https://{API_BASE_URL}/v1/teams/by_external_id/{integrationExternalId}`
 
-The same applies to `PUT` and `DELETE` — any of the team-scoped routes accept either the numeric `id` or the `integrationExternalId`. Unknown external ids return `404 Not Found`.
+The same subroute supports `PUT` and `DELETE` with identical behaviour to the id-keyed routes. Lookup is scoped to your company — unknown or cross-tenant external ids return `404 Not Found`. Purely numeric `integrationExternalId`s (e.g. `"42"`) are reachable through this subroute regardless of any team's `id`.
 
 
 > 200 OK - successful response:
