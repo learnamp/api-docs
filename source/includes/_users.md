@@ -374,7 +374,8 @@ primaryTeamId | 15 | Team ID of primary team [see Teams](#teams)
 primaryTeamIntegrationExternalId | "EPOS-001" | Primary team's `integrationExternalId` [see Teams](#teams). Mutually exclusive with `primaryTeamId`.
 secondaryTeamIds | [376,377] | Array of Team IDs of seconary teams
 secondaryTeamIntegrationExternalIds | ["EPOS-001","EPOS-002"] | Array of `integrationExternalId`s for secondary teams. Mutually exclusive with `secondaryTeamIds`.
-managerId | 1 | User ID of this user's Manager (override manager, not primary team manager)
+managerId | 1 | User ID of this user's Manager (override manager, not primary team manager). Mutually exclusive with `managerEmail`.
+managerEmail | "manager@acme.com" | Email of this user's Manager. Matched case-insensitively against active users in your company. Mutually exclusive with `managerId`.
 skipInvitation | true | Skip sending the user an invitation email immediately. If skipInvitation is not set, the user will be immediately sent an invitation email
 hireDate | 2021-02-28 | Employment start date for user in ISO 8601 date format
 location | London | Primary location of user
@@ -485,6 +486,22 @@ customFields | [{ name: "Employee ID", value: "12-34-56" }] | CustomFields param
 }
 ```
 
+> 400 Bad request - unknown `managerEmail`:
+
+```json
+{
+    "error": "managerEmail must match an existing user email within your company"
+}
+```
+
+> 400 Bad request - both `managerId` and `managerEmail` sent:
+
+```json
+{
+    "error": "managerId, managerEmail are mutually exclusive"
+}
+```
+
 ## Update a user
 
 > Update an existing user:
@@ -569,7 +586,8 @@ primaryTeamId | integer | 15 | Team ID of primary team [see Teams](#teams)
 primaryTeamIntegrationExternalId | string | "EPOS-001" | Primary team's `integrationExternalId` [see Teams](#teams). Mutually exclusive with `primaryTeamId`.
 secondaryTeamIds | Array(integer) | [376,377] | Array of Team IDs of seconary teams
 secondaryTeamIntegrationExternalIds | Array(string) | ["EPOS-001","EPOS-002"] | Array of `integrationExternalId`s for secondary teams. Mutually exclusive with `secondaryTeamIds`.
-managerId | integer | 1 | User ID of this user's Manager (override manager, not primary team manager)
+managerId | integer | 1 | User ID of this user's Manager (override manager, not primary team manager). Mutually exclusive with `managerEmail`.
+managerEmail | string | "manager@acme.com" | Email of this user's Manager. Matched case-insensitively against active users in your company. Mutually exclusive with `managerId`.
 hireDate | date | 2021-02-28 | Employment start date for user in ISO 8601 date format
 location | string | London | Primary location of user
 department | string | Marketing | Department of user
@@ -650,6 +668,22 @@ customFields | object | [{ name: "Employee ID", value: "12-34-56" }] | CustomFie
             "is missing"
         ]
     }
+}
+```
+
+> 400 Bad request - unknown `managerEmail`:
+
+```json
+{
+    "error": "managerEmail must match an existing user email within your company"
+}
+```
+
+> 400 Bad request - both `managerId` and `managerEmail` sent:
+
+```json
+{
+    "error": "managerId, managerEmail are mutually exclusive"
 }
 ```
 
