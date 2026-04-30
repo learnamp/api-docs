@@ -5062,7 +5062,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <tr>
 <td>managerId</td>
 <td>1</td>
-<td>User ID of this user&#39;s Manager (override manager, not primary team manager)</td>
+<td>User ID of this user&#39;s Manager (override manager, not primary team manager). Mutually exclusive with <code>managerEmail</code>.</td>
+</tr>
+<tr>
+<td>managerEmail</td>
+<td>&quot;manager@acme.com&quot;</td>
+<td>Email of this user&#39;s Manager. Matched case-insensitively against active users in your company. Mutually exclusive with <code>managerId</code>.</td>
 </tr>
 <tr>
 <td>skipInvitation</td>
@@ -5189,6 +5194,20 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"primaryTeamId, primaryTeamIntegrationExternalId are mutually exclusive"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>400 Bad request - unknown <code>managerEmail</code>:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"managerEmail must match an existing user email within your company"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>400 Bad request - both <code>managerId</code> and <code>managerEmail</code> sent:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"managerId, managerEmail are mutually exclusive"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h2 id='update-a-user'>Update a user</h2>
 <blockquote>
@@ -5321,7 +5340,13 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <td>managerId</td>
 <td>integer</td>
 <td>1</td>
-<td>User ID of this user&#39;s Manager (override manager, not primary team manager)</td>
+<td>User ID of this user&#39;s Manager (override manager, not primary team manager). Mutually exclusive with <code>managerEmail</code>.</td>
+</tr>
+<tr>
+<td>managerEmail</td>
+<td>string</td>
+<td>&quot;manager@acme.com&quot;</td>
+<td>Email of this user&#39;s Manager. Matched case-insensitively against active users in your company. Mutually exclusive with <code>managerId</code>.</td>
 </tr>
 <tr>
 <td>hireDate</td>
@@ -5428,6 +5453,20 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
             </span><span class="s2">"is missing"</span><span class="w">
         </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>400 Bad request - unknown <code>managerEmail</code>:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"managerEmail must match an existing user email within your company"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>400 Bad request - both <code>managerId</code> and <code>managerEmail</code> sent:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"managerId, managerEmail are mutually exclusive"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h2 id='deactivate-a-user'>Deactivate a User</h2>
 <blockquote>
