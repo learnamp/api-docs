@@ -2357,6 +2357,7 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
         </span><span class="p">{</span><span class="w">
             </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">379</span><span class="p">,</span><span class="w">
             </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Team"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"integrationExternalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EPOS-001"</span><span class="p">,</span><span class="w">
             </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
             </span><span class="nl">"apiTeamPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/379.json"</span><span class="p">,</span><span class="w">
             </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/379/users.json"</span><span class="p">,</span><span class="w">
@@ -2435,12 +2436,19 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 
 <p><code>GET https://{API_BASE_URL}/v1/teams/{teamId}</code></p>
 
+<p>A team may also be looked up by its <code>integrationExternalId</code> via a dedicated subroute, so external systems do not need to know the Learn Amp <code>id</code>:</p>
+
+<p><code>GET https://{API_BASE_URL}/v1/teams/by_external_id/{integrationExternalId}</code></p>
+
+<p>The same subroute supports <code>PUT</code> and <code>DELETE</code> with identical behaviour to the id-keyed routes. Lookup is scoped to your company — unknown or cross-tenant external ids return <code>404 Not Found</code>. Purely numeric <code>integrationExternalId</code>s (e.g. <code>&quot;42&quot;</code>) are reachable through this subroute regardless of any team&#39;s <code>id</code>.</p>
+
 <blockquote>
 <p>200 OK - successful response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">383</span><span class="p">,</span><span class="w">
     </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Team"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"integrationExternalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EPOS-001"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
     </span><span class="nl">"apiTeamPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/383.json"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/383/users.json"</span><span class="p">,</span><span class="w">
@@ -2612,6 +2620,11 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <td>Name of team</td>
 </tr>
 <tr>
+<td>integrationExternalId</td>
+<td>&quot;EPOS-001&quot;</td>
+<td>Optional third-party identifier for the team. Must be unique within your company.</td>
+</tr>
+<tr>
 <td>managerId</td>
 <td>1</td>
 <td>User ID of Team Manager</td>
@@ -2662,6 +2675,7 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">449</span><span class="p">,</span><span class="w">
     </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New Team Test"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"integrationExternalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EPOS-001"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"apiTeamPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/449.json"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/449/users.json"</span><span class="p">,</span><span class="w">
@@ -2708,6 +2722,18 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
         </span><span class="p">],</span><span class="w">
         </span><span class="nl">"parentTeamId"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
             </span><span class="s2">"must match existing teams IDs"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>400 Bad request - duplicate <code>integrationExternalId</code> within your company:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Integration external id has already been taken"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fullErrors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"integrationExternalId"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"has already been taken"</span><span class="w">
         </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -2766,6 +2792,11 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <td>Team Name</td>
 </tr>
 <tr>
+<td>integrationExternalId</td>
+<td>&quot;EPOS-001&quot;</td>
+<td>Optional third-party identifier for the team. Must be unique within your company. Send <code>null</code> or <code>&quot;&quot;</code> to clear an existing value.</td>
+</tr>
+<tr>
 <td>managerId</td>
 <td>1</td>
 <td>User ID of Team Manager</td>
@@ -2793,6 +2824,7 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">383</span><span class="p">,</span><span class="w">
     </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New Team Name"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"integrationExternalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EPOS-001"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"apiTeamPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/383.json"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/383/users.json"</span><span class="p">,</span><span class="w">
@@ -2821,6 +2853,7 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">383</span><span class="p">,</span><span class="w">
     </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New Team Name"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"integrationExternalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EPOS-001"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"apiTeamPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/383.json"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/383/users.json"</span><span class="p">,</span><span class="w">
