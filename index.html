@@ -5045,9 +5045,19 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <td>Team ID of primary team <a href="#teams">see Teams</a></td>
 </tr>
 <tr>
+<td>primaryTeamIntegrationExternalId</td>
+<td>&quot;EPOS-001&quot;</td>
+<td>Primary team&#39;s <code>integrationExternalId</code> <a href="#teams">see Teams</a>. Mutually exclusive with <code>primaryTeamId</code>.</td>
+</tr>
+<tr>
 <td>secondaryTeamIds</td>
 <td>[376,377]</td>
 <td>Array of Team IDs of seconary teams</td>
+</tr>
+<tr>
+<td>secondaryTeamIntegrationExternalIds</td>
+<td>[&quot;EPOS-001&quot;,&quot;EPOS-002&quot;]</td>
+<td>Array of <code>integrationExternalId</code>s for secondary teams. Mutually exclusive with <code>secondaryTeamIds</code>.</td>
 </tr>
 <tr>
 <td>managerId</td>
@@ -5161,6 +5171,25 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
         </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>400 Bad request - unknown team <code>integrationExternalId</code>:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"primaryTeamIntegrationExternalId must match existing teams integration external IDs"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fullErrors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"primaryTeamIntegrationExternalId"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"must match existing teams integration external IDs"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>400 Bad request - both id-keyed and external-id-keyed team params sent:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"primaryTeamId, primaryTeamIntegrationExternalId are mutually exclusive"</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div><h2 id='update-a-user'>Update a user</h2>
 <blockquote>
 <p>Update an existing user:</p>
@@ -5271,10 +5300,22 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <td>Team ID of primary team <a href="#teams">see Teams</a></td>
 </tr>
 <tr>
+<td>primaryTeamIntegrationExternalId</td>
+<td>string</td>
+<td>&quot;EPOS-001&quot;</td>
+<td>Primary team&#39;s <code>integrationExternalId</code> <a href="#teams">see Teams</a>. Mutually exclusive with <code>primaryTeamId</code>.</td>
+</tr>
+<tr>
 <td>secondaryTeamIds</td>
 <td>Array(integer)</td>
 <td>[376,377]</td>
 <td>Array of Team IDs of seconary teams</td>
+</tr>
+<tr>
+<td>secondaryTeamIntegrationExternalIds</td>
+<td>Array(string)</td>
+<td>[&quot;EPOS-001&quot;,&quot;EPOS-002&quot;]</td>
+<td>Array of <code>integrationExternalId</code>s for secondary teams. Mutually exclusive with <code>secondaryTeamIds</code>.</td>
 </tr>
 <tr>
 <td>managerId</td>
