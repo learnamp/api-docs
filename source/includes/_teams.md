@@ -76,6 +76,7 @@ filters[tags] | "developers,product,compliance" | Return teams matching any of t
         {
             "id": 379,
             "name": "Test Team",
+            "integrationExternalId": "EPOS-001",
             "teamUsersCount": 2,
             "apiTeamPath": "/v1/teams/379.json",
             "apiTeamUsersPath": "/v1/teams/379/users.json",
@@ -161,6 +162,12 @@ Display details for one specific Team.
 
 `GET https://{API_BASE_URL}/v1/teams/{teamId}`
 
+A team may also be looked up by its `integrationExternalId` via a dedicated subroute, so external systems do not need to know the Learn Amp `id`:
+
+`GET https://{API_BASE_URL}/v1/teams/by_external_id/{integrationExternalId}`
+
+The same subroute supports `PUT` and `DELETE` with identical behaviour to the id-keyed routes. Lookup is scoped to your company — unknown or cross-tenant external ids return `404 Not Found`. Purely numeric `integrationExternalId`s (e.g. `"42"`) are reachable through this subroute regardless of any team's `id`.
+
 
 > 200 OK - successful response:
 
@@ -168,6 +175,7 @@ Display details for one specific Team.
 {
     "id": 383,
     "name": "Test Team",
+    "integrationExternalId": "EPOS-001",
     "teamUsersCount": 2,
     "apiTeamPath": "/v1/teams/383.json",
     "apiTeamUsersPath": "/v1/teams/383/users.json",
@@ -344,6 +352,7 @@ This endpoint requires the `teams:create` scope.
 Parameter (* required) | Example value | Description
 --------- | ------- | -----------
 name * | Sales | Name of team
+integrationExternalId | "EPOS-001" | Optional third-party identifier for the team. Must be unique within your company.
 managerId | 1 | User ID of Team Manager
 managerEmail | "manager@email.com" | Email of Team Manager
 secondaryManagerIds | [2, 3] | IDs of Secondary Managers
@@ -362,6 +371,7 @@ Same rule applies for `parentTeamId` - `parentTeamName` and `subTeamIds` - `subT
 {
     "id": 449,
     "name": "New Team Test",
+    "integrationExternalId": "EPOS-001",
     "teamUsersCount": 0,
     "apiTeamPath": "/v1/teams/449.json",
     "apiTeamUsersPath": "/v1/teams/449/users.json",
@@ -409,6 +419,19 @@ Same rule applies for `parentTeamId` - `parentTeamName` and `subTeamIds` - `subT
         ],
         "parentTeamId": [
             "must match existing teams IDs"
+        ]
+    }
+}
+```
+
+> 400 Bad request - duplicate `integrationExternalId` within your company:
+
+```json
+{
+    "error": "Integration external id has already been taken",
+    "fullErrors": {
+        "integrationExternalId": [
+            "has already been taken"
         ]
     }
 }
@@ -467,6 +490,7 @@ This endpoint requires the `teams:update` scope.
 Parameter | Example value | Description
 --------- | ------- | -----------
 name | Marketing | Team Name
+integrationExternalId | "EPOS-001" | Optional third-party identifier for the team. Must be unique within your company. Send `null` or `""` to clear an existing value.
 managerId | 1 | User ID of Team Manager
 parentTeamId | 10 | ID of the parent team
 tags | developers,product,compliance | Tags - comma seperated string
@@ -478,6 +502,7 @@ response | Simple | Optional: Either "Simple" (default) or "Extended". Value of 
 {
     "id": 383,
     "name": "New Team Name",
+    "integrationExternalId": "EPOS-001",
     "teamUsersCount": 0,
     "apiTeamPath": "/v1/teams/383.json",
     "apiTeamUsersPath": "/v1/teams/383/users.json",
@@ -507,6 +532,7 @@ response | Simple | Optional: Either "Simple" (default) or "Extended". Value of 
 {
     "id": 383,
     "name": "New Team Name",
+    "integrationExternalId": "EPOS-001",
     "teamUsersCount": 0,
     "apiTeamPath": "/v1/teams/383.json",
     "apiTeamUsersPath": "/v1/teams/383/users.json",
