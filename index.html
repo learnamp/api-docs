@@ -3035,6 +3035,10 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <p>View all users for a given team.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>GET https://{API_BASE_URL}/v1/teams/{team_id}/users</code></p>
+
+<p>A team&#39;s members may also be listed by the team&#39;s <code>integrationExternalId</code> via a dedicated subroute, scoped to your company. Unknown or cross-tenant external ids return <code>404 Not Found</code>:</p>
+
+<p><code>GET https://{API_BASE_URL}/v1/teams/by_external_id/{integrationExternalId}/users</code></p>
 <h3 id='required-scope'>Required Scope</h3>
 <p>This endpoint requires the <code>team_users:read</code> scope.</p>
 
@@ -3174,6 +3178,10 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <p>Add a user to a team.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
 <p><code>POST https://{API_BASE_URL}/v1/teams/{team_id}/users</code></p>
+
+<p>Or, identifying the team by its <code>integrationExternalId</code>:</p>
+
+<p><code>POST https://{API_BASE_URL}/v1/teams/by_external_id/{integrationExternalId}/users</code></p>
 <h3 id='required-scope-2'>Required Scope</h3>
 <p>This endpoint requires the <code>team_users:create</code> scope.</p>
 <h3 id='data-in-body'>Data in Body</h3>
@@ -3375,6 +3383,11 @@ endpoint responsible for team member creation was implemented.</p>
 <td>Name of the team</td>
 </tr>
 <tr>
+<td>teamIntegrationExternalId</td>
+<td>&quot;EPOS-001&quot;</td>
+<td>Team&#39;s <code>integrationExternalId</code> <a href="#teams">see Teams</a></td>
+</tr>
+<tr>
 <td>userId</td>
 <td>1</td>
 <td>User ID of user to add to team</td>
@@ -3391,7 +3404,7 @@ endpoint responsible for team member creation was implemented.</p>
 </tr>
 </tbody></table>
 
-<p>Parameters <code>teamId</code> and <code>teamName</code> are mutually exclusive - only one of them can be present in the request payload. Same rule applies for <code>userId</code> and <code>userEmail</code>.</p>
+<p>Exactly one of <code>teamId</code>, <code>teamName</code>, or <code>teamIntegrationExternalId</code> must be present in the request payload. Same rule applies for <code>userId</code> and <code>userEmail</code>. An unknown <code>teamIntegrationExternalId</code> (or one belonging to another company) returns <code>400 Bad Request</code> with <code>teamIntegrationExternalId must match an existing team integration external ID within your company</code>.</p>
 
 <blockquote>
 <p>201 Created - successful response:</p>
@@ -3534,6 +3547,10 @@ endpoint responsible for team member creation was implemented.</p>
 <p>Remove a user from a team.</p>
 <h3 id='http-request-4'>HTTP Request</h3>
 <p><code>DELETE https://{API_BASE_URL}/v1/teams/{team_id}/users/{user_id}</code></p>
+
+<p>Or, identifying the team by its <code>integrationExternalId</code>:</p>
+
+<p><code>DELETE https://{API_BASE_URL}/v1/teams/by_external_id/{integrationExternalId}/users/{user_id}</code></p>
 <h3 id='required-scope-4'>Required Scope</h3>
 <p>This endpoint requires the <code>team_users:delete</code> scope.</p>
 
@@ -3600,6 +3617,10 @@ endpoint responsible for team member creation was implemented.</p>
 <p>Add multiple users to a team in a single request.</p>
 <h3 id='http-request-5'>HTTP Request</h3>
 <p><code>POST https://{API_BASE_URL}/v1/teams/{team_id}/bulk/users</code></p>
+
+<p>Or, identifying the team by its <code>integrationExternalId</code>:</p>
+
+<p><code>POST https://{API_BASE_URL}/v1/teams/by_external_id/{integrationExternalId}/bulk/users</code></p>
 <h3 id='required-scope-5'>Required Scope</h3>
 <p>This endpoint requires the <code>team_users:create</code> scope.</p>
 <h1 id='communities'>Communities</h1><h2 id='view-all-community-posts'>View All Community Posts</h2>
