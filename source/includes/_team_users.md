@@ -45,6 +45,10 @@ View all users for a given team.
 
 `GET https://{API_BASE_URL}/v1/teams/{team_id}/users`
 
+A team's members may also be listed by the team's `integrationExternalId` via a dedicated subroute, scoped to your company. Unknown or cross-tenant external ids return `404 Not Found`:
+
+`GET https://{API_BASE_URL}/v1/teams/by_external_id/{integrationExternalId}/users`
+
 ### Required Scope
 This endpoint requires the `team_users:read` scope.
 
@@ -193,6 +197,10 @@ Add a user to a team.
 ### HTTP Request
 
 `POST https://{API_BASE_URL}/v1/teams/{team_id}/users`
+
+Or, identifying the team by its `integrationExternalId`:
+
+`POST https://{API_BASE_URL}/v1/teams/by_external_id/{integrationExternalId}/users`
 
 ### Required Scope
 This endpoint requires the `team_users:create` scope.
@@ -383,11 +391,12 @@ Parameter | Example value | Description
 --------- | ------- | -----------
 teamId | 1200 | ID of the team
 teamName | "Marketing" | Name of the team
+teamIntegrationExternalId | "EPOS-001" | Team's `integrationExternalId` [see Teams](#teams)
 userId | 1 | User ID of user to add to team
 userEmail | "user@email.com" | Email of the new team member
 response | Teams::Simple | Optional: (blank value is the default) or "Teams::Simple" or "Teams::Extended". Value of "Teams::Simple" will include basic team information in the response. Value of "Teams::Extended: will include full team information in the response, including full list of users, sub-teams and tags in the JSON response. Only use the "Teams::Extended" response if all this data is required.
 
-Parameters `teamId` and `teamName` are mutually exclusive - only one of them can be present in the request payload. Same rule applies for `userId` and `userEmail`.
+Exactly one of `teamId`, `teamName`, or `teamIntegrationExternalId` must be present in the request payload. Same rule applies for `userId` and `userEmail`. An unknown `teamIntegrationExternalId` (or one belonging to another company) returns `400 Bad Request` with `teamIntegrationExternalId must match an existing team integration external ID within your company`.
 
 > 201 Created - successful response:
 
@@ -542,6 +551,10 @@ Remove a user from a team.
 
 `DELETE https://{API_BASE_URL}/v1/teams/{team_id}/users/{user_id}`
 
+Or, identifying the team by its `integrationExternalId`:
+
+`DELETE https://{API_BASE_URL}/v1/teams/by_external_id/{integrationExternalId}/users/{user_id}`
+
 ### Required Scope
 This endpoint requires the `team_users:delete` scope.
 
@@ -618,6 +631,10 @@ Add multiple users to a team in a single request.
 ### HTTP Request
 
 `POST https://{API_BASE_URL}/v1/teams/{team_id}/bulk/users`
+
+Or, identifying the team by its `integrationExternalId`:
+
+`POST https://{API_BASE_URL}/v1/teams/by_external_id/{integrationExternalId}/bulk/users`
 
 ### Required Scope
 This endpoint requires the `team_users:create` scope.
