@@ -90,6 +90,7 @@ filters[deactivated_at][to] | "2022-02-28" | Deactivated date range TO date in I
       "timeZone": "London",
       "language": "en",
       "role": "viewer",
+      "integrationExternalId": "EPOS-12345",
       "hireDate": "2021-01-15",
       "profileUrl": "https://testaccount.learnamp.com/en/users/1",
       "status": {
@@ -116,6 +117,7 @@ filters[deactivated_at][to] | "2022-02-28" | Deactivated date range TO date in I
         "timeZone": "London",
         "language": "en",
         "role": "viewer",
+        "integrationExternalId": "EPOS-12345",
         "hireDate": "2021-01-15",
         "profileUrl": "https://testaccount.learnamp.com/en/users/1",
         "status": {
@@ -132,6 +134,7 @@ filters[deactivated_at][to] | "2022-02-28" | Deactivated date range TO date in I
             "timeZone": "London",
             "language": "en",
             "role": "admin",
+            "integrationExternalId": "EPOS-98765",
             "profileUrl": "https://testaccount.learnamp.com/en/users/17",
             "status": {
                 "status": "Confirmed",
@@ -226,6 +229,7 @@ This endpoint requires the `users:read` scope.
     "timeZone": "London",
     "language": "en",
     "role": "viewer",
+    "integrationExternalId": "EPOS-12345",
     "hireDate": "2021-01-15",
     "profileUrl": "https://testaccount.learnamp.com/en/users/1",
     "status": {
@@ -242,6 +246,7 @@ This endpoint requires the `users:read` scope.
         "timeZone": "London",
         "language": "en",
         "role": "admin",
+        "integrationExternalId": "EPOS-98765",
         "profileUrl": "https://testaccount.learnamp.com/en/users/17",
         "status": {
             "status": "Confirmed",
@@ -265,6 +270,7 @@ This endpoint requires the `users:read` scope.
           "timeZone": "London",
           "language": "en",
           "role": "admin",
+          "integrationExternalId": "EPOS-98765",
           "profileUrl": "https://testaccount.learnamp.com/en/users/17",
           "status": {
               "status": "Confirmed",
@@ -367,6 +373,7 @@ Parameter | Example value | Description (* required)
 email | testuser@test.com | Email address of user *(\*)*
 firstName | Test | First name of user *(\*)*
 lastName | User | Last name of user *(\*)*
+integrationExternalId | "EPOS-12345" | Optional third-party identifier for the user. Must be unique within your company.
 language | fr | Primary language short code. One of:  en, en-US, de, es-CO, fr, it, nl, pt-BR, pl, ru, zh-CN, zh-TW, ja, ar
 jobTitle | Developer | Job title of user
 role | viewer | user's role. One of: viewer, curator, admin, hr, reporter
@@ -394,6 +401,7 @@ customFields | [{ name: "Employee ID", value: "12-34-56" }] | CustomFields param
     "timeZone": "London",
     "language": "en",
     "role": "viewer",
+    "integrationExternalId": "EPOS-12345",
     "hireDate": "2021-01-15",
     "profileUrl": "https://testaccount.learnamp.com/en/users/1",
     "status": {
@@ -410,6 +418,7 @@ customFields | [{ name: "Employee ID", value: "12-34-56" }] | CustomFields param
         "timeZone": "London",
         "language": "en",
         "role": "admin",
+        "integrationExternalId": "EPOS-98765",
         "profileUrl": "https://testaccount.learnamp.com/en/users/17",
         "status": {
             "status": "Confirmed",
@@ -433,6 +442,7 @@ customFields | [{ name: "Employee ID", value: "12-34-56" }] | CustomFields param
           "timeZone": "London",
           "language": "en",
           "role": "admin",
+          "integrationExternalId": "EPOS-98765",
           "profileUrl": "https://testaccount.learnamp.com/en/users/17",
           "status": {
               "status": "Confirmed",
@@ -580,6 +590,7 @@ Parameter | type | Example value | Description (* required)
 email | email |testuser@test.com | Email address of user *(\*)*
 firstName | string | Test | First name of user *(\*)*
 lastName | string | User | Last name of user *(\*)*
+integrationExternalId | string | "EPOS-12345" | Optional third-party identifier for the user. Must be unique within your company. Send `null` or `""` to clear an existing value.
 language | enum | fr | Primary language short code. One of:  en, en-US, de, es-CO, fr, it, nl, pt-BR, pl, ru, zh-CN, zh-TW, ja, ar
 jobTitle | string |Developer | Job title of user
 primaryTeamId | integer | 15 | Team ID of primary team [see Teams](#teams)
@@ -606,6 +617,7 @@ customFields | object | [{ name: "Employee ID", value: "12-34-56" }] | CustomFie
     "timeZone": "London",
     "language": "en",
     "role": "admin",
+    "integrationExternalId": "EPOS-13820",
     "profileUrl": "https://testaccount.learnamp.com/en/users/1382",
     "status": {
         "status": "Invite pending",
@@ -621,6 +633,7 @@ customFields | object | [{ name: "Employee ID", value: "12-34-56" }] | CustomFie
         "timeZone": "London",
         "language": "en",
         "role": "admin",
+        "integrationExternalId": "EPOS-12345",
         "profileUrl": "https://testaccount.learnamp.com/en/users/1",
         "status": {
             "status": "Confirmed",
@@ -684,6 +697,132 @@ customFields | object | [{ name: "Employee ID", value: "12-34-56" }] | CustomFie
 ```json
 {
     "error": "managerId, managerEmail are mutually exclusive"
+}
+```
+
+> 400 Bad request - duplicate `integrationExternalId` within your company:
+
+```json
+{
+    "error": "Validation failed: Integration external id has already been taken",
+    "fullErrors": {
+        "integrationExternalId": [
+            "has already been taken"
+        ]
+    }
+}
+```
+
+A user may also be updated by `integrationExternalId` via a dedicated subroute — see [Update a User by Integration External ID](#update-a-user-by-integration-external-id).
+
+## Update a User by Integration External ID
+
+> Update an existing user, looked up by `integrationExternalId`:
+
+```shell
+curl --location --request PUT 'https://api.learnamp.com/v1/users/by_integration_external_id/EPOS-12345' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
+--form 'jobTitle=Senior Developer' \
+--form 'location=Edinburgh'
+```
+
+```ruby
+module Learnamp
+  class Users
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+
+    attr_accessor :token
+
+    def initialize(token)
+      @token = token
+    end
+
+    def update_by_integration_external_id(integration_external_id, params)
+      response = self.class.put(
+        "/users/by_integration_external_id/#{integration_external_id}",
+        { body: params, headers: headers }
+      )
+      response.parsed_response
+    end
+
+    private
+
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
+
+params = {
+  jobTitle: "Senior Developer",
+  location: "Edinburgh"
+}
+
+user = Learnamp::Users.new(token).update_by_integration_external_id("EPOS-12345", params)
+```
+
+Update a user without knowing their Learn Amp `id`. The user is matched by `integrationExternalId` within your company.
+
+`PUT https://{API_BASE_URL}/v1/users/by_integration_external_id/{integrationExternalId}`
+
+### Required Scope
+This endpoint requires the `users:update` scope.
+
+### Data in Body
+
+Accepts the same body parameters as [Update a User](#update-a-user), including `integrationExternalId` itself — sending a new value renames the user's external identifier, sending `null` or `""` clears it.
+
+### Behaviour
+
+* Lookup is scoped to your company — an unknown `integrationExternalId` returns `404 Not Found`.
+* Renaming to an `integrationExternalId` already used by another user in your company returns `400 Bad Request`.
+* Purely numeric values (e.g. `"42"`) are reachable through this subroute regardless of any user's `id`.
+
+> 200 OK - successful response:
+
+```json
+{
+    "id": 1382,
+    "firstName": "Jim",
+    "lastName": "Robinson",
+    "jobTitle": "Senior Developer",
+    "email": "jimrobinson@test.com",
+    "timeZone": "London",
+    "language": "en",
+    "role": "admin",
+    "integrationExternalId": "EPOS-12345",
+    "profileUrl": "https://testaccount.learnamp.com/en/users/1382",
+    "status": {
+        "status": "Confirmed",
+        "time": "On 25 Sep 19"
+    },
+    "location": "Edinburgh",
+    "primaryTeam": null,
+    "secondaryTeams": []
+}
+```
+
+> 404 Not Found - no user matches the supplied `integrationExternalId`:
+
+```json
+{
+    "error": "Not found"
+}
+```
+
+> 400 Bad request - rename to a value already used by another user in your company:
+
+```json
+{
+    "error": "Validation failed: Integration external id has already been taken",
+    "fullErrors": {
+        "integrationExternalId": [
+            "has already been taken"
+        ]
+    }
 }
 ```
 
