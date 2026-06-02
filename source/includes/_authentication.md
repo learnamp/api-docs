@@ -79,6 +79,10 @@ By default, tokens are issued with the `public` scope, which provides basic acce
 
 Legacy scopes are created with full access, and implicitly request and are granted the `public` scope. Moving forward, API credentials should be provisioned with the specific scopes they require.
 
+<aside class="warning">
+If your API credentials were provisioned with specific scopes only (no <code>public</code>), you <strong>must</strong> pass an explicit <code>scope</code> parameter in your token request. Omitting <code>scope</code> falls back to the default <code>public</code> scope, which your credentials do not allow, and the request will fail with <code>invalid_scope</code>.
+</aside>
+
 ### Available Scopes
 
 Scope | Description
@@ -106,7 +110,7 @@ users:update | Update existing users
 users:delete | Delete users
 users:deactivate | Deactivate users
 users:reactivate | Reactivate users
-communities:read | Read access to communities
+communities_posts:read | Read access to community posts
 tasks:read | Read access to tasks
 verbs:read | Read access to verbs
 languages:read | Read access to languages
