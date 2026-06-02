@@ -688,6 +688,10 @@ A successful response will return an <code>access_token</code>, please replace <
 <p>By default, tokens are issued with the <code>public</code> scope, which provides basic access. For more specific operations, you should request additional scopes.</p>
 
 <p>Legacy scopes are created with full access, and implicitly request and are granted the <code>public</code> scope. Moving forward, API credentials should be provisioned with the specific scopes they require.</p>
+
+<aside class="warning">
+If your API credentials were provisioned with specific scopes only (no <code>public</code>), you <strong>must</strong> pass an explicit <code>scope</code> parameter in your token request. Omitting <code>scope</code> falls back to the default <code>public</code> scope, which your credentials do not allow, and the request will fail with <code>invalid_scope</code>.
+</aside>
 <h3 id='available-scopes'>Available Scopes</h3>
 <table><thead>
 <tr>
@@ -788,8 +792,8 @@ A successful response will return an <code>access_token</code>, please replace <
 <td>Reactivate users</td>
 </tr>
 <tr>
-<td>communities:read</td>
-<td>Read access to communities</td>
+<td>communities_posts:read</td>
+<td>Read access to community posts</td>
 </tr>
 <tr>
 <td>tasks:read</td>
