@@ -95,6 +95,7 @@ filters[verb] | "started" | Return activity for a specific verb. See [verbs](#ve
                 "name": "User Added Content",
                 "shortDescription": null,
                 "type": "Item",
+                "displayType": "Item",
                 "url": "https://examplecompany.learnamp.com/en/items/user-added-content",
                 "addedBy": {
                     "id": 7,
@@ -142,6 +143,9 @@ filters[verb] | "started" | Return activity for a specific verb. See [verbs](#ve
 }
 ```
 
+<aside class="notice">
+The <code>activityable</code> object exposes two type fields. <code>type</code> is the internal model name (e.g. <code>Item</code>, <code>Carousel</code>) and is a stable contract. <code>displayType</code> is the product-facing name shown in the Learn Amp UI — it matches <code>type</code> for every type <strong>except a Carousel, whose <code>displayType</code> is <code>Channel</code></strong>. When filtering by <code>filters[activityable_type]</code> (see below), use the display name <code>Channel</code>, not <code>Carousel</code>.
+</aside>
 
 > 200 OK - successful response:, with expanded=true param
 
@@ -155,6 +159,7 @@ filters[verb] | "started" | Return activity for a specific verb. See [verbs](#ve
                 "name": "Marketing 101",
                 "shortDescription": null,
                 "type": "Item",
+                "displayType": "Item",
                 "url": "https://examplecompany.learnamp.com/en/items/dani",
                 "addedBy": {
                     "id": 1,
