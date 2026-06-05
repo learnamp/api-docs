@@ -187,6 +187,78 @@ This endpoint requires the `items:read` scope.
 }
 ```
 
+## List Learnlists Containing an Item
+
+> List the learnlists that contain a single item:
+
+```shell
+curl --location --request GET 'https://api.learnamp.com/v1/items/3015/learnlists' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
+```
+
+```ruby
+module Learnamp
+  class Items
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+
+    attr_accessor :token
+
+    def initialize(token)
+      @token = token
+    end
+
+    def learnlists(id, filters = {})
+      filters_query = URI.encode_www_form(filters)
+      response = self.class.get("/items/#{id}/learnlists?#{filters_query}", { headers: headers })
+      response.parsed_response
+    end
+
+    private
+
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
+
+learnlists = Learnamp::Items.new(token).learnlists(3015)
+```
+
+List all of the learnlists that contain a given item, most recently created first.
+
+`GET https://{API_BASE_URL}/v1/items/{itemId}/learnlists`
+
+### Required Scope
+This endpoint requires the `items:read` scope.
+
+Response will be paginated [see pagination](#pagination)
+
+> 200 OK - successful response:
+
+```json
+{
+    "learnlists": [
+        {
+            "id": 379,
+            "name": "Test learnlist",
+            "description": "This is the learnlist description"
+        }
+    ]
+}
+
+```
+
+> 404 Not Found - unsuccessful response:
+
+```json
+{
+    "error": "Not found"
+}
+```
+
 ## Create an Item
 
 > Create a new Item:
