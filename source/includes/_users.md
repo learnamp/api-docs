@@ -374,7 +374,7 @@ email | testuser@test.com | Email address of user *(\*)*
 firstName | Test | First name of user *(\*)*
 lastName | User | Last name of user *(\*)*
 integrationExternalId | "EPOS-12345" | Optional third-party identifier for the user. Must be unique within your company.
-language | fr | Primary language short code. One of:  en, en-US, de, es-CO, fr, it, nl, pt-BR, pl, ru, zh-CN, zh-TW, ja, ar, cy, el, hu, pt-PT, ro, tr
+language | fr | Primary language short code. One of:  en (UK English), en-US (US English), de (German), es-CO (Colombian Spanish), fr (French), it (Italian), nl (Dutch), pt-BR (Brazilian Portuguese), pl (Polish), ru (Russian), zh-CN (Simplified Chinese), zh-TW (Traditional Chinese), ja (Japanese), ar (Arabic), cy (Welsh), el (Greek), hu (Hungarian), pt-PT (European Portuguese), ro (Romanian), tr (Turkish)
 jobTitle | Developer | Job title of user
 role | viewer | user's role. One of: viewer, curator, admin, hr, reporter
 primaryTeamId | 15 | Team ID of primary team [see Teams](#teams)
@@ -591,7 +591,7 @@ email | email |testuser@test.com | Email address of user *(\*)*
 firstName | string | Test | First name of user *(\*)*
 lastName | string | User | Last name of user *(\*)*
 integrationExternalId | string | "EPOS-12345" | Optional third-party identifier for the user. Must be unique within your company. Send `null` or `""` to clear an existing value.
-language | enum | fr | Primary language short code. One of:  en, en-US, de, es-CO, fr, it, nl, pt-BR, pl, ru, zh-CN, zh-TW, ja, ar, cy, el, hu, pt-PT, ro, tr
+language | enum | fr | Primary language short code. One of:  en (UK English), en-US (US English), de (German), es-CO (Colombian Spanish), fr (French), it (Italian), nl (Dutch), pt-BR (Brazilian Portuguese), pl (Polish), ru (Russian), zh-CN (Simplified Chinese), zh-TW (Traditional Chinese), ja (Japanese), ar (Arabic), cy (Welsh), el (Greek), hu (Hungarian), pt-PT (European Portuguese), ro (Romanian), tr (Turkish)
 jobTitle | string |Developer | Job title of user
 primaryTeamId | integer | 15 | Team ID of primary team [see Teams](#teams)
 primaryTeamIntegrationExternalId | string | "EPOS-001" | Primary team's `integrationExternalId` [see Teams](#teams). Mutually exclusive with `primaryTeamId`.
