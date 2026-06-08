@@ -273,6 +273,77 @@ Response will be paginated [see pagination](#pagination)
 }
 ```
 
+## List Channels Containing an Item
+
+> List the channels that contain a single item:
+
+```shell
+curl --location --request GET 'https://api.learnamp.com/v1/items/3015/channels' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
+```
+
+```ruby
+module Learnamp
+  class Items
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+
+    attr_accessor :token
+
+    def initialize(token)
+      @token = token
+    end
+
+    def channels(id, filters = {})
+      filters_query = URI.encode_www_form(filters)
+      response = self.class.get("/items/#{id}/channels?#{filters_query}", { headers: headers })
+      response.parsed_response
+    end
+
+    private
+
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
+
+channels = Learnamp::Items.new(token).channels(3015)
+```
+
+List all of the channels that contain a given item, most recently created first.
+
+`GET https://{API_BASE_URL}/v1/items/{itemId}/channels`
+
+### Required Scope
+This endpoint requires the `items:read` scope.
+
+Response will be paginated [see pagination](#pagination)
+
+> 200 OK - successful response:
+
+```json
+{
+    "channels": [
+        {
+            "id": 42,
+            "title": "Onboarding"
+        }
+    ]
+}
+
+```
+
+> 404 Not Found - unsuccessful response:
+
+```json
+{
+    "error": "Not found"
+}
+```
+
 ## Create an Item
 
 > Create a new Item:
