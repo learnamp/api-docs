@@ -1125,6 +1125,7 @@ Code | Language
 `en` | UK English
 `en-US` | US English
 `de` | German
+`es` | Spanish
 `es-CO` | Colombian Spanish
 `fr` | French
 `it` | Italian
@@ -1132,10 +1133,14 @@ Code | Language
 `pt-BR` | Brazilian Portuguese
 `pl` | Polish
 `ru` | Russian
+`no` | Norwegian
+`sv` | Swedish
+`da` | Danish
 `zh-CN` | Simplified Chinese
 `zh-TW` | Traditional Chinese
 `ja` | Japanese
 `ar` | Arabic
+`sk` | Slovak
 `cy` | Welsh
 `el` | Greek
 `hu` | Hungarian
