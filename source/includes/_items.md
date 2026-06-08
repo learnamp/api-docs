@@ -63,7 +63,13 @@ Response will be paginated [see pagination](#pagination)
             "shortDescription": null,
             "itemType": "Video",
             "itemCategory": "Audio/Visual",
-            "itemUrl": "https://examplecompany.learnamp.com/en/items/activity-10"
+            "itemUrl": "https://examplecompany.learnamp.com/en/items/activity-10",
+            "createdAt": "2021-03-02T11:09:35Z",
+            "updatedAt": "2021-03-02T12:24:02Z",
+            "addedBy": {
+                "id": 1
+            },
+            "tags": ["marketing", "video"]
         },
         {
             "id": 3014,
@@ -71,12 +77,20 @@ Response will be paginated [see pagination](#pagination)
             "shortDescription": null,
             "itemType": "Other",
             "itemCategory": "Other",
-            "itemUrl": "https://examplecompany.learnamp.com/en/items/rust-lang-rust"
+            "itemUrl": "https://examplecompany.learnamp.com/en/items/rust-lang-rust",
+            "createdAt": "2021-03-01T09:15:00Z",
+            "updatedAt": "2021-03-01T09:15:00Z",
+            "addedBy": {
+                "id": null
+            },
+            "tags": []
         }
     ]
 }
 
 ```
+
+Each item includes `createdAt`, `updatedAt`, `addedBy` and `tags`. `addedBy` contains only the user `id` who added the item. When an item was added by an external contributor, `addedBy.id` is `null` — the full contributor details are available on the [single item endpoint](#show-an-item).
 
 ## Show an Item
 
