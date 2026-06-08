@@ -988,6 +988,7 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
                 </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User Added Content"</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Item"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"displayType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Item"</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/user-added-content"</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"addedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
                     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
@@ -1034,6 +1035,10 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
+<aside class="notice">
+The <code>activityable</code> object exposes two type fields. <code>type</code> is the internal model name (e.g. <code>Item</code>, <code>Carousel</code>) and is a stable contract. <code>displayType</code> is the product-facing name shown in the Learn Amp UI — it matches <code>type</code> for every type <strong>except a Carousel, whose <code>displayType</code> is <code>Channel</code></strong>. When filtering by <code>filters[activityable_type]</code> (see below), use the display name <code>Channel</code>, not <code>Carousel</code>.
+</aside>
+
 <blockquote>
 <p>200 OK - successful response:, with expanded=true param</p>
 </blockquote>
@@ -1046,6 +1051,7 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
                 </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Marketing 101"</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Item"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"displayType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Item"</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/dani"</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"addedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
                     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
