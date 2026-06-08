@@ -526,6 +526,9 @@
                   <li>
                     <a href="#channels-progress" class="toc-h2 toc-link" data-title="Channels Progress">Channels Progress</a>
                   </li>
+                  <li>
+                    <a href="#supported-language-codes" class="toc-h2 toc-link" data-title="Supported Language Codes">Supported Language Codes</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -3868,7 +3871,13 @@ endpoint responsible for team member creation was implemented.</p>
             </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
             </span><span class="nl">"itemType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Video"</span><span class="p">,</span><span class="w">
             </span><span class="nl">"itemCategory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Audio/Visual"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"itemUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/activity-10"</span><span class="w">
+            </span><span class="nl">"itemUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/activity-10"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-03-02T11:09:35Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-03-02T12:24:02Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"addedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"marketing"</span><span class="p">,</span><span class="w"> </span><span class="s2">"video"</span><span class="p">]</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
             </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3014</span><span class="p">,</span><span class="w">
@@ -3876,12 +3885,20 @@ endpoint responsible for team member creation was implemented.</p>
             </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
             </span><span class="nl">"itemType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
             </span><span class="nl">"itemCategory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"itemUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/rust-lang-rust"</span><span class="w">
+            </span><span class="nl">"itemUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/rust-lang-rust"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-03-01T09:15:00Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-03-01T09:15:00Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"addedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre></div><h2 id='show-an-item'>Show an Item</h2>
+</span></code></pre></div>
+<p>Each item includes <code>createdAt</code>, <code>updatedAt</code>, <code>addedBy</code> and <code>tags</code>. <code>addedBy</code> contains only the user <code>id</code> who added the item. When an item was added by an external contributor, <code>addedBy.id</code> is <code>null</code> — the full contributor details are available on the <a href="#show-an-item">single item endpoint</a>.</p>
+<h2 id='show-an-item'>Show an Item</h2>
 <blockquote>
 <p>Display details for a single Item:</p>
 </blockquote>
@@ -5130,7 +5147,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <tr>
 <td>language</td>
 <td>fr</td>
-<td>Primary language short code. One of:  en, en-US, de, es-CO, fr, it, nl, pt-BR, pl, ru, zh-CN, zh-TW, ja, ar</td>
+<td>Primary language short code (e.g. <code>fr</code>). Must be one of the <a href="#supported-language-codes">supported language codes</a>.</td>
 </tr>
 <tr>
 <td>jobTitle</td>
@@ -5416,7 +5433,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <td>language</td>
 <td>enum</td>
 <td>fr</td>
-<td>Primary language short code. One of:  en, en-US, de, es-CO, fr, it, nl, pt-BR, pl, ru, zh-CN, zh-TW, ja, ar</td>
+<td>Primary language short code (e.g. <code>fr</code>). Must be one of the <a href="#supported-language-codes">supported language codes</a>.</td>
 </tr>
 <tr>
 <td>jobTitle</td>
@@ -5947,7 +5964,99 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h1 id='verbs'>Verbs</h1><h2 id='verb-description'>Verb Description</h2>
+</span></code></pre></div><h2 id='supported-language-codes'>Supported Language Codes</h2>
+<p>The <code>language</code> field on the <a href="#create-a-user">Create</a> and <a href="#update-a-user">Update</a> user endpoints accepts one of the codes below.</p>
+
+<aside class="notice">Send the <strong>code</strong> (the value in the left column, e.g. <code>fr</code>) — not the language name. The Language column is for reference only.</aside>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Language</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>en</code></td>
+<td>UK English</td>
+</tr>
+<tr>
+<td><code>en-US</code></td>
+<td>US English</td>
+</tr>
+<tr>
+<td><code>de</code></td>
+<td>German</td>
+</tr>
+<tr>
+<td><code>es-CO</code></td>
+<td>Colombian Spanish</td>
+</tr>
+<tr>
+<td><code>fr</code></td>
+<td>French</td>
+</tr>
+<tr>
+<td><code>it</code></td>
+<td>Italian</td>
+</tr>
+<tr>
+<td><code>nl</code></td>
+<td>Dutch</td>
+</tr>
+<tr>
+<td><code>pt-BR</code></td>
+<td>Brazilian Portuguese</td>
+</tr>
+<tr>
+<td><code>pl</code></td>
+<td>Polish</td>
+</tr>
+<tr>
+<td><code>ru</code></td>
+<td>Russian</td>
+</tr>
+<tr>
+<td><code>zh-CN</code></td>
+<td>Simplified Chinese</td>
+</tr>
+<tr>
+<td><code>zh-TW</code></td>
+<td>Traditional Chinese</td>
+</tr>
+<tr>
+<td><code>ja</code></td>
+<td>Japanese</td>
+</tr>
+<tr>
+<td><code>ar</code></td>
+<td>Arabic</td>
+</tr>
+<tr>
+<td><code>cy</code></td>
+<td>Welsh</td>
+</tr>
+<tr>
+<td><code>el</code></td>
+<td>Greek</td>
+</tr>
+<tr>
+<td><code>hu</code></td>
+<td>Hungarian</td>
+</tr>
+<tr>
+<td><code>pt-PT</code></td>
+<td>European Portuguese</td>
+</tr>
+<tr>
+<td><code>ro</code></td>
+<td>Romanian</td>
+</tr>
+<tr>
+<td><code>tr</code></td>
+<td>Turkish</td>
+</tr>
+</tbody></table>
+<h1 id='verbs'>Verbs</h1><h2 id='verb-description'>Verb Description</h2>
 <p>In Learn Amp, each Activity has an associated Verb. Verbs are a concept in the TinCan/xAPI specification. To simplify integration with xAPI, our verbs are taken from the <a href="https://registry.tincanapi.com/">Tin Can Registry</a>.</p>
 <h2 id='view-all-verbs'>View All Verbs</h2>
 <blockquote>
