@@ -178,6 +178,8 @@ List all of a Learnlist's contents, in Learnlist order.
 
 A Learnlist can contain more than just Items — it may also hold Quizzes, Surveys and Events. This endpoint returns every entry, regardless of type. Each entry carries a `type` discriminator (`Item`, `Quiz`, `Survey` or `Event`) which you can pair with the entry `id` to fetch type-specific detail from the relevant endpoint (e.g. `GET /v1/items/:id`).
 
+`displayType` is the product-facing label for the entry type. For Learnlist contents it always mirrors `type`; it differs only for content types whose internal name differs from the name shown in the product.
+
 `GET https://{API_BASE_URL}/v1/learnlists/{learnlistId}/contents`
 
 ### Required Scope
@@ -195,6 +197,7 @@ Response will be paginated [see pagination](#pagination)
             "name": "Intro to Onboarding",
             "shortDescription": "A short welcome video.",
             "type": "Item",
+            "displayType": "Item",
             "url": "https://examplecompany.learnamp.com/en/items/intro-to-onboarding",
             "totalTimeEstimate": "< 5 mins",
             "addedBy": {
@@ -206,6 +209,7 @@ Response will be paginated [see pagination](#pagination)
             "name": "Onboarding Knowledge Check",
             "shortDescription": "Assess what you've learned.",
             "type": "Quiz",
+            "displayType": "Quiz",
             "url": "https://examplecompany.learnamp.com/en/quizzes/477",
             "totalTimeEstimate": "< 1 hr",
             "addedBy": {
@@ -217,6 +221,7 @@ Response will be paginated [see pagination](#pagination)
             "name": "Team Welcome Session",
             "shortDescription": null,
             "type": "Event",
+            "displayType": "Event",
             "url": "https://examplecompany.learnamp.com/en/events/58",
             "totalTimeEstimate": "1 hr",
             "addedBy": {
