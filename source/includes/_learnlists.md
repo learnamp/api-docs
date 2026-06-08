@@ -133,3 +133,107 @@ This endpoint requires the `learnlists:read` scope.
     "error": "Not found"
 }
 ```
+
+## List a Learnlist's Contents
+
+> List the contents of a single Learnlist:
+
+```shell
+curl --location --request GET 'https://api.learnamp.com/v1/learnlists/379/contents' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
+```
+
+```ruby
+module Learnamp
+  class Learnlists
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+
+    attr_accessor :token
+
+    def initialize(token)
+      @token = token
+    end
+
+    def contents(id, filters = {})
+      filters_query = URI.encode_www_form(filters)
+      response = self.class.get("/learnlists/#{id}/contents?#{filters_query}", { headers: headers })
+      response.parsed_response
+    end
+
+    private
+
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
+
+contents = Learnamp::Learnlists.new(token).contents(379)
+```
+
+List all of a Learnlist's contents, in Learnlist order.
+
+A Learnlist can contain more than just Items — it may also hold Quizzes, Surveys and Events. This endpoint returns every entry, regardless of type. Each entry carries a `type` discriminator (`Item`, `Quiz`, `Survey` or `Event`) which you can pair with the entry `id` to fetch type-specific detail from the relevant endpoint (e.g. `GET /v1/items/:id`).
+
+`GET https://{API_BASE_URL}/v1/learnlists/{learnlistId}/contents`
+
+### Required Scope
+This endpoint requires the `learnlists:read` scope.
+
+Response will be paginated [see pagination](#pagination)
+
+> 200 OK - successful response:
+
+```json
+{
+    "contents": [
+        {
+            "id": 1180,
+            "name": "Intro to Onboarding",
+            "shortDescription": "A short welcome video.",
+            "type": "Item",
+            "url": "https://examplecompany.learnamp.com/en/items/intro-to-onboarding",
+            "totalTimeEstimate": "< 5 mins",
+            "addedBy": {
+                "id": 1
+            }
+        },
+        {
+            "id": 477,
+            "name": "Onboarding Knowledge Check",
+            "shortDescription": "Assess what you've learned.",
+            "type": "Quiz",
+            "url": "https://examplecompany.learnamp.com/en/quizzes/477",
+            "totalTimeEstimate": "< 1 hr",
+            "addedBy": {
+                "id": 1
+            }
+        },
+        {
+            "id": 58,
+            "name": "Team Welcome Session",
+            "shortDescription": null,
+            "type": "Event",
+            "url": "https://examplecompany.learnamp.com/en/events/58",
+            "totalTimeEstimate": "1 hr",
+            "addedBy": {
+                "id": null
+            }
+        }
+    ]
+}
+
+```
+
+`addedBy` contains only the `id` of the user who added the entry. When the entry was added by an external contributor, `addedBy.id` is `null`. For content types that do not track who added them, `addedBy` is omitted entirely.
+
+> 404 Not Found - unsuccessful response:
+
+```json
+{
+    "error": "Not found"
+}
+```
