@@ -466,6 +466,9 @@
                     <a href="#show-an-item" class="toc-h2 toc-link" data-title="Show an Item">Show an Item</a>
                   </li>
                   <li>
+                    <a href="#list-learnlists-containing-an-item" class="toc-h2 toc-link" data-title="List Learnlists Containing an Item">List Learnlists Containing an Item</a>
+                  </li>
+                  <li>
                     <a href="#create-an-item" class="toc-h2 toc-link" data-title="Create an Item">Create an Item</a>
                   </li>
                   <li>
@@ -490,6 +493,9 @@
                   </li>
                   <li>
                     <a href="#show-a-learnlist" class="toc-h2 toc-link" data-title="Show a Learnlist">Show a Learnlist</a>
+                  </li>
+                  <li>
+                    <a href="#list-a-learnlist-39-s-contents" class="toc-h2 toc-link" data-title="List a Learnlist's Contents">List a Learnlist's Contents</a>
                   </li>
               </ul>
           </li>
@@ -3871,7 +3877,13 @@ endpoint responsible for team member creation was implemented.</p>
             </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
             </span><span class="nl">"itemType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Video"</span><span class="p">,</span><span class="w">
             </span><span class="nl">"itemCategory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Audio/Visual"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"itemUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/activity-10"</span><span class="w">
+            </span><span class="nl">"itemUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/activity-10"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-03-02T11:09:35Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-03-02T12:24:02Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"addedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"marketing"</span><span class="p">,</span><span class="w"> </span><span class="s2">"video"</span><span class="p">]</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
             </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3014</span><span class="p">,</span><span class="w">
@@ -3879,12 +3891,20 @@ endpoint responsible for team member creation was implemented.</p>
             </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
             </span><span class="nl">"itemType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
             </span><span class="nl">"itemCategory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"itemUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/rust-lang-rust"</span><span class="w">
+            </span><span class="nl">"itemUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/rust-lang-rust"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-03-01T09:15:00Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-03-01T09:15:00Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"addedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre></div><h2 id='show-an-item'>Show an Item</h2>
+</span></code></pre></div>
+<p>Each item includes <code>createdAt</code>, <code>updatedAt</code>, <code>addedBy</code> and <code>tags</code>. <code>addedBy</code> contains only the user <code>id</code> who added the item. When an item was added by an external contributor, <code>addedBy.id</code> is <code>null</code> — the full contributor details are available on the <a href="#show-an-item">single item endpoint</a>.</p>
+<h2 id='show-an-item'>Show an Item</h2>
 <blockquote>
 <p>Display details for a single Item:</p>
 </blockquote>
@@ -3984,6 +4004,69 @@ endpoint responsible for team member creation was implemented.</p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
 </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='list-learnlists-containing-an-item'>List Learnlists Containing an Item</h2>
+<blockquote>
+<p>List the learnlists that contain a single item:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/items/3015/learnlists'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Items</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">learnlists</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">filters</span> <span class="o">=</span> <span class="p">{})</span>
+      <span class="n">filters_query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">encode_www_form</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/items/</span><span class="si">#{</span><span class="nb">id</span><span class="si">}</span><span class="s2">/learnlists?</span><span class="si">#{</span><span class="n">filters_query</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">learnlists</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Items</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">learnlists</span><span class="p">(</span><span class="mi">3015</span><span class="p">)</span>
+</code></pre></div>
+<p>List all of the learnlists that contain a given item, most recently created first.</p>
+
+<p><code>GET https://{API_BASE_URL}/v1/items/{itemId}/learnlists</code></p>
+<h3 id='required-scope-3'>Required Scope</h3>
+<p>This endpoint requires the <code>items:read</code> scope.</p>
+
+<p>Response will be paginated <a href="#pagination">see pagination</a></p>
+
+<blockquote>
+<p>200 OK - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"learnlists"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">379</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test learnlist"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is the learnlist description"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div>
+<blockquote>
+<p>404 Not Found - unsuccessful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div><h2 id='create-an-item'>Create an Item</h2>
 <blockquote>
 <p>Create a new Item:</p>
@@ -4035,7 +4118,7 @@ endpoint responsible for team member creation was implemented.</p>
 <p>Create an Item</p>
 
 <p><code>POST https://{API_BASE_URL}/v1/items</code></p>
-<h3 id='required-scope-3'>Required Scope</h3>
+<h3 id='required-scope-4'>Required Scope</h3>
 <p>This endpoint requires the <code>items:create</code> scope.</p>
 <h3 id='data-in-body'>Data in Body</h3>
 <table><thead>
@@ -4249,7 +4332,7 @@ endpoint responsible for team member creation was implemented.</p>
 <p>Update an Item</p>
 
 <p><code>PUT https://{API_BASE_URL}/v1/items/{itemId}</code></p>
-<h3 id='required-scope-4'>Required Scope</h3>
+<h3 id='required-scope-5'>Required Scope</h3>
 <p>This endpoint requires the <code>items:update</code> scope.</p>
 <h3 id='data-in-body-2'>Data in Body</h3>
 <table><thead>
@@ -4462,7 +4545,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <span class="n">activity</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Items</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">complete</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
 </code></pre></div><h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://{API_BASE_URL}/v1/items/complete</code></p>
-<h3 id='required-scope-5'>Required Scope</h3>
+<h3 id='required-scope-6'>Required Scope</h3>
 <p>This endpoint requires the <code>items:complete</code> scope.</p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
@@ -4580,7 +4663,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Delete an Item</p>
 
 <p><code>DELETE https://{API_BASE_URL}/v1/items/{itemId}</code></p>
-<h3 id='required-scope-6'>Required Scope</h3>
+<h3 id='required-scope-7'>Required Scope</h3>
 <p>This endpoint requires the <code>items:delete</code> scope.</p>
 
 <blockquote>
@@ -4703,6 +4786,106 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
     </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is the learnlist description"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
+<blockquote>
+<p>404 Not Found - unsuccessful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='list-a-learnlist-39-s-contents'>List a Learnlist&#39;s Contents</h2>
+<blockquote>
+<p>List the contents of a single Learnlist:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/learnlists/379/contents'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Learnlists</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">contents</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">filters</span> <span class="o">=</span> <span class="p">{})</span>
+      <span class="n">filters_query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">encode_www_form</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/learnlists/</span><span class="si">#{</span><span class="nb">id</span><span class="si">}</span><span class="s2">/contents?</span><span class="si">#{</span><span class="n">filters_query</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">contents</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Learnlists</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">contents</span><span class="p">(</span><span class="mi">379</span><span class="p">)</span>
+</code></pre></div>
+<p>List all of a Learnlist&#39;s contents, in Learnlist order.</p>
+
+<p>A Learnlist can contain more than just Items — it may also hold Quizzes, Surveys and Events. This endpoint returns every entry, regardless of type. Each entry carries a <code>type</code> discriminator (<code>Item</code>, <code>Quiz</code>, <code>Survey</code> or <code>Event</code>) which you can pair with the entry <code>id</code> to fetch type-specific detail from the relevant endpoint (e.g. <code>GET /v1/items/:id</code>).</p>
+
+<p><code>displayType</code> is the product-facing label for the entry type. For Learnlist contents it always mirrors <code>type</code>; it differs only for content types whose internal name differs from the name shown in the product.</p>
+
+<p><code>GET https://{API_BASE_URL}/v1/learnlists/{learnlistId}/contents</code></p>
+<h3 id='required-scope-3'>Required Scope</h3>
+<p>This endpoint requires the <code>learnlists:read</code> scope.</p>
+
+<p>Response will be paginated <a href="#pagination">see pagination</a></p>
+
+<blockquote>
+<p>200 OK - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"contents"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1180</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Intro to Onboarding"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A short welcome video."</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Item"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"displayType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Item"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/items/intro-to-onboarding"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"totalTimeEstimate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt; 5 mins"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"addedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">477</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Onboarding Knowledge Check"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Assess what you've learned."</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Quiz"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"displayType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Quiz"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/quizzes/477"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"totalTimeEstimate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt; 1 hr"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"addedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">58</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Team Welcome Session"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"shortDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Event"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"displayType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Event"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://examplecompany.learnamp.com/en/events/58"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"totalTimeEstimate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1 hr"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"addedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div>
+<p><code>addedBy</code> contains only the <code>id</code> of the user who added the entry. When the entry was added by an external contributor, <code>addedBy.id</code> is <code>null</code>. For content types that do not track who added them, <code>addedBy</code> is omitted entirely.</p>
+
 <blockquote>
 <p>404 Not Found - unsuccessful response:</p>
 </blockquote>
