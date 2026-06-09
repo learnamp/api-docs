@@ -469,6 +469,9 @@
                     <a href="#list-learnlists-containing-an-item" class="toc-h2 toc-link" data-title="List Learnlists Containing an Item">List Learnlists Containing an Item</a>
                   </li>
                   <li>
+                    <a href="#list-channels-containing-an-item" class="toc-h2 toc-link" data-title="List Channels Containing an Item">List Channels Containing an Item</a>
+                  </li>
+                  <li>
                     <a href="#create-an-item" class="toc-h2 toc-link" data-title="Create an Item">Create an Item</a>
                   </li>
                   <li>
@@ -4067,6 +4070,68 @@ endpoint responsible for team member creation was implemented.</p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
 </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='list-channels-containing-an-item'>List Channels Containing an Item</h2>
+<blockquote>
+<p>List the channels that contain a single item:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/items/3015/channels'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Items</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">channels</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">filters</span> <span class="o">=</span> <span class="p">{})</span>
+      <span class="n">filters_query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">encode_www_form</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/items/</span><span class="si">#{</span><span class="nb">id</span><span class="si">}</span><span class="s2">/channels?</span><span class="si">#{</span><span class="n">filters_query</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">channels</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Items</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">channels</span><span class="p">(</span><span class="mi">3015</span><span class="p">)</span>
+</code></pre></div>
+<p>List all of the channels that contain a given item, most recently created first.</p>
+
+<p><code>GET https://{API_BASE_URL}/v1/items/{itemId}/channels</code></p>
+<h3 id='required-scope-4'>Required Scope</h3>
+<p>This endpoint requires the <code>items:read</code> scope.</p>
+
+<p>Response will be paginated <a href="#pagination">see pagination</a></p>
+
+<blockquote>
+<p>200 OK - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Onboarding"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div>
+<blockquote>
+<p>404 Not Found - unsuccessful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div><h2 id='create-an-item'>Create an Item</h2>
 <blockquote>
 <p>Create a new Item:</p>
@@ -4118,7 +4183,7 @@ endpoint responsible for team member creation was implemented.</p>
 <p>Create an Item</p>
 
 <p><code>POST https://{API_BASE_URL}/v1/items</code></p>
-<h3 id='required-scope-4'>Required Scope</h3>
+<h3 id='required-scope-5'>Required Scope</h3>
 <p>This endpoint requires the <code>items:create</code> scope.</p>
 <h3 id='data-in-body'>Data in Body</h3>
 <table><thead>
@@ -4332,7 +4397,7 @@ endpoint responsible for team member creation was implemented.</p>
 <p>Update an Item</p>
 
 <p><code>PUT https://{API_BASE_URL}/v1/items/{itemId}</code></p>
-<h3 id='required-scope-5'>Required Scope</h3>
+<h3 id='required-scope-6'>Required Scope</h3>
 <p>This endpoint requires the <code>items:update</code> scope.</p>
 <h3 id='data-in-body-2'>Data in Body</h3>
 <table><thead>
@@ -4545,7 +4610,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <span class="n">activity</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Items</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">complete</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
 </code></pre></div><h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://{API_BASE_URL}/v1/items/complete</code></p>
-<h3 id='required-scope-6'>Required Scope</h3>
+<h3 id='required-scope-7'>Required Scope</h3>
 <p>This endpoint requires the <code>items:complete</code> scope.</p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
@@ -4663,7 +4728,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Delete an Item</p>
 
 <p><code>DELETE https://{API_BASE_URL}/v1/items/{itemId}</code></p>
-<h3 id='required-scope-7'>Required Scope</h3>
+<h3 id='required-scope-8'>Required Scope</h3>
 <p>This endpoint requires the <code>items:delete</code> scope.</p>
 
 <blockquote>
@@ -4981,6 +5046,11 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <td>filters[team_ids]</td>
 <td><em>[1,2,3]</em> or <em>1,2,3</em></td>
 <td>Return members of any of the given teams by team ID.<br /><br />Param can be array of team ids, or a string of comma seperated team ids</td>
+</tr>
+<tr>
+<td>filters[status][]</td>
+<td>confirmed</td>
+<td>Return users matching any of the given statuses. Repeat the param to pass multiple, e.g. <code>filters[status][]=confirmed&amp;filters[status][]=deactivated</code>.<br /><br />Possible values: &quot;not_invited&quot;, &quot;invite_scheduled&quot;, &quot;invite_pending&quot;, &quot;confirmed&quot;, &quot;deactivated&quot;</td>
 </tr>
 <tr>
 <td>filters[created_at][from]</td>
