@@ -230,7 +230,7 @@ This endpoint requires the `users:read` scope.
     "language": "en",
     "role": "viewer",
     "integrationExternalId": "EPOS-12345",
-    "skillsMatrixRole": "Software Engineer",
+    "occupationRole": "Software Engineer",
     "hireDate": "2021-01-15",
     "profileUrl": "https://testaccount.learnamp.com/en/users/1",
     "status": {
@@ -403,7 +403,7 @@ customFields | [{ name: "Employee ID", value: "12-34-56" }] | CustomFields param
     "language": "en",
     "role": "viewer",
     "integrationExternalId": "EPOS-12345",
-    "skillsMatrixRole": "Software Engineer",
+    "occupationRole": "Software Engineer",
     "hireDate": "2021-01-15",
     "profileUrl": "https://testaccount.learnamp.com/en/users/1",
     "status": {
@@ -572,7 +572,7 @@ params = {
   hireDate:  "2021-02-28",
   location:  "London",
   department:  "Marketing",
-  skillsMatrixRole: "Software Engineer",
+  occupationRole: "Software Engineer",
   customFields: [{ name: "Employee ID", value: "123456" }]
 }
 
@@ -606,7 +606,7 @@ hireDate | date | 2021-02-28 | Employment start date for user in ISO 8601 date f
 location | string | London | Primary location of user
 department | string | Marketing | Department of user
 reactivate | boolean | true | Reactivates user if deactivated
-skillsMatrixRole | string | "Software Engineer" | Name of a skills-matrix role (an "occupation"/role defined in your company) to assign to the user. Assigns it as the user's primary role and applies the role's target skills, removing the need for the user to self-select a role during onboarding. An unknown role name returns `422 Unprocessable Entity`. Returned on the user object as `skillsMatrixRole`.
+occupationRole | string | "Software Engineer" | Name of a skills-matrix role (an "occupation"/role defined in your company) to assign to the user. Assigns it as the user's primary role and applies the role's target skills, removing the need for the user to self-select a role during onboarding. An unknown role name returns `422 Unprocessable Entity`. Returned on the user object as `occupationRole`.
 customFields | object | [{ name: "Employee ID", value: "12-34-56" }] | CustomFields param is an array, of name/value pairs for custom fields. See [Clearing custom field values](#clearing-custom-field-values) below.
 
 ### Clearing custom field values
@@ -631,7 +631,7 @@ Within the `customFields` array each entry is a `{ "name": ..., "value": ... }` 
     "language": "en",
     "role": "admin",
     "integrationExternalId": "EPOS-13820",
-    "skillsMatrixRole": "Software Engineer",
+    "occupationRole": "Software Engineer",
     "profileUrl": "https://testaccount.learnamp.com/en/users/1382",
     "status": {
         "status": "Invite pending",
@@ -748,7 +748,7 @@ Within the `customFields` array each entry is a `{ "name": ..., "value": ... }` 
 }
 ```
 
-> 422 Unprocessable Entity - unknown `skillsMatrixRole` name:
+> 422 Unprocessable Entity - unknown `occupationRole` name:
 
 ```json
 {
@@ -823,7 +823,7 @@ Accepts the same body parameters as [Update a User](#update-a-user), including `
 * Lookup is scoped to your company — an unknown `integrationExternalId` returns `404 Not Found`.
 * Renaming to an `integrationExternalId` already used by another user in your company returns `400 Bad Request`.
 * Purely numeric values (e.g. `"42"`) are reachable through this subroute regardless of any user's `id`.
-* `customFields` clearing and `skillsMatrixRole` behave exactly as on [Update a User](#update-a-user) — see [Clearing custom field values](#clearing-custom-field-values).
+* `customFields` clearing and `occupationRole` behave exactly as on [Update a User](#update-a-user) — see [Clearing custom field values](#clearing-custom-field-values).
 
 > 200 OK - successful response:
 
@@ -838,7 +838,7 @@ Accepts the same body parameters as [Update a User](#update-a-user), including `
     "language": "en",
     "role": "admin",
     "integrationExternalId": "EPOS-12345",
-    "skillsMatrixRole": "Software Engineer",
+    "occupationRole": "Software Engineer",
     "profileUrl": "https://testaccount.learnamp.com/en/users/1382",
     "status": {
         "status": "Confirmed",
