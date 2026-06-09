@@ -69,6 +69,7 @@ filters[last_name] | Smith | Return users with matching last name (using `ILIKE 
 filters[role] | viewer | Return users with matching role. <br />Possible values: "viewer", "curator", "reporter", "hr", "admin", "owner"
 filters[no_team] | true | Return users that have no team assigned
 filters[team_ids] | *[1,2,3]* or *1,2,3* | Return members of any of the given teams by team ID.<br /><br />Param can be array of team ids, or a string of comma seperated team ids
+filters[status][] | confirmed | Return users matching any of the given statuses. Repeat the param to pass multiple, e.g. `filters[status][]=confirmed&filters[status][]=deactivated`.<br /><br />Possible values: "not_invited", "invite_scheduled", "invite_pending", "confirmed", "deactivated"
 filters[created_at][from] | "2021-12-31" | Created date range FROM date in ISO 8601 format
 filters[created_at][to] | "2022-02-28" | Created date range TO date in ISO 8601 format
 filters[updated_at][from] | "2021-12-31" | Updated date range FROM date in ISO 8601 format
