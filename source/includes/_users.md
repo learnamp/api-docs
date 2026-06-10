@@ -752,7 +752,7 @@ Within the `customFields` array each entry is a `{ "name": ..., "value": ... }` 
 
 ```json
 {
-    "error": "Skills matrix role not found"
+    "error": "occupationRole does not match an existing role in your company"
 }
 ```
 
