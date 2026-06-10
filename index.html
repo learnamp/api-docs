@@ -5234,6 +5234,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
     </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"integrationExternalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EPOS-12345"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"occupationRole"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Software Engineer"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-01-15"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -5473,6 +5474,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
     </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"integrationExternalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EPOS-12345"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"occupationRole"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Software Engineer"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-01-15"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -5630,6 +5632,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
   <span class="ss">hireDate:  </span><span class="s2">"2021-02-28"</span><span class="p">,</span>
   <span class="ss">location:  </span><span class="s2">"London"</span><span class="p">,</span>
   <span class="ss">department:  </span><span class="s2">"Marketing"</span><span class="p">,</span>
+  <span class="ss">occupationRole: </span><span class="s2">"Software Engineer"</span><span class="p">,</span>
   <span class="ss">customFields: </span><span class="p">[{</span> <span class="ss">name: </span><span class="s2">"Employee ID"</span><span class="p">,</span> <span class="ss">value: </span><span class="s2">"123456"</span> <span class="p">}]</span>
 <span class="p">}</span>
 
@@ -5746,12 +5749,28 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <td>Reactivates user if deactivated</td>
 </tr>
 <tr>
+<td>occupationRole</td>
+<td>string</td>
+<td>&quot;Software Engineer&quot;</td>
+<td>Name of a skills-matrix role (an &quot;occupation&quot;/role defined in your company) to assign to the user. Assigns it as the user&#39;s primary role and applies the role&#39;s target skills, removing the need for the user to self-select a role during onboarding. An unknown role name returns <code>422 Unprocessable Entity</code>. Returned on the user object as <code>occupationRole</code>.</td>
+</tr>
+<tr>
 <td>customFields</td>
 <td>object</td>
 <td>[{ name: &quot;Employee ID&quot;, value: &quot;12-34-56&quot; }]</td>
-<td>CustomFields param is an array, of name/value pairs for custom fields.</td>
+<td>CustomFields param is an array, of name/value pairs for custom fields. See <a href="#clearing-custom-field-values">Clearing custom field values</a> below.</td>
 </tr>
 </tbody></table>
+<h3 id='clearing-custom-field-values'>Clearing custom field values</h3>
+<p>Within the <code>customFields</code> array each entry is a <code>{ &quot;name&quot;: ..., &quot;value&quot;: ... }</code> pair, matched by <code>name</code>:</p>
+
+<ul>
+<li>To <strong>clear</strong> a custom field, send it with <code>&quot;value&quot;: null</code> or <code>&quot;value&quot;: &quot;&quot;</code> — the stored value is removed.</li>
+<li><strong>Omitting</strong> a field from the <code>customFields</code> array leaves that field <strong>unchanged</strong> — omission does <strong>not</strong> clear it.</li>
+<li>A custom field with <strong>presence validation enabled cannot be cleared</strong>: attempting to clear it returns <code>400 Bad Request</code> with a validation error and the existing value is retained.</li>
+<li>An unknown custom field <code>name</code> returns <code>404 Not Found</code>.</li>
+<li>If your company has custom fields disabled, the entire <code>customFields</code> payload is silently ignored and the rest of the update still succeeds.</li>
+</ul>
 
 <blockquote>
 <p>200 OK - successful response:</p>
@@ -5766,6 +5785,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
     </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"integrationExternalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EPOS-13820"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"occupationRole"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Software Engineer"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1382"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invite pending"</span><span class="p">,</span><span class="w">
@@ -5856,6 +5876,32 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
+<blockquote>
+<p>400 Bad request - clearing a custom field that has presence validation enabled (the existing value is retained):</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Validation failed: Value can't be blank"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fullErrors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"can't be blank"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>404 Not Found - unknown custom field <code>name</code>:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>422 Unprocessable Entity - unknown <code>occupationRole</code> name:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"occupationRole does not match an existing role in your company"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <p>A user may also be updated by <code>integrationExternalId</code> via a dedicated subroute — see <a href="#update-a-user-by-integration-external-id">Update a User by Integration External ID</a>.</p>
 <h2 id='update-a-user-by-integration-external-id'>Update a User by Integration External ID</h2>
 <blockquote>
@@ -5913,6 +5959,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <li>Lookup is scoped to your company — an unknown <code>integrationExternalId</code> returns <code>404 Not Found</code>.</li>
 <li>Renaming to an <code>integrationExternalId</code> already used by another user in your company returns <code>400 Bad Request</code>.</li>
 <li>Purely numeric values (e.g. <code>&quot;42&quot;</code>) are reachable through this subroute regardless of any user&#39;s <code>id</code>.</li>
+<li><code>customFields</code> clearing and <code>occupationRole</code> behave exactly as on <a href="#update-a-user">Update a User</a> — see <a href="#clearing-custom-field-values">Clearing custom field values</a>.</li>
 </ul>
 
 <blockquote>
@@ -5928,6 +5975,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
     </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"integrationExternalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EPOS-12345"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"occupationRole"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Software Engineer"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1382"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
