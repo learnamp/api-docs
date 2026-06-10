@@ -617,6 +617,7 @@ Within the `customFields` array each entry is a `{ "name": ..., "value": ... }` 
 * **Omitting** a field from the `customFields` array leaves that field **unchanged** — omission does **not** clear it.
 * A custom field with **presence validation enabled cannot be cleared**: attempting to clear it returns `400 Bad Request` with a validation error and the existing value is retained.
 * An unknown custom field `name` returns `404 Not Found`.
+* If your company has custom fields disabled, the entire `customFields` payload is silently ignored and the rest of the update still succeeds.
 
 > 200 OK - successful response:
 
