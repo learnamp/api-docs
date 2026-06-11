@@ -379,7 +379,7 @@ lastName | User | Last name of user *(\*)*
 integrationExternalId | "EPOS-12345" | Optional third-party identifier for the user. Must be unique within your company.
 language | fr | Primary language short code (e.g. `fr`). Must be one of the [supported language codes](#supported-language-codes).
 jobTitle | Developer | Job title of user
-role | viewer | user's role. One of: viewer, curator, admin, hr, reporter
+role | viewer | user's role. One of: viewer, curator, reporter, learning_designer, hr, admin
 primaryTeamId | 15 | Team ID of primary team [see Teams](#teams)
 primaryTeamIntegrationExternalId | "EPOS-001" | Primary team's `integrationExternalId` [see Teams](#teams). Mutually exclusive with `primaryTeamId`.
 secondaryTeamIds | [376,377] | Array of Team IDs of seconary teams
@@ -598,6 +598,7 @@ lastName | string | User | Last name of user *(\*)*
 integrationExternalId | string | "EPOS-12345" | Optional third-party identifier for the user. Must be unique within your company. Send `null` or `""` to clear an existing value.
 language | enum | fr | Primary language short code (e.g. `fr`). Must be one of the [supported language codes](#supported-language-codes).
 jobTitle | string |Developer | Job title of user
+role | enum | admin | User's system role. One of: viewer, curator, reporter, learning_designer, hr, admin. `owner` and `super_admin` cannot be set via the API. `hr` requires the HR-role package on your company (otherwise returns `422 Unprocessable Entity`).
 primaryTeamId | integer | 15 | Team ID of primary team [see Teams](#teams)
 primaryTeamIntegrationExternalId | string | "EPOS-001" | Primary team's `integrationExternalId` [see Teams](#teams). Mutually exclusive with `primaryTeamId`.
 secondaryTeamIds | Array(integer) | [376,377] | Array of Team IDs of seconary teams
