@@ -5402,7 +5402,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <tr>
 <td>role</td>
 <td>viewer</td>
-<td>user&#39;s role. One of: viewer, curator, admin, hr, reporter</td>
+<td>user&#39;s role. One of: viewer, curator, reporter, learning_designer, hr, admin</td>
 </tr>
 <tr>
 <td>primaryTeamId</td>
@@ -5687,6 +5687,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <td>string</td>
 <td>Developer</td>
 <td>Job title of user</td>
+</tr>
+<tr>
+<td>role</td>
+<td>enum</td>
+<td>admin</td>
+<td>User&#39;s system role. One of: viewer, curator, reporter, learning_designer, hr, admin. <code>owner</code> and <code>super_admin</code> cannot be set via the API. <code>hr</code> requires the HR-role package on your company (otherwise returns <code>422 Unprocessable Entity</code>).</td>
 </tr>
 <tr>
 <td>primaryTeamId</td>
