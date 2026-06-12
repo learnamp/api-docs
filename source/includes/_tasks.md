@@ -280,3 +280,64 @@ filters[lifecycle] | "active,deleted,deactivated" | Lifecycle status of task. Ca
     ]
 }
 ```
+## Delete a Task
+
+> Delete a task:
+
+```shell
+curl --location --request DELETE 'https://api.learnamp.com/v1/tasks/1' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
+```
+
+```ruby
+module Learnamp
+  class Tasks
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+
+    attr_accessor :token
+
+    def initialize(token)
+      @token = token
+    end
+
+    def delete(id)
+      response = self.class.delete("/tasks/#{id}", { headers: headers })
+      response.parsed_response
+    end
+
+    private
+
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
+
+Learnamp::Tasks.new(token).delete(2456)
+```
+
+Delete a task. The task is removed from the user's active tasks, and any access that was granted by the task (for example, access to a channel) is revoked.
+
+This matches deleting a task in the UI: the task is given a lifecycle of 'deleted' rather than being permanently destroyed, so it can still be retrieved using the `filters[lifecycle]=deleted` filter on the [View All Tasks](#view-all-tasks) endpoint. Processing the deletion may take a couple of minutes.
+
+`DELETE https://{API_BASE_URL}/v1/tasks/{taskId}`
+
+### Required Scope
+This endpoint requires the `tasks:delete` scope.
+
+> 204 No Content - successful response:
+
+```json
+
+```
+
+> 404 Not Found - unsuccessful response:
+
+```json
+{
+    "error": "Not found"
+}
+```
