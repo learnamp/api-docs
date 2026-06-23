@@ -1177,6 +1177,7 @@ Code | Language
 `es` | Spanish
 `es-CO` | Colombian Spanish
 `fr` | French
+`fr-CA` | Canadian French
 `it` | Italian
 `nl` | Dutch
 `pt-BR` | Brazilian Portuguese
@@ -1190,6 +1191,7 @@ Code | Language
 `ja` | Japanese
 `ar` | Arabic
 `sk` | Slovak
+`ca` | Catalan
 `cy` | Welsh
 `el` | Greek
 `hu` | Hungarian
