@@ -535,6 +535,9 @@
                     <a href="#show-a-user" class="toc-h2 toc-link" data-title="Show a User">Show a User</a>
                   </li>
                   <li>
+                    <a href="#show-a-user-by-integration-external-id" class="toc-h2 toc-link" data-title="Show a User by Integration External ID">Show a User by Integration External ID</a>
+                  </li>
+                  <li>
                     <a href="#create-a-user" class="toc-h2 toc-link" data-title="Create a User">Create a User</a>
                   </li>
                   <li>
@@ -5410,6 +5413,11 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <td>Return users with matching email address</td>
 </tr>
 <tr>
+<td>filters[integration_external_id]</td>
+<td>EPOS-12345</td>
+<td>Return the user with exactly matching integration external ID</td>
+</tr>
+<tr>
 <td>filters[first_name]</td>
 <td>John</td>
 <td>Return users with matching first name (using <code>ILIKE &#39;%value%&#39;</code>)</td>
@@ -5680,6 +5688,122 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
 </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='show-a-user-by-integration-external-id'>Show a User by Integration External ID</h2>
+<blockquote>
+<p>Display details for a single user, looked up by integration external ID:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/users/by_integration_external_id/EPOS-12345'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
+  <span class="k">class</span> <span class="nc">Users</span>
+    <span class="kp">include</span> <span class="no">HTTParty</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:token</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">find_by_integration_external_id</span><span class="p">(</span><span class="n">external_id</span><span class="p">)</span>
+      <span class="n">encoded_id</span> <span class="o">=</span> <span class="no">ERB</span><span class="o">::</span><span class="no">Util</span><span class="p">.</span><span class="nf">url_encode</span><span class="p">(</span><span class="n">external_id</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/users/by_integration_external_id/</span><span class="si">#{</span><span class="n">encoded_id</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">headers: </span><span class="n">headers</span> <span class="p">})</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">parsed_response</span> <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="nf">ok?</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">headers</span>
+      <span class="p">{</span>
+        <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer </span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">user</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Users</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">token</span><span class="p">).</span><span class="nf">find_by_integration_external_id</span><span class="p">(</span><span class="s2">"EPOS-12345"</span><span class="p">)</span>
+</code></pre></div>
+<p>Display user details for the user whose integration external ID exactly matches the given value.</p>
+
+<p><code>GET https://{API_BASE_URL}/v1/users/by_integration_external_id/{integrationExternalId}</code></p>
+
+<p>The external ID must be URL-encoded when used in the path. For example, an ID of <code>HR/1001</code> must be requested as <code>/v1/users/by_integration_external_id/HR%2F1001</code>.</p>
+
+<p>Lookups are scoped to your company: an unknown external ID returns <code>404 Not Found</code>.</p>
+<h3 id='required-scope-3'>Required Scope</h3>
+<p>This endpoint requires the <code>users:read</code> scope.</p>
+
+<blockquote>
+<p>200 OK - successful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Developer"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@email.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"viewer"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"integrationExternalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EPOS-12345"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"occupationRole"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Software Engineer"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"hireDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-01-15"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 29 Nov 16"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/dfiav5ctj/image/upload/c_crop,g_custom/a_exif,c_fill,dpr_1.0,f_auto,q_auto,w_100/v1505401603/iysnlkr6sr6ys0dybeh0.jpg"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ops Director"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test2@email.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"integrationExternalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EPOS-98765"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London, UK"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"department"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Marketing"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"primaryTeam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Operations"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"teamUsersCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"apiTeamPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15.json"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"apiTeamUsersPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/teams/15/users.json"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"manager"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manager"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"jobTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ops Director"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test2@email.com"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"integrationExternalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EPOS-98765"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"profileUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://testaccount.learnamp.com/en/users/17"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Confirmed"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On 20 Feb 17"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"secondaryTeams"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>404 Not Found - unsuccessful response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found"</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div><h2 id='create-a-user'>Create a User</h2>
 <blockquote>
 <p>Create a new user in your account:</p>
@@ -5746,7 +5870,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Create a user and trigger an invite email.</p>
 
 <p><code>POST https://{API_BASE_URL}/v1/users</code></p>
-<h3 id='required-scope-3'>Required Scope</h3>
+<h3 id='required-scope-4'>Required Scope</h3>
 <p>This endpoint requires the <code>users:create</code> scope.</p>
 <h3 id='data-in-body'>Data in Body</h3>
 <table><thead>
@@ -6028,7 +6152,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Update a user&#39;s details&#39;.</p>
 
 <p><code>PUT https://{API_BASE_URL}/v1/users/{userId}</code></p>
-<h3 id='required-scope-4'>Required Scope</h3>
+<h3 id='required-scope-5'>Required Scope</h3>
 <p>This endpoint requires the <code>users:update</code> scope.</p>
 <h3 id='data-in-body-2'>Data in Body</h3>
 <table><thead>
@@ -6343,7 +6467,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Update a user without knowing their Learn Amp <code>id</code>. The user is matched by <code>integrationExternalId</code> within your company.</p>
 
 <p><code>PUT https://{API_BASE_URL}/v1/users/by_integration_external_id/{integrationExternalId}</code></p>
-<h3 id='required-scope-5'>Required Scope</h3>
+<h3 id='required-scope-6'>Required Scope</h3>
 <p>This endpoint requires the <code>users:update</code> scope.</p>
 <h3 id='data-in-body-3'>Data in Body</h3>
 <p>Accepts the same body parameters as <a href="#update-a-user">Update a User</a>, including <code>integrationExternalId</code> itself — sending a new value renames the user&#39;s external identifier, sending <code>null</code> or <code>&quot;&quot;</code> clears it.</p>
@@ -6434,7 +6558,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Deactivate a user, so that they can no longer login. Their data is not removed.</p>
 
 <p><code>PUT https://{API_BASE_URL}/v1/users/{userId}/deactivate</code></p>
-<h3 id='required-scope-6'>Required Scope</h3>
+<h3 id='required-scope-7'>Required Scope</h3>
 <p>This endpoint requires the <code>users:deactivate</code> scope.</p>
 
 <blockquote>
@@ -6485,7 +6609,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Reactivate a user, so that they login again.</p>
 
 <p><code>PUT https://{API_BASE_URL}/v1/users/{userId}/reactivate</code></p>
-<h3 id='required-scope-7'>Required Scope</h3>
+<h3 id='required-scope-8'>Required Scope</h3>
 <p>This endpoint requires the <code>users:reactivate</code> scope.</p>
 
 <blockquote>
@@ -6536,7 +6660,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>Delete a user, so that they can no longer login. Their data is removed.</p>
 
 <p><code>DELETE https://{API_BASE_URL}/v1/users/{userId}</code></p>
-<h3 id='required-scope-8'>Required Scope</h3>
+<h3 id='required-scope-9'>Required Scope</h3>
 <p>This endpoint requires the <code>users:delete</code> scope.</p>
 
 <blockquote>
@@ -6587,7 +6711,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <p>View progress of all assigned channels by a specified user. This is analogous to Learn Amp&#39;s People Log feature, for a single user.</p>
 
 <p><code>GET https://{API_BASE_URL}/v1/users/{userId}/channels_progress</code></p>
-<h3 id='required-scope-9'>Required Scope</h3>
+<h3 id='required-scope-10'>Required Scope</h3>
 <p>This endpoint requires the <code>user_channels_progress:read</code> scope.</p>
 
 <p>This end-point will return a paginated array of channels that are assigned to the specified user. Each element will contain the completion percentage of the channel by that user, as well as the datetime (if any) when the channel was completed.</p>
