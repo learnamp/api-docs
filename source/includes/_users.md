@@ -64,6 +64,7 @@ URL Param |Example Value | Description
 --------- | ------- | -----------
 expanded | true | Optional expanded json. Returns all available user details including custom fields and teams information.
 filters[email] | email@test.com | Return users with matching email address
+filters[integration_external_id] | EPOS-12345 | Return the user with exactly matching integration external ID
 filters[first_name] | John | Return users with matching first name (using `ILIKE '%value%'`)
 filters[last_name] | Smith | Return users with matching last name (using `ILIKE '%value%'`)
 filters[role] | viewer | Return users with matching role. <br />Possible values: "viewer", "curator", "reporter", "hr", "admin", "owner"
@@ -281,6 +282,131 @@ This endpoint requires the `users:read` scope.
           }
         }
       }
+    },
+    "secondaryTeams": []
+}
+```
+
+> 404 Not Found - unsuccessful response:
+
+```json
+{
+    "error": "Not found"
+}
+```
+
+## Show a User by Integration External ID
+
+> Display details for a single user, looked up by integration external ID:
+
+```shell
+curl --location --request GET 'https://api.learnamp.com/v1/users/by_integration_external_id/EPOS-12345' \
+--header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
+```
+
+```ruby
+module Learnamp
+  class Users
+    include HTTParty
+    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+
+    attr_accessor :token
+
+    def initialize(token)
+      @token = token
+    end
+
+    def find_by_integration_external_id(external_id)
+      encoded_id = ERB::Util.url_encode(external_id)
+      response = self.class.get("/users/by_integration_external_id/#{encoded_id}", { headers: headers })
+      response.parsed_response if response.ok?
+    end
+
+    private
+
+    def headers
+      {
+        'Authorization' => "Bearer #{token}"
+      }
+    end
+  end
+end
+
+user = Learnamp::Users.new(token).find_by_integration_external_id("EPOS-12345")
+```
+
+Display user details for the user whose integration external ID exactly matches the given value.
+
+`GET https://{API_BASE_URL}/v1/users/by_integration_external_id/{integrationExternalId}`
+
+The external ID must be URL-encoded when used in the path. For example, an ID of `HR/1001` must be requested as `/v1/users/by_integration_external_id/HR%2F1001`.
+
+Lookups are scoped to your company: an unknown external ID returns `404 Not Found`.
+
+### Required Scope
+This endpoint requires the `users:read` scope.
+
+> 200 OK - successful response:
+
+```json
+{
+    "id": 1,
+    "firstName": "Test",
+    "lastName": "User",
+    "jobTitle": "Developer",
+    "email": "test@email.com",
+    "timeZone": "London",
+    "language": "en",
+    "role": "viewer",
+    "integrationExternalId": "EPOS-12345",
+    "occupationRole": "Software Engineer",
+    "hireDate": "2021-01-15",
+    "profileUrl": "https://testaccount.learnamp.com/en/users/1",
+    "status": {
+        "status": "Confirmed",
+        "time": "On 29 Nov 16"
+    },
+    "avatar": "https://res.cloudinary.com/dfiav5ctj/image/upload/c_crop,g_custom/a_exif,c_fill,dpr_1.0,f_auto,q_auto,w_100/v1505401603/iysnlkr6sr6ys0dybeh0.jpg",
+    "manager": {
+        "id": 17,
+        "firstName": "Test",
+        "lastName": "Manager",
+        "jobTitle": "Ops Director",
+        "email": "test2@email.com",
+        "timeZone": "London",
+        "language": "en",
+        "role": "admin",
+        "integrationExternalId": "EPOS-98765",
+        "profileUrl": "https://testaccount.learnamp.com/en/users/17",
+        "status": {
+            "status": "Confirmed",
+            "time": "On 20 Feb 17"
+        }
+    },
+    "location": "London, UK",
+    "department": "Marketing",
+    "primaryTeam": {
+        "id": 15,
+        "name": "Operations",
+        "teamUsersCount": 1,
+        "apiTeamPath": "/v1/teams/15.json",
+        "apiTeamUsersPath": "/v1/teams/15/users.json",
+        "manager": {
+          "id": 17,
+          "firstName": "Test",
+          "lastName": "Manager",
+          "jobTitle": "Ops Director",
+          "email": "test2@email.com",
+          "timeZone": "London",
+          "language": "en",
+          "role": "admin",
+          "integrationExternalId": "EPOS-98765",
+          "profileUrl": "https://testaccount.learnamp.com/en/users/17",
+          "status": {
+              "status": "Confirmed",
+              "time": "On 20 Feb 17"
+          }
+        }
     },
     "secondaryTeams": []
 }
