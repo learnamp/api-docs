@@ -5433,11 +5433,6 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <td>Return users with matching role. <br />Possible values: &quot;viewer&quot;, &quot;curator&quot;, &quot;reporter&quot;, &quot;hr&quot;, &quot;admin&quot;, &quot;owner&quot;</td>
 </tr>
 <tr>
-<td>filters[status]</td>
-<td><em>[confirmed,invite_pending]</em> or <em>confirmed</em></td>
-<td>Return users matching any of the given statuses.<br /><br />Param can be an array of statuses, or a string of comma separated statuses.<br />Possible values: &quot;not_invited&quot;, &quot;invite_scheduled&quot;, &quot;invite_pending&quot;, &quot;confirmed&quot;, &quot;deactivated&quot;</td>
-</tr>
-<tr>
 <td>filters[no_team]</td>
 <td>true</td>
 <td>Return users that have no team assigned</td>
@@ -5449,8 +5444,8 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 </tr>
 <tr>
 <td>filters[status][]</td>
-<td>confirmed</td>
-<td>Return users matching any of the given statuses. Repeat the param to pass multiple, e.g. <code>filters[status][]=confirmed&amp;filters[status][]=deactivated</code>.<br /><br />Possible values: &quot;not_invited&quot;, &quot;invite_scheduled&quot;, &quot;invite_pending&quot;, &quot;confirmed&quot;, &quot;pending_deactivation&quot;, &quot;deactivated&quot;</td>
+<td><em>[confirmed,invite_pending]</em> or <em>confirmed</em></td>
+<td>Return users matching any of the given statuses. Repeat the param to pass multiple, e.g. <code>filters[status][]=confirmed&amp;filters[status][]=deactivated</code>.<br />Param can be an array of statuses, or a string of comma separated statuses.<br />Possible values: &quot;not_invited&quot;, &quot;invite_scheduled&quot;, &quot;invite_pending&quot;, &quot;confirmed&quot;, &quot;pending_deactivation&quot;, &quot;deactivated&quot;</td>
 </tr>
 <tr>
 <td>filters[created_at][from]</td>
