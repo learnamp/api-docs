@@ -15,7 +15,7 @@ When a survey is `anonymous`, responses are returned without the respondent (`us
 > View all surveys in your account:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/surveys' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/surveys' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -23,7 +23,7 @@ curl --location --request GET 'https://api.learnamp.com/v1/surveys' \
 module Learnamp
   class Surveys
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -87,7 +87,7 @@ Response will be paginated [see pagination](#pagination)
 > Display details for a single survey:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/surveys/379' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/surveys/379' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -95,7 +95,7 @@ curl --location --request GET 'https://api.learnamp.com/v1/surveys/379' \
 module Learnamp
   class Surveys
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -158,7 +158,7 @@ This endpoint requires the `surveys:read` scope.
 > List all submitted responses for a single survey:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/surveys/379/responses' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/surveys/379/responses' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -166,7 +166,7 @@ curl --location --request GET 'https://api.learnamp.com/v1/surveys/379/responses
 module Learnamp
   class Surveys
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 

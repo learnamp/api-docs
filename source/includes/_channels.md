@@ -9,7 +9,7 @@ In Learn Amp, a Channel is a collection of content (items, learnlists, events et
 > View all channels in your account:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/channels' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/channels' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -17,7 +17,7 @@ curl --location --request GET 'https://api.learnamp.com/v1/channels' \
 module Learnamp
   class Channels
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -74,7 +74,7 @@ Response will be paginated [see pagination](#pagination)
 > View progress of all assigned users through a specified channel:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/channels/123/users_progress' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/channels/123/users_progress' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -82,7 +82,7 @@ curl --location --request GET 'https://api.learnamp.com/v1/channels/123/users_pr
 module Learnamp
   class Channels
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 

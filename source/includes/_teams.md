@@ -9,7 +9,7 @@ In Learn Amp, a Team is any grouping of users. Teams may map to your organisatio
 > View all teams in your account:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/teams' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/teams' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -17,7 +17,7 @@ curl --location --request GET 'https://api.learnamp.com/v1/teams' \
 module Learnamp
   class Teams
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -124,7 +124,7 @@ filters[tags] | "developers,product,compliance" | Return teams matching any of t
 > Display details for a single Team:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/teams/383' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/teams/383' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -132,7 +132,7 @@ curl --location --request GET 'https://api.learnamp.com/v1/teams/383' \
 module Learnamp
   class Teams
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -287,7 +287,7 @@ The same subroute supports `PUT` and `DELETE` with identical behaviour to the id
 > Create a new Team:
 
 ```shell
-curl --location --request POST 'https://api.learnamp.com/v1/teams' \
+curl --location --request POST 'https://{API_BASE_URL}/v1/teams' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --form 'name=New Team Test' \
 --form 'managerId=1' \
@@ -295,7 +295,7 @@ curl --location --request POST 'https://api.learnamp.com/v1/teams' \
 ```
 
 ```shell
-curl --location --request POST 'https://api.learnamp.com/v1/teams' \
+curl --location --request POST 'https://{API_BASE_URL}/v1/teams' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --form 'name=New Team Test' \
 --form 'managerEmail=manager@company.com' \
@@ -307,7 +307,7 @@ curl --location --request POST 'https://api.learnamp.com/v1/teams' \
 module Learnamp
   class Teams
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -442,7 +442,7 @@ Same rule applies for `parentTeamId` - `parentTeamName` and `subTeamIds` - `subT
 > Update a team:
 
 ```shell
-curl --location --request PUT 'https://api.learnamp.com/v1/teams/383' \
+curl --location --request PUT 'https://{API_BASE_URL}/v1/teams/383' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --form 'name=New Team Name' \
 --form 'managerId=1'
@@ -452,7 +452,7 @@ curl --location --request PUT 'https://api.learnamp.com/v1/teams/383' \
 module Learnamp
   class Teams
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -634,7 +634,7 @@ response | Simple | Optional: Either "Simple" (default) or "Extended". Value of 
 > Delete a team:
 
 ```shell
-curl --location --request DELETE 'https://api.learnamp.com/v1/teams/1' \
+curl --location --request DELETE 'https://{API_BASE_URL}/v1/teams/1' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -642,7 +642,7 @@ curl --location --request DELETE 'https://api.learnamp.com/v1/teams/1' \
 module Learnamp
   class Teams
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 

@@ -17,7 +17,7 @@ Tasks may be expired, for example, if the same user is required to complete the 
 > View all tasks in your account:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/tasks' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/tasks' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -25,7 +25,7 @@ curl --location --request GET 'https://api.learnamp.com/v1/tasks' \
 module Learnamp
   class Tasks
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -285,7 +285,7 @@ filters[lifecycle] | "active,deleted,deactivated" | Lifecycle status of task. Ca
 > Delete a task:
 
 ```shell
-curl --location --request DELETE 'https://api.learnamp.com/v1/tasks/1' \
+curl --location --request DELETE 'https://{API_BASE_URL}/v1/tasks/1' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -293,7 +293,7 @@ curl --location --request DELETE 'https://api.learnamp.com/v1/tasks/1' \
 module Learnamp
   class Tasks
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 

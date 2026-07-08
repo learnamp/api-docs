@@ -10,7 +10,7 @@ In Learn Amp, a User, is a person who can access the platform. User's belong to 
 > View all users in your account:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/users' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/users' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -18,7 +18,7 @@ curl --location --request GET 'https://api.learnamp.com/v1/users' \
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -178,7 +178,7 @@ filters[deactivated_at][to] | "2022-02-28" | Deactivated date range TO date in I
 > Display details for a single user:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/users/1' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/users/1' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -186,7 +186,7 @@ curl --location --request GET 'https://api.learnamp.com/v1/users/1' \
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -299,7 +299,7 @@ This endpoint requires the `users:read` scope.
 > Display details for a single user, looked up by integration external ID:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/users/by_integration_external_id/EPOS-12345' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/users/by_integration_external_id/EPOS-12345' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -307,7 +307,7 @@ curl --location --request GET 'https://api.learnamp.com/v1/users/by_integration_
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -424,7 +424,7 @@ This endpoint requires the `users:read` scope.
 > Create a new user in your account:
 
 ```shell
-curl --location --request POST 'https://api.learnamp.com/v1/users' \
+curl --location --request POST 'https://{API_BASE_URL}/v1/users' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --form 'email=testuser@test.com' \
 --form 'firstName=Test' \
@@ -443,7 +443,7 @@ curl --location --request POST 'https://api.learnamp.com/v1/users' \
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -646,7 +646,7 @@ customFields | [{ name: "Employee ID", value: "12-34-56" }] | CustomFields param
 > Update an existing user:
 
 ```shell
-curl --location --request PUT 'https://api.learnamp.com/v1/users/1382' \
+curl --location --request PUT 'https://{API_BASE_URL}/v1/users/1382' \
 --header 'Authorization: Bearer SQn9nZAxgwPJcz-neajmNahBdlc2DRoNbUHwx9A4Rvw' \
 --form 'firstName=Jim' \
 --form 'lastName=Robinson' \
@@ -662,7 +662,7 @@ curl --location --request PUT 'https://api.learnamp.com/v1/users/1382' \
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -892,7 +892,7 @@ A user may also be updated by `integrationExternalId` via a dedicated subroute â
 > Update an existing user, looked up by `integrationExternalId`:
 
 ```shell
-curl --location --request PUT 'https://api.learnamp.com/v1/users/by_integration_external_id/EPOS-12345' \
+curl --location --request PUT 'https://{API_BASE_URL}/v1/users/by_integration_external_id/EPOS-12345' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --form 'jobTitle=Senior Developer' \
 --form 'location=Edinburgh'
@@ -902,7 +902,7 @@ curl --location --request PUT 'https://api.learnamp.com/v1/users/by_integration_
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -1005,7 +1005,7 @@ Accepts the same body parameters as [Update a User](#update-a-user), including `
 > Deactivate a user:
 
 ```shell
-curl --location --request PUT 'https://api.learnamp.com/v1/users/1/deactivate' \
+curl --location --request PUT 'https://{API_BASE_URL}/v1/users/1/deactivate' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -1013,7 +1013,7 @@ curl --location --request PUT 'https://api.learnamp.com/v1/users/1/deactivate' \
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -1065,7 +1065,7 @@ This endpoint requires the `users:deactivate` scope.
 > Reactivate a deactivated user:
 
 ```shell
-curl --location --request PUT 'https://api.learnamp.com/v1/users/1/reactivate' \
+curl --location --request PUT 'https://{API_BASE_URL}/v1/users/1/reactivate' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -1073,7 +1073,7 @@ curl --location --request PUT 'https://api.learnamp.com/v1/users/1/reactivate' \
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -1125,7 +1125,7 @@ This endpoint requires the `users:reactivate` scope.
 > Delete a user:
 
 ```shell
-curl --location --request DELETE 'https://api.learnamp.com/v1/users/1' \
+curl --location --request DELETE 'https://{API_BASE_URL}/v1/users/1' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -1133,7 +1133,7 @@ curl --location --request DELETE 'https://api.learnamp.com/v1/users/1' \
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -1185,7 +1185,7 @@ This endpoint requires the `users:delete` scope.
 > View progress of all assigned channels by the specified user:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/users/567/channels_progress' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/users/567/channels_progress' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -1193,7 +1193,7 @@ curl --location --request GET 'https://api.learnamp.com/v1/users/567/channels_pr
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 

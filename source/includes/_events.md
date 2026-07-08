@@ -13,7 +13,7 @@ After an event session has been completed, the user's attendance is marked. If t
 > View all events in your account:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/events' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/events' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -21,7 +21,7 @@ curl --location --request GET 'https://api.learnamp.com/v1/events' \
 module Learnamp
   class Events
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -116,7 +116,7 @@ filters[created_at][to] | "2022-02-28" | Created at date range TO date in ISO 86
 > Display details for a single event:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/events/1' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/events/1' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -124,7 +124,7 @@ curl --location --request GET 'https://api.learnamp.com/v1/events/1' \
 module Learnamp
   class Events
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
