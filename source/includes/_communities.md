@@ -5,7 +5,7 @@
 > For a given community, view all posts
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/communities/123/posts' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/communities/123/posts' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 

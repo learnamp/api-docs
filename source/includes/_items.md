@@ -9,7 +9,7 @@ Items are typically organised into Channels and Learnlists.
 > View all items in your account:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/items' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/items' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -97,7 +97,7 @@ Each item includes `createdAt`, `updatedAt`, `addedBy` and `tags`. `addedBy` con
 > Display details for a single Item:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/items/3015' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/items/3015' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -206,7 +206,7 @@ This endpoint requires the `items:read` scope.
 > List the learnlists that contain a single item:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/items/3015/learnlists' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/items/3015/learnlists' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -278,7 +278,7 @@ Response will be paginated [see pagination](#pagination)
 > List the channels that contain a single item:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/items/3015/channels' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/items/3015/channels' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -349,7 +349,7 @@ Response will be paginated [see pagination](#pagination)
 > Create a new Item:
 
 ```shell
-curl --location --request POST 'https://api.learnamp.com/v1/items' \
+curl --location --request POST 'https://{API_BASE_URL}/v1/items' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --form 'url=https://www.test.com' \
 --form 'description=This is the description' \
@@ -514,7 +514,7 @@ The above mentioned parameters `sourceType` and `sourceId` are used to link the 
 > Update an Item:
 
 ```shell
-curl --location --request PUT 'https://api.learnamp.com/v1/items/383' \
+curl --location --request PUT 'https://{API_BASE_URL}/v1/items/383' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --form 'title=New Item Title'
 ```
@@ -646,7 +646,7 @@ archive | true | If item must be archived, set to true. To unarchive an item set
 
 ```shell
 # Complete by item ID
-curl --location --request POST 'https://api.learnamp.com/v1/items/complete' \
+curl --location --request POST 'https://{API_BASE_URL}/v1/items/complete' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --data-raw '{
@@ -655,7 +655,7 @@ curl --location --request POST 'https://api.learnamp.com/v1/items/complete' \
 }'
 
 # Complete by source type and ID
-curl --location --request POST 'https://api.learnamp.com/v1/items/complete' \
+curl --location --request POST 'https://{API_BASE_URL}/v1/items/complete' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --data-raw '{
@@ -788,7 +788,7 @@ The response will be an Activity object representing the completion.
 > Delete an item:
 
 ```shell
-curl --location --request DELETE 'https://api.learnamp.com/v1/items/1' \
+curl --location --request DELETE 'https://{API_BASE_URL}/v1/items/1' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 

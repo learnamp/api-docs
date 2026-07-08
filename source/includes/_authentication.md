@@ -3,7 +3,7 @@
 > Generate an Access Token from the Auth Token URL:
 
 ```shell
-curl --location --request POST 'https://api.learnamp.com/oauth/token' \
+curl --location --request POST 'https://{API_BASE_URL}/oauth/token' \
 --form 'client_id=YOUR-CLIENT-ID' \
 --form 'client_secret=YOUR-CLIENT-SECRET' \
 --form 'grant_type=client_credentials'
@@ -25,7 +25,7 @@ module Learnamp
     end
   end
 end
-
+-
 response = Learnamp::Auth.access_token
 puts response["access_token"] if response.ok?
 ```
@@ -43,13 +43,10 @@ puts response["access_token"] if response.ok?
 
 The Learn Amp API is secured using the OAuth2 Client Credentials flow.
 
-Before calls can be made to the API, an **access token** must be retrieved from the Auth Token URL.
+Before calls can be made to the API, an **access token** must be retrieved from the Auth Token URL:
 
-For accounts on EU1 Pod, the authentication URL is:
-`POST https://api.learnamp.com/oauth/token`
+`POST https://{API_BASE_URL}/oauth/token`
 
-For accounts on EU2 Pod, the authentication URL is:
-`POST https://api-eu2.learnamp.com/oauth/token`
 
 ### Data in Body
 
@@ -125,7 +122,7 @@ roles:read | Read access to roles
 To request specific scopes, add the `scope` parameter to your token request:
 
 ```shell
-curl --location --request POST 'https://api.learnamp.com/oauth/token' \
+curl --location --request POST 'https://{API_BASE_URL}/oauth/token' \
 --form 'client_id=YOUR-CLIENT-ID' \
 --form 'client_secret=YOUR-CLIENT-SECRET' \
 --form 'grant_type=client_credentials' \

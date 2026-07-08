@@ -9,7 +9,7 @@ In Learn Amp, each Activity has an associated Verb. Verbs are a concept in the T
 > View all available verbs:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/verbs' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/verbs' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 

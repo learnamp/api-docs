@@ -5,7 +5,7 @@
 > View all users for a given team:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/teams/1/users' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/teams/1/users' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -143,7 +143,7 @@ Response will be paginated [see pagination](#pagination)
 > Add a user to a team:
 
 ```shell
-curl --location --request POST 'https://api.learnamp.com/v1/teams/1/users' \
+curl --location --request POST 'https://{API_BASE_URL}/v1/teams/1/users' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -325,7 +325,7 @@ response | Teams::Simple | Optional: (blank value is the default) or "Teams::Sim
 > Add a user to a team by email and team name:
 
 ```shell
-curl --location --request POST 'https://api.learnamp.com/v1/teams/users' \
+curl --location --request POST 'https://{API_BASE_URL}/v1/teams/users' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -511,7 +511,7 @@ Exactly one of `teamId`, `teamName`, or `teamIntegrationExternalId` must be pres
 > Remove a user from a team:
 
 ```shell
-curl --location --request DELETE 'https://api.learnamp.com/v1/teams/1/users/1' \
+curl --location --request DELETE 'https://{API_BASE_URL}/v1/teams/1/users/1' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -576,7 +576,7 @@ This endpoint requires the `team_users:delete` scope.
 > Add multiple users to a team:
 
 ```shell
-curl --location --request POST 'https://api.learnamp.com/v1/teams/1/bulk/users' \
+curl --location --request POST 'https://{API_BASE_URL}/v1/teams/1/bulk/users' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --header 'Content-Type: application/json' \
 --data-raw '{

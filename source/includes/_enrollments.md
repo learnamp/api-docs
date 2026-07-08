@@ -9,7 +9,7 @@ In Learn Amp, an Enrollment is the association between a user and an event sessi
 > View all event session enrollments in your account:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/enrollments' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/enrollments' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -158,7 +158,7 @@ filters[updated_at][to] | 2020-04-01 | Enrollment updated date range TO in ISO 8
 > Display details for a single event:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/events/1' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/events/1' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -275,7 +275,7 @@ This endpoint requires the `events:read` scope.
 > Show a specific enrollment:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/enrollments/52' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/enrollments/52' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -396,7 +396,7 @@ This endpoint requires the `enrollments:read` scope.
 > Create a new enrollment:
 
 ```shell
-curl --location --request POST 'https://api.learnamp.com/v1/enrollments' \
+curl --location --request POST 'https://{API_BASE_URL}/v1/enrollments' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN' \
 --header 'Content-Type: application/json' \
 --data-raw '{

@@ -9,7 +9,7 @@ In Learn Amp, a Learnlist is a 'playlist' of content. It can be structured, like
 > View all learnlists in your account:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/learnlists' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/learnlists' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -75,7 +75,7 @@ Response will be paginated [see pagination](#pagination)
 > Display details for a single Learnlist:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/learnlists/379' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/learnlists/379' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 
@@ -139,7 +139,7 @@ This endpoint requires the `learnlists:read` scope.
 > List the contents of a single Learnlist:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/learnlists/379/contents' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/learnlists/379/contents' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 

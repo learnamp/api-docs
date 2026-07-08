@@ -10,7 +10,7 @@ All activity records are associated to a User. They contain a [verb](#verbs), li
 > View all activity in your account:
 
 ```shell
-curl --location --request GET 'https://api.learnamp.com/v1/activities' \
+curl --location --request GET 'https://{API_BASE_URL}/v1/activities' \
 --header 'Authorization: Bearer YOUR-ACCESS-TOKEN'
 ```
 

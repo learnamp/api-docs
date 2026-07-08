@@ -42,7 +42,7 @@ To get started, you will need:
 
 1. An account on the Learn Amp platform
 2. An API Key and Secret: Go to "Company Settings" --> "API" --> "Generate New API Key"
-3. Take note of the API Base URL, and use this value for all API calls.
+3. Take note of the **API Base URL**, and use this value for all API calls. All examples in this documentation use {API_BASE_URL} which can be replaced with the value listed in your company Settings API area.
 
 **Please note** Only the Owner user of your account is permitted to access the API settings.
 
@@ -51,24 +51,14 @@ To get started, you will need:
 
 ## Authentication Token URL
 
-For accounts on EU1 Pod:
 ```
-https://api.learnamp.com/oauth/token
-```
-
-For accounts on EU2 Pod:
-```
-https://api-eu2.learnamp.com/oauth/token
+https://{API_BASE_URL}/oauth/token
 ```
 
 ## API Base URL for subsquent calls
 
-For accounts on EU1 Pod:
 ```
-https://api.learnamp.com/v1
+https://{API_BASE_URL}/v1
 ```
 
-For accounts on EU2 Pod:
-```
-https://api-eu2.learnamp.com/v1
-```
+
