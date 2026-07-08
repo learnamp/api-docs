@@ -17,7 +17,7 @@ curl --location --request GET 'https://{API_BASE_URL}/v1/teams' \
 module Learnamp
   class Teams
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -132,7 +132,7 @@ curl --location --request GET 'https://{API_BASE_URL}/v1/teams/383' \
 module Learnamp
   class Teams
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -307,7 +307,7 @@ curl --location --request POST 'https://{API_BASE_URL}/v1/teams' \
 module Learnamp
   class Teams
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -452,7 +452,7 @@ curl --location --request PUT 'https://{API_BASE_URL}/v1/teams/383' \
 module Learnamp
   class Teams
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -642,7 +642,7 @@ curl --location --request DELETE 'https://{API_BASE_URL}/v1/teams/1' \
 module Learnamp
   class Teams
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 

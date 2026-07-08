@@ -17,7 +17,7 @@ curl --location --request GET 'https://{API_BASE_URL}/v1/items' \
 module Learnamp
   class Items
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -105,7 +105,7 @@ curl --location --request GET 'https://{API_BASE_URL}/v1/items/3015' \
 module Learnamp
   class Items
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -214,7 +214,7 @@ curl --location --request GET 'https://{API_BASE_URL}/v1/items/3015/learnlists' 
 module Learnamp
   class Items
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -286,7 +286,7 @@ curl --location --request GET 'https://{API_BASE_URL}/v1/items/3015/channels' \
 module Learnamp
   class Items
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -362,7 +362,7 @@ curl --location --request POST 'https://{API_BASE_URL}/v1/items' \
 module Learnamp
   class Items
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -523,7 +523,7 @@ curl --location --request PUT 'https://{API_BASE_URL}/v1/items/383' \
 module Learnamp
   class Items
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -669,7 +669,7 @@ curl --location --request POST 'https://{API_BASE_URL}/v1/items/complete' \
 module Learnamp
   class Items
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -796,7 +796,7 @@ curl --location --request DELETE 'https://{API_BASE_URL}/v1/items/1' \
 module Learnamp
   class Items
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 

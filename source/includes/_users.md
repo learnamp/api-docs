@@ -18,7 +18,7 @@ curl --location --request GET 'https://{API_BASE_URL}/v1/users' \
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -186,7 +186,7 @@ curl --location --request GET 'https://{API_BASE_URL}/v1/users/1' \
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -307,7 +307,7 @@ curl --location --request GET 'https://{API_BASE_URL}/v1/users/by_integration_ex
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -443,7 +443,7 @@ curl --location --request POST 'https://{API_BASE_URL}/v1/users' \
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -662,7 +662,7 @@ curl --location --request PUT 'https://{API_BASE_URL}/v1/users/1382' \
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -902,7 +902,7 @@ curl --location --request PUT 'https://{API_BASE_URL}/v1/users/by_integration_ex
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -1013,7 +1013,7 @@ curl --location --request PUT 'https://{API_BASE_URL}/v1/users/1/deactivate' \
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -1073,7 +1073,7 @@ curl --location --request PUT 'https://{API_BASE_URL}/v1/users/1/reactivate' \
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -1133,7 +1133,7 @@ curl --location --request DELETE 'https://{API_BASE_URL}/v1/users/1' \
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
@@ -1193,7 +1193,7 @@ curl --location --request GET 'https://{API_BASE_URL}/v1/users/567/channels_prog
 module Learnamp
   class Users
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 

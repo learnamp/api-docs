@@ -13,7 +13,7 @@ curl --location --request GET 'https://{API_BASE_URL}/v1/communities/123/posts' 
 module Learnamp
   class CommunityPosts
     include HTTParty
-    base_uri "#{ENV['BASE_URL']}#{ENV['API_PATH']}"
+    base_uri "#{ENV['API_BASE_URL']}/v1"
 
     attr_accessor :token
 
