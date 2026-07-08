@@ -611,37 +611,19 @@
 <ol>
 <li>An account on the Learn Amp platform</li>
 <li>An API Key and Secret: Go to &quot;Company Settings&quot; --&gt; &quot;API&quot; --&gt; &quot;Generate New API Key&quot;</li>
-<li>Take note of the API Base URL, and use this value for all API calls.</li>
+<li>Take note of the <strong>API Base URL</strong>, and use this value for all API calls. All examples in this documentation use {API_BASE_URL} which can be replaced with the value listed in your company Settings API area.</li>
 </ol>
 
 <p><strong>Please note</strong> Only the Owner user of your account is permitted to access the API settings.</p>
 
 <p><img src="images/api_credentials-7c72359a.png" width="580" alt="Accessing API credentials for Learn Amp within Company Settings area" /></p>
-<h2 id='authentication-token-url'>Authentication Token URL</h2>
-<p>For accounts on EU1 Pod:
-<code>
-https://api.learnamp.com/oauth/token
-</code></p>
-
-<p>For accounts on EU2 Pod:
-<code>
-https://api-eu2.learnamp.com/oauth/token
-</code></p>
-<h2 id='api-base-url-for-subsquent-calls'>API Base URL for subsquent calls</h2>
-<p>For accounts on EU1 Pod:
-<code>
-https://api.learnamp.com/v1
-</code></p>
-
-<p>For accounts on EU2 Pod:
-<code>
-https://api-eu2.learnamp.com/v1
-</code></p>
-<h1 id='authentication'>Authentication</h1>
+<h2 id='authentication-token-url'>Authentication Token URL</h2><div class="highlight"><pre class="highlight plaintext"><code>https://{API_BASE_URL}/oauth/token
+</code></pre></div><h2 id='api-base-url-for-subsquent-calls'>API Base URL for subsquent calls</h2><div class="highlight"><pre class="highlight plaintext"><code>https://{API_BASE_URL}/v1
+</code></pre></div><h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>Generate an Access Token from the Auth Token URL:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/oauth/token'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://{API_BASE_URL}/oauth/token'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'client_id=YOUR-CLIENT-ID'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'client_secret=YOUR-CLIENT-SECRET'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'grant_type=client_credentials'</span>
@@ -660,7 +642,7 @@ https://api-eu2.learnamp.com/v1
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span>
-
+<span class="o">-</span>
 <span class="n">response</span> <span class="o">=</span> <span class="no">Learnamp</span><span class="o">::</span><span class="no">Auth</span><span class="p">.</span><span class="nf">access_token</span>
 <span class="nb">puts</span> <span class="n">response</span><span class="p">[</span><span class="s2">"access_token"</span><span class="p">]</span> <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="nf">ok?</span>
 </code></pre></div>
@@ -677,13 +659,9 @@ https://api-eu2.learnamp.com/v1
 </span></code></pre></div>
 <p>The Learn Amp API is secured using the OAuth2 Client Credentials flow.</p>
 
-<p>Before calls can be made to the API, an <strong>access token</strong> must be retrieved from the Auth Token URL.</p>
+<p>Before calls can be made to the API, an <strong>access token</strong> must be retrieved from the Auth Token URL:</p>
 
-<p>For accounts on EU1 Pod, the authentication URL is:
-<code>POST https://api.learnamp.com/oauth/token</code></p>
-
-<p>For accounts on EU2 Pod, the authentication URL is:
-<code>POST https://api-eu2.learnamp.com/oauth/token</code></p>
+<p><code>POST https://{API_BASE_URL}/oauth/token</code></p>
 <h3 id='data-in-body'>Data in Body</h3>
 <table><thead>
 <tr>
@@ -868,7 +846,7 @@ If your API credentials were provisioned with specific scopes only (no <code>pub
 </tbody></table>
 <h3 id='requesting-scopes'>Requesting Scopes</h3>
 <p>To request specific scopes, add the <code>scope</code> parameter to your token request:</p>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/oauth/token'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://{API_BASE_URL}/oauth/token'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'client_id=YOUR-CLIENT-ID'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'client_secret=YOUR-CLIENT-SECRET'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'grant_type=client_credentials'</span> <span class="se">\</span>
@@ -899,12 +877,12 @@ All activity records are associated to a User. They contain a <a href="#verbs">v
 <blockquote>
 <p>View all activity in your account:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/activities'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/activities'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Tasks</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -1149,12 +1127,12 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 <blockquote>
 <p>View all channels in your account:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/channels'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/channels'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Channels</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -1206,12 +1184,12 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 <blockquote>
 <p>View progress of all assigned users through a specified channel:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/channels/123/users_progress'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/channels/123/users_progress'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Channels</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -1311,12 +1289,12 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 <blockquote>
 <p>View all events in your account:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/events'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/events'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Events</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -1421,12 +1399,12 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 <blockquote>
 <p>Display details for a single event:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/events/1'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/events/1'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Events</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -1519,12 +1497,12 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 <blockquote>
 <p>View all event session enrollments in your account:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/enrollments'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/enrollments'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Enrollments</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -1719,12 +1697,12 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 <blockquote>
 <p>Display details for a single event:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/events/1'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/events/1'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Events</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -1828,12 +1806,12 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 <blockquote>
 <p>Show a specific enrollment:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/enrollments/52'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/enrollments/52'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Enrollments</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -1940,7 +1918,7 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 <blockquote>
 <p>Create a new enrollment:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/enrollments'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://{API_BASE_URL}/v1/enrollments'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
 <span class="nt">--data-raw</span> <span class="s1">'{
@@ -1951,7 +1929,7 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Enrollments</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -2002,12 +1980,12 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 <blockquote>
 <p>View all tasks in your account:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/tasks'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/tasks'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Tasks</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -2333,12 +2311,12 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 <blockquote>
 <p>Delete a task:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> DELETE <span class="s1">'https://api.learnamp.com/v1/tasks/1'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> DELETE <span class="s1">'https://{API_BASE_URL}/v1/tasks/1'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Tasks</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -2388,12 +2366,12 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 <blockquote>
 <p>View all teams in your account:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/teams'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/teams'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Teams</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -2506,12 +2484,12 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 <blockquote>
 <p>Display details for a single Team:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/teams/383'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/teams/383'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Teams</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -2660,12 +2638,12 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 <blockquote>
 <p>Create a new Team:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/teams'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://{API_BASE_URL}/v1/teams'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'name=New Team Test'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'managerId=1'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'parentTeamId=1200'</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/teams'</span> <span class="se">\</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://{API_BASE_URL}/v1/teams'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'name=New Team Test'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'managerEmail=manager@company.com'</span> <span class="se">\</span>
@@ -2673,7 +2651,7 @@ The <code>activityable</code> object exposes two type fields. <code>type</code> 
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Teams</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -2845,14 +2823,14 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <blockquote>
 <p>Update a team:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'https://api.learnamp.com/v1/teams/383'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'https://{API_BASE_URL}/v1/teams/383'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'name=New Team Name'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'managerId=1'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Teams</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -3055,12 +3033,12 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <blockquote>
 <p>Delete a team:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> DELETE <span class="s1">'https://api.learnamp.com/v1/teams/1'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> DELETE <span class="s1">'https://{API_BASE_URL}/v1/teams/1'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Teams</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -3106,12 +3084,12 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <blockquote>
 <p>View all users for a given team:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/teams/1/users'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/teams/1/users'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">TeamUsers</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -3234,7 +3212,7 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <blockquote>
 <p>Add a user to a team:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/teams/1/users'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://{API_BASE_URL}/v1/teams/1/users'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
 <span class="nt">--data-raw</span> <span class="s1">'{
@@ -3244,7 +3222,7 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">TeamUsers</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -3416,7 +3394,7 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 <blockquote>
 <p>Add a user to a team by email and team name:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/teams/users'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://{API_BASE_URL}/v1/teams/users'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
 <span class="nt">--data-raw</span> <span class="s1">'{
@@ -3426,7 +3404,7 @@ Same rule applies for <code>parentTeamId</code> - <code>parentTeamName</code> an
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">TeamUsers</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -3618,12 +3596,12 @@ endpoint responsible for team member creation was implemented.</p>
 <blockquote>
 <p>Remove a user from a team:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> DELETE <span class="s1">'https://api.learnamp.com/v1/teams/1/users/1'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> DELETE <span class="s1">'https://{API_BASE_URL}/v1/teams/1/users/1'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">TeamUsers</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -3672,7 +3650,7 @@ endpoint responsible for team member creation was implemented.</p>
 <blockquote>
 <p>Add multiple users to a team:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/teams/1/bulk/users'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://{API_BASE_URL}/v1/teams/1/bulk/users'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
 <span class="nt">--data-raw</span> <span class="s1">'{
@@ -3682,7 +3660,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">TeamUsers</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -3731,12 +3709,12 @@ endpoint responsible for team member creation was implemented.</p>
 <blockquote>
 <p>For a given community, view all posts</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/communities/123/posts'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/communities/123/posts'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">CommunityPosts</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -3907,12 +3885,12 @@ endpoint responsible for team member creation was implemented.</p>
 <blockquote>
 <p>View all items in your account:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/items'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/items'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Items</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -3987,12 +3965,12 @@ endpoint responsible for team member creation was implemented.</p>
 <blockquote>
 <p>Display details for a single Item:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/items/3015'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/items/3015'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Items</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -4087,12 +4065,12 @@ endpoint responsible for team member creation was implemented.</p>
 <blockquote>
 <p>List the learnlists that contain a single item:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/items/3015/learnlists'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/items/3015/learnlists'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Items</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -4150,12 +4128,12 @@ endpoint responsible for team member creation was implemented.</p>
 <blockquote>
 <p>List the channels that contain a single item:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/items/3015/channels'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/items/3015/channels'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Items</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -4212,7 +4190,7 @@ endpoint responsible for team member creation was implemented.</p>
 <blockquote>
 <p>Create a new Item:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/items'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://{API_BASE_URL}/v1/items'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'url=https://www.test.com'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'description=This is the description'</span> <span class="se">\</span>
@@ -4222,7 +4200,7 @@ endpoint responsible for team member creation was implemented.</p>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Items</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -4439,13 +4417,13 @@ endpoint responsible for team member creation was implemented.</p>
 <blockquote>
 <p>Update an Item:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'https://api.learnamp.com/v1/items/383'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'https://{API_BASE_URL}/v1/items/383'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'title=New Item Title'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Items</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -4630,7 +4608,7 @@ endpoint responsible for team member creation was implemented.</p>
 <p>Mark an item as completed for a user:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Complete by item ID</span>
-curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/items/complete'</span> <span class="se">\</span>
+curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://{API_BASE_URL}/v1/items/complete'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
 <span class="nt">--data-raw</span> <span class="s1">'{
@@ -4639,7 +4617,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 }'</span>
 
 <span class="c"># Complete by source type and ID</span>
-curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/items/complete'</span> <span class="se">\</span>
+curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://{API_BASE_URL}/v1/items/complete'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
 <span class="nt">--data-raw</span> <span class="s1">'{
@@ -4650,7 +4628,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Items</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -4771,12 +4749,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>Delete an item:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> DELETE <span class="s1">'https://api.learnamp.com/v1/items/1'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> DELETE <span class="s1">'https://{API_BASE_URL}/v1/items/1'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Items</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -4824,12 +4802,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>View all learnlists in your account:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/learnlists'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/learnlists'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Learnlists</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -4882,12 +4860,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>Display details for a single Learnlist:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/learnlists/379'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/learnlists/379'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Learnlists</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -4937,12 +4915,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>List the contents of a single Learnlist:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/learnlists/379/contents'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/learnlists/379/contents'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Learnlists</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -5045,12 +5023,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>View all surveys in your account:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/surveys'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/surveys'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Surveys</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -5109,12 +5087,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>Display details for a single survey:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/surveys/379'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/surveys/379'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Surveys</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -5171,12 +5149,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>List all submitted responses for a single survey:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/surveys/379/responses'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/surveys/379/responses'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Surveys</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -5353,12 +5331,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>View all users in your account:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/users'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/users'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Users</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -5575,12 +5553,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>Display details for a single user:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/users/1'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/users/1'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Users</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -5687,12 +5665,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>Display details for a single user, looked up by integration external ID:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/users/by_integration_external_id/EPOS-12345'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/users/by_integration_external_id/EPOS-12345'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Users</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -5803,7 +5781,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>Create a new user in your account:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://api.learnamp.com/v1/users'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'https://{API_BASE_URL}/v1/users'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'email=testuser@test.com'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'firstName=Test'</span> <span class="se">\</span>
@@ -5819,7 +5797,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Users</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -6088,7 +6066,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>Update an existing user:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'https://api.learnamp.com/v1/users/1382'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'https://{API_BASE_URL}/v1/users/1382'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer SQn9nZAxgwPJcz-neajmNahBdlc2DRoNbUHwx9A4Rvw'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'firstName=Jim'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'lastName=Robinson'</span> <span class="se">\</span>
@@ -6101,7 +6079,7 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Users</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -6419,14 +6397,14 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>Update an existing user, looked up by <code>integrationExternalId</code>:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'https://api.learnamp.com/v1/users/by_integration_external_id/EPOS-12345'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'https://{API_BASE_URL}/v1/users/by_integration_external_id/EPOS-12345'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'jobTitle=Senior Developer'</span> <span class="se">\</span>
 <span class="nt">--form</span> <span class="s1">'location=Edinburgh'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Users</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -6520,12 +6498,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>Deactivate a user:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'https://api.learnamp.com/v1/users/1/deactivate'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'https://{API_BASE_URL}/v1/users/1/deactivate'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Users</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -6571,12 +6549,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>Reactivate a deactivated user:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'https://api.learnamp.com/v1/users/1/reactivate'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'https://{API_BASE_URL}/v1/users/1/reactivate'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Users</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -6622,12 +6600,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>Delete a user:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> DELETE <span class="s1">'https://api.learnamp.com/v1/users/1'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> DELETE <span class="s1">'https://{API_BASE_URL}/v1/users/1'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Users</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -6673,12 +6651,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>View progress of all assigned channels by the specified user:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/users/567/channels_progress'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/users/567/channels_progress'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Users</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
@@ -6894,12 +6872,12 @@ curl <span class="nt">--location</span> <span class="nt">--request</span> POST <
 <blockquote>
 <p>View all available verbs:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://api.learnamp.com/v1/verbs'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'https://{API_BASE_URL}/v1/verbs'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer YOUR-ACCESS-TOKEN'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="k">module</span> <span class="nn">Learnamp</span>
   <span class="k">class</span> <span class="nc">Verbs</span>
     <span class="kp">include</span> <span class="no">HTTParty</span>
-    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BASE_URL'</span><span class="p">]</span><span class="si">}#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_PATH'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_uri</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'API_BASE_URL'</span><span class="p">]</span><span class="si">}</span><span class="s2">/v1"</span>
 
     <span class="nb">attr_accessor</span> <span class="ss">:token</span>
 
